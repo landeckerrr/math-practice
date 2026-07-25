@@ -3,493 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Practice 0.06 — The Whole Story</title>
+<title>Green Time — Mr. Landy's Math</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
   :root{
-    --ink:#15202b; --muted:#6b7785; --line:#d8dee6; --paper:#fff; --wash:#f2f6f3;
-    --green:#2f8a4e; --green-soft:#e6f4ea; --green-deep:#236b3c;
-    --blue:#2f6fd0; --blue-soft:#e8f0fc;
-    --red:#c53d3d; --red-soft:#fdeceb;
-    --gold:#e6a700; --gold-soft:#fff6dd;
-    --violet:#6b4fbb; --violet-soft:#efeafc;
+    --ink:#15202b; --muted:#6b7785; --line:#dbe3dd; --paper:#fff; --wash:#f2f6f3;
+    --green:#2f8a4e; --green-soft:#e6f4ea; --green-deep:#1f5c33;
+    --blue:#2f6fd0; --blue-soft:#e8f0fc; --red:#c53d3d; --gold:#e6a700;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'DM Sans',system-ui,sans-serif;background:var(--wash);color:var(--ink);line-height:1.5;padding:16px}
-  .shell{max-width:780px;margin:0 auto}
-  .bar{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-  .who{font-size:13px;color:var(--muted)} .who b{color:var(--ink)}
-  .code{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green-deep);background:var(--green-soft);padding:3px 9px;border-radius:20px}
-  .track{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:10px;width:100%}
-  .track > div{height:100%;background:var(--green);width:0;transition:width .3s}
-  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:14px}
-  h1{font-size:24px;font-weight:700;margin-bottom:4px}
-  h2{font-size:19px;font-weight:700;margin-bottom:10px}
-  .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
-  .teach{background:var(--gold-soft);border-left:4px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;font-size:14px;margin-bottom:18px;white-space:pre-line}
-  .extbanner{background:var(--violet-soft);border-left:4px solid var(--violet);padding:12px 14px;border-radius:0 8px 8px 0;font-size:14px;margin-bottom:18px}
-  .q{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
-  .q:first-of-type{border-top:0;padding-top:0;margin-top:0}
-  .qnum{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-bottom:5px}
-  .prompt{font-size:16px;margin-bottom:12px;white-space:pre-line}
-  .choices{display:flex;flex-direction:column;gap:8px}
-  .choice{border:1.5px solid var(--line);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:15px;background:var(--paper);text-align:left;transition:.12s;font-family:inherit}
-  .choice:hover{border-color:var(--green)}
-  .choice.sel{border-color:var(--green);background:var(--green-soft);font-weight:600}
-  input[type=text]{width:100%;max-width:260px;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:16px;font-family:inherit}
-  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--green)}
-  textarea{width:100%;min-height:90px;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:inherit;resize:vertical}
-  .hint{font-size:12.5px;color:var(--muted);margin-top:6px}
-  .keypad{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-  .key{font-family:inherit;font-size:17px;font-weight:600;line-height:1;background:var(--green-soft);
-       border:1.5px solid #bcdcc7;color:var(--green-deep);border-radius:8px;padding:7px 14px;cursor:pointer}
-  .key:hover{background:#d5ecdd;border-color:var(--green)}
-  .key:active{transform:translateY(1px)}
-  .keylab{font-size:11.5px;color:var(--muted);align-self:center;margin-right:2px}
-  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px}
-  button{font-family:inherit;font-size:15px;font-weight:600;border-radius:9px;padding:11px 20px;border:1.5px solid transparent;cursor:pointer;transition:.12s}
-  .primary{background:var(--green);color:#fff} .primary:hover{background:var(--green-deep)}
-  .primary:disabled{background:#a9c9b5;cursor:not-allowed}
-  .ghost{background:var(--paper);border-color:var(--line);color:var(--ink)} .ghost:hover{border-color:var(--muted)}
-  .spacer{flex:1}
-  .savenote{font-size:12.5px;color:var(--green);font-weight:600}
-  .slidelist{display:flex;flex-direction:column;gap:8px;margin:16px 0}
-  .chip{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:9px;padding:11px 14px;cursor:pointer;background:var(--paper)}
-  .chip:hover{border-color:var(--muted)}
-  .chip .mark{font-size:18px;width:24px;text-align:center;flex-shrink:0}
-  .chip .lbl{flex:1;font-size:14.5px} .chip .cnt{font-size:12px;color:var(--muted)}
-  .chip.ok{background:var(--green-soft);border-color:#b7ddc4} .chip.ok .mark{color:var(--green)}
-  .chip.bad{background:var(--red-soft);border-color:#f2c3c0} .chip.bad .mark{color:var(--red)}
-  .chip.wait{background:var(--gold-soft);border-color:#ecd79a}
-  .chip.ext{background:var(--violet-soft);border-color:#cfc2f0} .chip.ext .mark{color:var(--violet)}
-  .score{font-size:44px;font-weight:700;line-height:1}
-  .scorelab{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-  .field{margin-bottom:16px}
-  .field label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
-  .err{color:var(--red);font-size:13px;font-weight:600;margin-top:8px}
-  .bigcheck{font-size:56px;text-align:center;margin-bottom:8px}
-  .center{text-align:center}
-  .hide{display:none}
-  code.work{font-family:ui-monospace,Menlo,Consolas,monospace;background:#f4f6f8;padding:2px 5px;border-radius:4px;font-size:14px}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:var(--wash);color:var(--ink);line-height:1.5;padding:20px 16px 60px}
+  .shell{max-width:820px;margin:0 auto}
+
+  header{margin-bottom:26px}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-deep);background:var(--green-soft);padding:5px 11px;border-radius:20px;margin-bottom:12px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  h1{font-size:38px;font-weight:700;line-height:1.1;letter-spacing:-.02em}
+  h1 .light{color:var(--green)}
+  .lede{font-size:16px;color:var(--muted);margin-top:8px;max-width:52ch}
+
+  .howto{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:22px 0 30px;display:flex;gap:26px;flex-wrap:wrap}
+  .howto .step{flex:1;min-width:180px}
+  .howto .n{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.08em;margin-bottom:3px}
+  .howto .t{font-size:14px}
+  .howto .t b{font-weight:700}
+
+  .unit{margin-bottom:34px}
+  .unithead{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:4px}
+  .unithead h2{font-size:20px;font-weight:700}
+  .unithead .meta{font-size:12px;color:var(--muted);margin-left:auto}
+  .partlabel{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+
+  .set{display:flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:13px 16px;margin-bottom:8px;text-decoration:none;color:inherit;transition:.14s}
+  .set:hover{border-color:var(--green);transform:translateX(3px)}
+  .set .code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;font-weight:600;color:var(--green-deep);background:var(--green-soft);padding:4px 9px;border-radius:6px;flex-shrink:0}
+  .set .title{flex:1;font-size:15.5px;font-weight:500}
+  .set .arrow{color:var(--green);font-size:18px;flex-shrink:0}
+  .set.locked{opacity:.45;pointer-events:none}
+  .set.locked .code{background:#eef0f1;color:var(--muted)}
+  .set.locked .arrow{color:var(--muted)}
+  .set.locked .arrow::before{content:"🔒";font-size:14px}
+
+  .help{background:var(--blue-soft);border:1px solid #c3d7f5;border-radius:12px;padding:18px 20px;margin-top:34px}
+  .help h3{font-size:16px;font-weight:700;margin-bottom:8px}
+  .help p{font-size:14px;margin-bottom:7px}
+  .help a{color:var(--blue);font-weight:600}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+  @media (max-width:520px){ h1{font-size:30px} .howto{gap:16px} }
 </style>
 </head>
 <body>
 <div class="shell">
 
-  <div id="startScreen" class="card">
-    <span class="code" id="startCode"></span>
-    <h1 style="margin-top:10px" id="startTitle"></h1>
-    <p class="sub" id="startSub"></p>
-    <div class="field">
-      <label for="nameIn">Your name</label>
-      <input type="text" id="nameIn" style="max-width:100%" placeholder="First and last name" autocomplete="off">
-    </div>
-    <div class="field">
-      <label for="vipIn">VIP number (3 digits)</label>
-      <input type="text" id="vipIn" inputmode="numeric" maxlength="3" placeholder="000" autocomplete="off">
-    </div>
-    <div id="resumeNote" class="teach hide"></div>
-    <div id="startErr" class="err hide"></div>
-    <div class="row"><button class="primary" id="startBtn">Start Green Time</button></div>
-    <p class="hint" style="margin-top:14px">Your work saves as you go. Stop anytime and come back with the same VIP number.</p>
+  <header>
+    <span class="eyebrow"><span class="dot"></span> Green Time · Collaborate</span>
+    <h1>Practice<span class="light">.</span></h1>
+    <p class="lede">Everything you work on during Green Time lives here. Pick today's set, do your best thinking, turn it in before you leave.</p>
+  </header>
+
+  <div class="howto">
+    <div class="step"><div class="n">01</div><div class="t">Open today's set. Type your <b>name</b> and <b>VIP number</b>.</div></div>
+    <div class="step"><div class="n">02</div><div class="t">Work through the slides. It <b>saves as you go</b> — no panic if class ends.</div></div>
+    <div class="step"><div class="n">03</div><div class="t">Check your work, fix the red ones, then <b>turn it in</b>.</div></div>
   </div>
 
-  <div id="practiceScreen" class="hide">
-    <div class="bar">
-      <div class="who"><b id="barName"></b> · VIP <span id="barVip"></span></div>
-      <span class="code" id="barCode"></span>
-      <div class="track"><div id="progressFill"></div></div>
+  <section class="unit">
+    <div class="unithead">
+      <h2>Getting Started</h2>
+      <span class="meta">Week 1</span>
     </div>
-    <div class="card" id="slideCard"></div>
-    <div class="row" style="margin-top:0">
-      <button class="ghost" id="backBtn">← Back</button>
-      <button class="primary" id="nextBtn">Next →</button>
-      <div class="spacer"></div>
-      <span class="savenote" id="saveNote"></span>
-      <button class="ghost" id="exitBtn">Save &amp; exit</button>
+    <a class="set" href="0-00.html"><span class="code">0.00</span><span class="title">How This Class Works</span><span class="arrow">→</span></a>
+  </section>
+
+  <!-- =================== UNIT 0 =================== -->
+  <section class="unit">
+    <div class="unithead">
+      <h2>Unit 0 — Division: The Whole Story</h2>
+      <span class="meta">August – September</span>
     </div>
+
+    <div class="partlabel">Part A · Fractions ARE Division</div>
+    <a class="set" href="0-01.html"><span class="code">0.01</span><span class="title">The Secret of ÷</span><span class="arrow">→</span></a>
+    <a class="set" href="0-02.html"><span class="code">0.02</span><span class="title">Sharing Problems &amp; Bigger Than One</span><span class="arrow">→</span></a>
+    <a class="set" href="0-03.html"><span class="code">0.03</span><span class="title">Numbers in Disguise</span><span class="arrow">→</span></a>
+    <a class="set" href="0-04.html"><span class="code">0.04</span><span class="title">Decimal Reminders</span><span class="arrow">→</span></a>
+    <a class="set" href="0-05.html"><span class="code">0.05</span><span class="title">Estimation Station</span><span class="arrow">→</span></a>
+    <a class="set" href="0-06.html"><span class="code">0.06</span><span class="title">The Whole Story</span><span class="arrow">→</span></a>
+
+    <div class="partlabel">Part B · The Division Machine</div>
+    <a class="set locked"><span class="code">0.07</span><span class="title">So What IS 5/8?</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.08</span><span class="title">Building the House</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.09</span><span class="title">Remainders ARE Fractions</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.10</span><span class="title">Two-Digit Divisors</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.11</span><span class="title">Division That Keeps Going</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.12</span><span class="title">Dividing Decimals</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.13</span><span class="title">Decimals in Real Life</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.14</span><span class="title">How Many Fit?</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.15</span><span class="title">Keep. Change. Flip.</span><span class="arrow"></span></a>
+    <a class="set locked"><span class="code">0.16</span><span class="title">The Whole Story</span><span class="arrow"></span></a>
+  </section>
+
+  <div class="help">
+    <h3>Stuck? Read this before you panic.</h3>
+    <p><b>Ran out of time in class?</b> Come back on the <b>same computer</b>, type your VIP number, and it picks up where you stopped.</p>
+    <p><b>Forgot your VIP number?</b> Ask me. Don't guess and don't use a friend's.</p>
+    <p><b>Don't understand a question?</b> Put your name on the queue. That's what it's there for.</p>
+    <p><b>Turned it in late?</b> Fill out the <a href="https://bit.ly/44Sxkkb">Late Work form</a> so I know to go look.</p>
   </div>
 
-  <div id="reviewScreen" class="hide">
-    <div class="card">
-      <h2>How did you do?</h2>
-      <p class="sub">Tap any slide to go back and fix it. Nothing is turned in until you press the button at the bottom.</p>
-      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">
-        <span class="score" id="scoreNum"></span><span class="scorelab">correct</span>
-      </div>
-      <div class="slidelist" id="slideList"></div>
-      <div class="teach" id="reviewNote"></div>
-      <div class="row">
-        <button class="ghost" id="reviewBackBtn">← Keep working</button>
-        <div class="spacer"></div>
-        <button class="primary" id="submitBtn">Turn in to Mr. Landy</button>
-      </div>
-      <div id="submitErr" class="err hide"></div>
-    </div>
-  </div>
-
-  <div id="doneScreen" class="hide">
-    <div class="card center">
-      <div class="bigcheck">✅</div>
-      <h2>Turned in!</h2>
-      <p class="sub" id="doneSub"></p>
-      <div class="teach" style="text-align:left" id="doneDetail"></div>
-    </div>
-  </div>
+  <footer>
+    <span>6th Grade Math · The Columbus School</span>
+    <span>Mr. Landy</span>
+  </footer>
 
 </div>
-
-<script>
-/* ==========================================================================
-   EDIT ONLY THIS BLOCK TO MAKE A NEW PRACTICE SET.
-   Add  extension: true  to a slide and it becomes a bonus slide:
-   it still gets graded, but it does NOT count against the student's score.
-   ========================================================================== */
-
-const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzJxzE8FRVF7gA6vPOzcuPAqBF7y_oeBMVpifKrhJ--yGqUfGN-WADMdbX23rCjoY0P/exec"; // ← paste your Apps Script /exec URL here
-
-// Symbol buttons shown under every typed-answer box (they aren't on a keyboard).
-// Override per question with  keys:["÷","½"]  or switch them off with  keys:[]
-const DEFAULT_KEYS = ["÷"];
-
-const LESSON = {
-  code: "0.06",
-  title: "The Whole Story",
-  subtitle: "Unit 0, Lesson 6 \u00b7 Mixed Review \u2014 everything so far",
-
-  slides: [
-    { title: "Warm-up",
-      teach: "This set is MIXED. Nobody tells you which lesson a question comes from. Read carefully and decide what the question wants.",
-      questions: [
-        { type:"text", prompt:"Write 6 \u00f7 5 as a fraction.", accept:["6/5"] },
-        { type:"text", prompt:"Write 3/8 as a division problem.", accept:["3\u00f78","3/8","3 \u00f7 8"] },
-        { type:"mc", prompt:"8/8 is...", choices:["More than one","Less than one","Exactly one"], answer:2 }
-      ]},
-
-    { title: "Sharing",
-      questions: [
-        { type:"text", prompt:"7 friends share 4 pizzas equally. Write each share as a fraction.", accept:["4/7"] },
-        { type:"text", prompt:"4 friends share 7 pizzas equally. Write each share as a fraction.", accept:["7/4"] },
-        { type:"mc", prompt:"Which of those two answers is more than one whole?", choices:["4/7","7/4","Both","Neither"], answer:1 }
-      ]},
-
-    { title: "Costume change",
-      teach: "Type mixed numbers like this: 3 2/5",
-      questions: [
-        { type:"text", prompt:"Write 19/4 as a mixed number.", accept:["4 3/4"] },
-        { type:"text", prompt:"Write 3 5/6 as an improper fraction.", accept:["23/6"] },
-        { type:"text", prompt:"Write 27/5 as a mixed number.", accept:["5 2/5"] }
-      ]},
-
-    { title: "Decimals",
-      questions: [
-        { type:"text", prompt:"Write 0.4 as a fraction in SIMPLEST form.", accept:["2/5"] },
-        { type:"text", prompt:"Write 1/4 as a decimal.", accept:["0.25",".25"] },
-        { type:"mc", prompt:"Which is bigger: 0.08 or 0.8?", choices:["0.08","0.8","They are equal"], answer:1 }
-      ]},
-
-    { title: "Estimate it",
-      teach: "Do not divide. Compare the top to the bottom.",
-      questions: [
-        { type:"mc", prompt:"13/14 is closest to...", choices:["0","one half","1"], answer:2 },
-        { type:"mc", prompt:"2/17 is closest to...", choices:["0","one half","1"], answer:0 },
-        { type:"mc", prompt:"8/17 is closest to...", choices:["0","one half","1"], answer:1 }
-      ]},
-
-    { title: "Catch the mistake",
-      questions: [
-        { type:"mc", prompt:"Chanku says 5 \u00f7 8 = 8/5. What went wrong?", choices:["Nothing","He flipped it \u2014 it should be 5/8","He should have multiplied","He should have estimated"], answer:1 },
-        { type:"mc", prompt:"Villegas says 11 \u00f7 3 = 3 remainder 2, so the answer is 3.2. What went wrong?", choices:["Nothing","The remainder is 2 out of 3, so it is 3 2/3","It should be 3.23","The answer is 4"], answer:1 },
-        { type:"mc", prompt:"Emi says 0.3 = 3/100. What went wrong?", choices:["Nothing","One place after the point means tenths, so it is 3/10","It should be 3/1000","It should be 30/10"], answer:1 }
-      ]},
-
-    { title: "Explain it",
-      questions: [
-        { type:"written", prompt:"What was the HARDEST thing in this unit for you? Name it, then explain it in your own words as if you were teaching it to someone who missed that day.",
-          hint:"Mr. Landy reads every one of these before writing the study guide. Be honest \u2014 this is how I know what to review." }
-      ]},
-
-    { title: "Compare and order",
-      extension: true,
-      questions: [
-        { type:"mc", prompt:"Which is bigger: 9/4 or 2 1/4?", choices:["9/4","2 1/4","They are equal"], answer:2, hint:"Convert one before you answer." },
-        { type:"mc", prompt:"Which is bigger: 0.6 or 5/8?", choices:["0.6","5/8","They are equal"], answer:1 },
-        { type:"mc", prompt:"Order from LEAST to GREATEST: 1/2, 0.45, 3/5", choices:["1/2, 0.45, 3/5","0.45, 1/2, 3/5","3/5, 1/2, 0.45","0.45, 3/5, 1/2"], answer:1 },
-        { type:"mc", prompt:"Which of these is the SMALLEST?", choices:["1/3","1/6","1/2","1/4"], answer:1 }
-      ]},
-
-    { title: "Word problems",
-      extension: true,
-      questions: [
-        { type:"text", prompt:"4 friends share 15 empanadas equally. Write each share as a MIXED NUMBER.", accept:["3 3/4"] },
-        { type:"mc", prompt:"38 students need buses. Each bus holds 8 students. How many buses are needed?", choices:["4","4 3/4","5","6"], answer:2 },
-        { type:"text", prompt:"A rope 9 meters long is cut into 4 equal pieces. How long is each piece? Write it as a MIXED NUMBER.", accept:["2 1/4"] }
-      ]},
-
-    { title: "Last mixed set",
-      extension: true,
-      questions: [
-        { type:"text", prompt:"Write 23/4 as a mixed number.", accept:["5 3/4"] },
-        { type:"text", prompt:"Write 0.75 as a fraction in SIMPLEST form.", accept:["3/4"] },
-        { type:"mc", prompt:"Estimate 11/12 as a decimal.", choices:["0.5","0.7","0.9","1.2"], answer:2 },
-        { type:"text", prompt:"Write 2 1/5 as an improper fraction.", accept:["11/5"] }
-      ]},
-
-    { title: "Challenge Zone",
-      extension: true,
-      questions: [
-        { type:"text", prompt:"Write 53/8 as a mixed number.", accept:["6 5/8"] },
-        { type:"mc", prompt:"Which of these is the LARGEST?", choices:["7/8","0.85","6/7","0.9"], answer:3, hint:"Turn them all into decimals first." },
-        { type:"text", prompt:"5 friends share 23 empanadas equally. Write each share as a MIXED NUMBER.", accept:["4 3/5"] }
-      ]}
-  ]
-};
-
-/* ==========================================================================
-   ENGINE — nothing below here needs editing.
-   ========================================================================== */
-const el = id => document.getElementById(id);
-const S = { name:"", vip:"", idx:0, answers:{}, submitted:false };
-const keyFor = vip => `landy_practice_${LESSON.code}_${vip}`;
-
-function save(){
-  try{
-    localStorage.setItem(keyFor(S.vip), JSON.stringify({
-      name:S.name, vip:S.vip, idx:S.idx, answers:S.answers,
-      submitted:S.submitted, saved:new Date().toISOString()
-    }));
-    flashSaved();
-  }catch(e){}
-}
-function load(vip){
-  try{ const raw = localStorage.getItem(keyFor(vip)); return raw ? JSON.parse(raw) : null; }catch(e){ return null; }
-}
-let flashTimer;
-function flashSaved(){
-  const n = el('saveNote'); if(!n) return;
-  n.textContent = "Saved ✓"; clearTimeout(flashTimer);
-  flashTimer = setTimeout(()=>{ n.textContent=""; }, 1600);
-}
-
-function normalize(s){
-  return String(s).toLowerCase().trim()
-    .replace(/,/g,"").replace(/\s+/g,"")
-    .replace(/÷/g,"/").replace(/dividedby/g,"/")
-    .replace(/remainder/g,"r");
-}
-function isCorrect(q,val){
-  if(q.type === "written") return null;
-  if(val === undefined || val === "" || val === null) return false;
-  if(q.type === "mc") return Number(val) === q.answer;
-  return q.accept.some(a => normalize(a) === normalize(val));
-}
-const qid = (si,qi) => `s${si}q${qi}`;
-
-function slideStatus(si){
-  const sl = LESSON.slides[si];
-  let graded=0, right=0, blank=0;
-  sl.questions.forEach((q,qi)=>{
-    const v = S.answers[qid(si,qi)];
-    if(q.type === "written"){ if(!v || !String(v).trim()) blank++; return; }
-    graded++;
-    if(v === undefined || v === "") blank++;
-    else if(isCorrect(q,v)) right++;
-  });
-  return {graded,right,blank,ext:!!sl.extension};
-}
-function totals(){
-  let g=0,r=0,eg=0,er=0;
-  LESSON.slides.forEach((sl,si)=>{
-    const st = slideStatus(si);
-    if(sl.extension){ eg+=st.graded; er+=st.right; }
-    else { g+=st.graded; r+=st.right; }
-  });
-  return {graded:g,right:r,extGraded:eg,extRight:er};
-}
-
-function show(which){
-  ['startScreen','practiceScreen','reviewScreen','doneScreen']
-    .forEach(id => el(id).classList.toggle('hide', id !== which));
-  window.scrollTo(0,0);
-}
-
-el('startCode').textContent = "Practice " + LESSON.code;
-el('startTitle').textContent = LESSON.title;
-el('startSub').textContent = LESSON.subtitle;
-
-el('vipIn').addEventListener('input', e=>{
-  e.target.value = e.target.value.replace(/\D/g,'').slice(0,3);
-  const v = e.target.value, note = el('resumeNote');
-  if(v.length === 3){
-    const prev = load(v);
-    if(prev && !prev.submitted){
-      note.innerHTML = `Welcome back, <b>${escapeHtml(prev.name)}</b> — picking up on slide ${prev.idx+1}.`;
-      note.classList.remove('hide');
-      if(!el('nameIn').value) el('nameIn').value = prev.name;
-      return;
-    }
-    if(prev && prev.submitted){
-      note.textContent = `This VIP already turned in Practice ${LESSON.code}. Starting again replaces it.`;
-      note.classList.remove('hide'); return;
-    }
-  }
-  note.classList.add('hide');
-});
-
-el('startBtn').onclick = ()=>{
-  const name = el('nameIn').value.trim(), vip = el('vipIn').value.trim(), err = el('startErr');
-  if(name.length < 2){ err.textContent="Please type your full name."; err.classList.remove('hide'); return; }
-  if(vip.length !== 3){ err.textContent="Your VIP number is 3 digits."; err.classList.remove('hide'); return; }
-  err.classList.add('hide');
-  const prev = load(vip);
-  if(prev && !prev.submitted){ S.idx = prev.idx; S.answers = prev.answers || {}; }
-  S.name=name; S.vip=vip; S.submitted=false;
-  el('barName').textContent=name; el('barVip').textContent=vip;
-  el('barCode').textContent="Practice "+LESSON.code;
-  show('practiceScreen'); renderSlide();
-};
-
-function renderSlide(){
-  const si=S.idx, sl=LESSON.slides[si];
-  el('progressFill').style.width = (si/LESSON.slides.length*100)+"%";
-  const required = LESSON.slides.filter(s=>!s.extension).length;
-
-  let html = `<div class="sub" style="margin-bottom:6px">Slide ${si+1} of ${LESSON.slides.length}</div>`;
-  html += `<h2>${escapeHtml(sl.title)}</h2>`;
-  const firstExt = LESSON.slides.findIndex(s => s.extension);
-  if(sl.extension){
-    html += si === firstExt
-      ? `<div class="extbanner">🌟 <b>Bonus round.</b> You've finished all ${required} required slides — nice. Nothing from here counts against your score, so swing away.</div>`
-      : `<div class="extbanner">🌟 <b>Still bonus.</b> Doesn't count against your score.</div>`;
-  }
-  if(sl.teach) html += `<div class="teach">${escapeHtml(sl.teach)}</div>`;
-
-  sl.questions.forEach((q,qi)=>{
-    const id=qid(si,qi), val=S.answers[id];
-    html += `<div class="q"><div class="qnum">QUESTION ${qi+1}</div><div class="prompt">${escapeHtml(q.prompt)}</div>`;
-    if(q.type==="mc"){
-      html += `<div class="choices">`;
-      q.choices.forEach((c,ci)=>{
-        html += `<button class="choice ${String(val)===String(ci)?'sel':''}" data-q="${id}" data-c="${ci}">${escapeHtml(c)}</button>`;
-      });
-      html += `</div>`;
-    } else if(q.type==="written"){
-      html += `<textarea data-q="${id}" placeholder="Write your answer here...">${escapeHtml(val||"")}</textarea>`;
-    } else {
-      html += `<input type="text" data-q="${id}" value="${escapeHtml(val||"")}" placeholder="Your answer" autocomplete="off">`;
-      const keys = q.keys === undefined ? DEFAULT_KEYS : q.keys;
-      if(keys && keys.length){
-        html += `<div class="keypad"><span class="keylab">Tap to insert:</span>`;
-        keys.forEach(k => { html += `<button class="key" data-ins="${escapeHtml(k)}" data-target="${id}">${escapeHtml(k)}</button>`; });
-        html += `</div>`;
-      }
-    }
-    if(q.hint) html += `<div class="hint">💡 ${escapeHtml(q.hint)}</div>`;
-    html += `</div>`;
-  });
-  el('slideCard').innerHTML = html;
-
-  el('slideCard').querySelectorAll('.choice').forEach(b=>{
-    b.onclick=()=>{
-      S.answers[b.dataset.q]=Number(b.dataset.c);
-      b.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));
-      b.classList.add('sel'); save();
-    };
-  });
-  el('slideCard').querySelectorAll('input[type=text], textarea').forEach(inp=>{
-    inp.oninput=()=>{ S.answers[inp.dataset.q]=inp.value; };
-    inp.onblur=()=>save();
-  });
-  el('slideCard').querySelectorAll('.key').forEach(k=>{
-    k.onclick=()=>{
-      const inp = el('slideCard').querySelector(`input[data-q="${k.dataset.target}"]`);
-      if(!inp) return;
-      const a = inp.selectionStart ?? inp.value.length;
-      const b = inp.selectionEnd   ?? inp.value.length;
-      inp.value = inp.value.slice(0,a) + k.dataset.ins + inp.value.slice(b);
-      const pos = a + k.dataset.ins.length;
-      inp.focus(); inp.setSelectionRange(pos,pos);
-      S.answers[inp.dataset.q] = inp.value; save();
-    };
-  });
-
-  el('backBtn').style.visibility = si===0 ? 'hidden':'visible';
-  el('nextBtn').textContent = si===LESSON.slides.length-1 ? "Check my work →" : "Next →";
-}
-
-el('backBtn').onclick=()=>{ if(S.idx>0){ S.idx--; save(); renderSlide(); } };
-el('nextBtn').onclick=()=>{
-  save();
-  if(S.idx < LESSON.slides.length-1){ S.idx++; renderSlide(); } else renderReview();
-};
-el('exitBtn').onclick=()=>{
-  save();
-  alert(`Saved, ${S.name}. Come back on this same computer and type VIP ${S.vip} to pick up where you left off.`);
-};
-
-function renderReview(){
-  show('reviewScreen');
-  const t = totals();
-  el('scoreNum').textContent = `${t.right}/${t.graded}`;
-
-  let list="", anyBlank=false;
-  LESSON.slides.forEach((sl,si)=>{
-    const st=slideStatus(si);
-    let cls,mark,note;
-    if(sl.extension){
-      cls="ext"; mark="🌟";
-      note = st.blank>0 ? "bonus — optional" : `${st.right}/${st.graded} bonus correct`;
-    } else if(st.blank>0){ cls="wait"; mark="•"; note="not finished"; anyBlank=true; }
-    else if(st.graded===0){ cls="wait"; mark="✎"; note="Mr. Landy grades this"; }
-    else if(st.right===st.graded){ cls="ok"; mark="✓"; note=`${st.right}/${st.graded} correct`; }
-    else { cls="bad"; mark="✗"; note=`${st.right}/${st.graded} correct`; }
-    list += `<div class="chip ${cls}" data-go="${si}"><span class="mark">${mark}</span>
-      <span class="lbl"><b>Slide ${si+1}</b> — ${escapeHtml(sl.title)}</span>
-      <span class="cnt">${note}</span></div>`;
-  });
-  el('slideList').innerHTML=list;
-  el('slideList').querySelectorAll('.chip').forEach(c=>{
-    c.onclick=()=>{ S.idx=Number(c.dataset.go); show('practiceScreen'); renderSlide(); };
-  });
-
-  el('reviewNote').textContent = anyBlank
-    ? "Some questions are still blank. Tap those slides and finish them before you turn in."
-    : "Red slides mean something's off. Go fix them — you can change any answer before turning in.";
-}
-el('reviewBackBtn').onclick=()=>{ show('practiceScreen'); renderSlide(); };
-
-el('submitBtn').onclick = async ()=>{
-  const btn=el('submitBtn'); btn.disabled=true; btn.textContent="Sending...";
-  const t=totals();
-  const payload={
-    lesson:LESSON.code, lessonTitle:LESSON.title, name:S.name, vip:S.vip,
-    score:t.right, outOf:t.graded, bonusScore:t.extRight, bonusOutOf:t.extGraded,
-    submittedAt:new Date().toISOString(),
-    answers: LESSON.slides.flatMap((sl,si)=> sl.questions.map((q,qi)=>({
-      q:`${si+1}.${qi+1}`, bonus:!!sl.extension,
-      response:S.answers[qid(si,qi)] ?? "",
-      correct:isCorrect(q,S.answers[qid(si,qi)])
-    })))
-  };
-  if(SUBMIT_URL){
-    try{
-      await fetch(SUBMIT_URL,{method:"POST",mode:"no-cors",
-        headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-    }catch(e){}
-  }
-  S.submitted=true; save();
-  el('doneSub').textContent=`Nice work, ${S.name}.`;
-  el('doneDetail').innerHTML =
-    `<b>Practice ${LESSON.code} — ${escapeHtml(LESSON.title)}</b><br>
-     VIP ${S.vip} · ${t.right} of ${t.graded} correct` +
-     (t.extGraded ? ` · ${t.extRight}/${t.extGraded} bonus` : ``) +
-    `<br>Turned in ${new Date().toLocaleString()}`;
-  show('doneScreen');
-};
-
-function escapeHtml(s){
-  return String(s ?? "").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-</script>
 </body>
 </html>
