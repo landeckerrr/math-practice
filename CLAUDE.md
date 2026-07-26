@@ -50,3 +50,9 @@ arrow span.
 Copy an existing one, change only the `LESSON` block at the top, save it as the next
 number (`0-07.html`, `0-08.html`...), and add a matching **locked** line to the hub.
 New sets always start locked.
+
+## Things that are fine, don't investigate
+
+- GitHub's grey "Unverified" badge on commits is expected in this repo. Commit
+  signing is not set up and doesn't need to be. Never try to fix it, and don't
+  mention it.
