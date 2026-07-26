@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Practice 0.00 — How This Class Works</title>
+<title>Practice 0.04 — Decimal Reminders</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
   :root{
@@ -150,122 +150,99 @@ const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzJxzE8FRVF7gA6vPOzc
 
 // Symbol buttons shown under every typed-answer box (they aren't on a keyboard).
 // Override per question with  keys:["÷","½"]  or switch them off with  keys:[]
-const DEFAULT_KEYS = [];
+const DEFAULT_KEYS = ["÷"];
 
 const LESSON = {
-  code: "0.00",
-  title: "How This Class Works",
-  subtitle: "Pre-Unit 0 \u00b7 Everything from Day 1 and Day 2",
+  code: "0.04",
+  title: "Decimal Reminders",
+  subtitle: "Unit 0, Lesson 4 \u00b7 The Third Costume",
 
   slides: [
-
-    { title: "The Three Times",
-      teach: "Blue = Focus. Green = Collaborate. Red = Assess.",
+    { title: "Warm-up",
+      teach: "Type mixed numbers like this: 3 2/5",
       questions: [
-        { type:"mc", prompt:"Blue Time is for...", choices:["Warm up and the lesson","Practice work","Quizzes and tests","Free time"], answer:0 },
-        { type:"mc", prompt:"Green Time is for...", choices:["The warm up","Practice work","Exit tickets and quizzes","Lining up"], answer:1 },
-        { type:"mc", prompt:"Red Time is for...", choices:["Learning something new","Practice work","Exit tickets, quizzes, and tests","Snacks"], answer:2 }
+        { type:"text", prompt:"Write 13/4 as a mixed number.", accept:["3 1/4"] },
+        { type:"text", prompt:"Write 2 3/5 as an improper fraction.", accept:["13/5"] },
+        { type:"mc", prompt:"9/9 is...", choices:["More than one","Less than one","Exactly one"], answer:2 }
       ]},
 
-    { title: "What can I do, and when?",
+    { title: "Know your places",
+      teach: "3 . 4 5 6  \u2192  4 is tenths, 5 is hundredths, 6 is thousandths.",
       questions: [
-        { type:"mc", prompt:"During Red Time, can you get out of your seat?", choices:["Yes","No","If you really need to","Only for the trash"], answer:1 },
-        { type:"mc", prompt:"During which time can you work with friends?", choices:["Blue Time","Green Time","Red Time","All of them"], answer:1 }
+        { type:"mc", prompt:"In 0.435, which digit is in the HUNDREDTHS place?", choices:["4","3","5","0"], answer:1 },
+        { type:"mc", prompt:"In 2.06, the 6 is in the...", choices:["tenths place","hundredths place","thousandths place","ones place"], answer:1 },
+        { type:"text", prompt:"Write \"five tenths\" as a decimal.", accept:["0.5",".5"] }
       ]},
 
-    { title: "Bathroom Boxes",
-      teach: "Going during Blue Time costs the MOST boxes. That is on purpose \u2014 Blue Time is when you are being taught something new, and that is the worst time to miss.",
+    { title: "Decimal to fraction",
+      teach: "Count the places after the point. That is how many zeros go on the bottom.",
       questions: [
-        { type:"mc", prompt:"How many bathroom boxes do you fill in if you go during GREEN Time?", choices:["1","2","3","0"], answer:0 },
-        { type:"mc", prompt:"How many boxes if you go during BLUE Time?", choices:["1","2","3","0"], answer:2 },
-        { type:"mc", prompt:"Which time costs you the FEWEST boxes?", choices:["Blue Time","Green Time","Red Time","They all cost the same"], answer:1 }
+        { type:"text", prompt:"Write 0.7 as a fraction.", accept:["7/10"] },
+        { type:"text", prompt:"Write 0.09 as a fraction.", accept:["9/100"] },
+        { type:"text", prompt:"Write 0.25 as a fraction in SIMPLEST form.", accept:["1/4"], hint:"25/100 is correct, but it can be reduced." }
       ]},
 
-    { title: "Hearts, Checks, and your score",
-      teach: "Your SCORE is not your GRADE. Your score is hearts minus checks. Then you look up that score on the scale to find your grade.",
+    { title: "Fraction to decimal",
       questions: [
-        { type:"mc", prompt:"Which of these is TRUE about hearts?", choices:["There is no single way to earn one \u2014 any great choice can","You only get them for correct answers","You only get them for being quiet","Everyone gets the same number each day"], answer:0 },
-        { type:"mc", prompt:"What does a check mean?", choices:["You failed the assignment","Check yourself \u2014 that choice needs fixing","You were absent","You lost a heart forever"], answer:1 },
-        { type:"text", prompt:"You have 6 hearts and 2 checks this week. What is your SCORE?", accept:["4"], hint:"Hearts minus checks." },
-        { type:"mc", prompt:"Your score for the week is 4. What Behavior GRADE does that give you?", choices:["4","3.5","3","2.5"], answer:1, hint:"Look at the scale. A score of 2, 3, or 4 all land in the same band." }
+        { type:"text", prompt:"Write 3/10 as a decimal.", accept:["0.3",".3"] },
+        { type:"text", prompt:"Write 47/100 as a decimal.", accept:["0.47",".47"] },
+        { type:"text", prompt:"Write 9/100 as a decimal.", accept:["0.09",".09"], hint:"Careful \u2014 this is NOT 0.9" }
       ]},
 
-    { title: "When checks add up",
-      teach: "Three numbers worth memorizing: 3 in a day, 4 in a day, 6 in a week.",
+    { title: "The friendly family",
+      teach: "Memorize these six. They will save you more time this year than anything else.",
       questions: [
-        { type:"mc", prompt:"3 checks in ONE day means...", choices:["Nothing yet","Stay in for part of lunch and write an email home","An office referral","You lose all your hearts"], answer:1 },
-        { type:"mc", prompt:"4 checks in ONE day means...", choices:["Part of lunch","An office referral","A warning","An email home only"], answer:1 },
-        { type:"mc", prompt:"You got 2 checks Monday, 2 Wednesday, and 2 Friday. You never hit 3 in a single day. What happens?", choices:["Nothing \u2014 you never hit 3 in a day","6 in one week means an email home","An office referral","Your score resets"], answer:1 }
+        { type:"text", prompt:"Write 1/2 as a decimal.", accept:["0.5",".5"] },
+        { type:"text", prompt:"Write 1/4 as a decimal.", accept:["0.25",".25"] },
+        { type:"text", prompt:"Write 3/4 as a decimal.", accept:["0.75",".75"] },
+        { type:"text", prompt:"Write 1/5 as a decimal.", accept:["0.2",".2"] }
       ]},
 
-    { title: "Your grade: three ingredients",
+    { title: "Which is bigger?",
+      teach: "More digits does NOT mean bigger. Read the place, not the length.",
       questions: [
-        { type:"mc", prompt:"Academic Responsibility is about...", choices:["How you act in class","The work you turn in \u2014 how much, and how on time","Your exam scores","Your attendance"], answer:1 },
-        { type:"mc", prompt:"Your Behavior grade comes from...", choices:["Your VIP score \u2014 hearts minus checks","Your exam average","How quiet you are","Your homework"], answer:0 },
-        { type:"mc", prompt:"Which one affects your GPA?", choices:["Academic Responsibility","Behavior","Summative","All three equally"], answer:2 }
+        { type:"mc", prompt:"Which is bigger: 0.7 or 0.07?", choices:["0.7","0.07","They are equal"], answer:0 },
+        { type:"mc", prompt:"Which is bigger: 0.5 or 1/4?", choices:["0.5","1/4","They are equal"], answer:0 },
+        { type:"mc", prompt:"Order these from LEAST to GREATEST: 0.6, 1/2, 0.55", choices:["0.6, 0.55, 1/2","1/2, 0.55, 0.6","0.55, 1/2, 0.6","1/2, 0.6, 0.55"], answer:1 }
       ]},
 
-    { title: "Getting help",
+    { title: "Catch the mistake",
       questions: [
-        { type:"mc", prompt:"You need help during Green Time. What do you do?", choices:["Shout your teacher's name","Walk up to the desk and ask","Write your name on the queue and keep working","Sit and wait silently"], answer:2 },
-        { type:"mc", prompt:"Before your teacher helps you, what must you have already done?", choices:["Asked three friends","Tried it on paper or a whiteboard first","Finished everything else","Raised your hand for five minutes"], answer:1 },
-        { type:"mc", prompt:"TRUE or FALSE: saying \"that is unfair\" in a calm voice in front of the whole class is fine.", choices:["True \u2014 calm is what matters","False \u2014 in front of the class is squawking, even in a calm voice"], answer:1 }
-      ]},
-
-    { title: "Your body and the calm room",
-      questions: [
-        { type:"mc", prompt:"Can you put your feet on a chair?", choices:["Yes, if nobody is using it","Only your own chair","Never \u2014 feet stay on the floor","Only during Green Time"], answer:2 },
-        { type:"mc", prompt:"When is it okay to shout out an answer?", choices:["Whenever you know it","Never, no exceptions","When your teacher's hand is by their ear","During Green Time"], answer:2 }
-      ]},
-
-    { title: "Screens",
-      questions: [
-        { type:"mc", prompt:"Your teacher walks past your desk. What should you NOT do?", choices:["Keep working","Close a window or switch tabs","Look up","Ask a question"], answer:1 },
-        { type:"mc", prompt:"Playing a computer game earns you...", choices:["A warning the first time","1 check","3 checks immediately","Nothing if you close it fast"], answer:2 }
-      ]},
-
-    { title: "Materials, pencils, and leaving",
-      questions: [
-        { type:"mc", prompt:"The entry music stops and your notebook is still in your backpack. Are you ready?", choices:["Yes, you have it with you","No \u2014 it has to be OUT on your desk","Only if you get it out fast","Only on the first day"], answer:1 },
-        { type:"mc", prompt:"You forgot a pencil. What is the routine on your way in?", choices:["Ask a friend for one","Sign the sheet, take a pencil, sit down","Ask your teacher for one","Work without it"], answer:1 },
-        { type:"mc", prompt:"Do you have to give that borrowed pencil back?", choices:["Yes, at the end of class","Yes, the next day","No \u2014 it is yours to keep","Only if you signed the sheet"], answer:2 }
-      ]},
-
-    { title: "Leaving class",
-      teach: "Your teacher calls coordinates: \"if your x coordinate is 3, you can line up.\" But only if you are ready.",
-      questions: [
-        { type:"mc", prompt:"Your coordinate gets called. Before you can line up, you must be...", choices:["Just packed up","Packed up, area clear, standing behind your desk, chair tucked in","Sitting quietly with your hand up","First to the door"], answer:1 },
-        { type:"mc", prompt:"Class already started and you walk in late. What do you do?", choices:["Explain why you are late","Slide in silently and do not interrupt","Wait outside until the lesson ends","Ask what you missed right away"], answer:1 }
-      ]},
-
-    { title: "GT Experts",
-      teach: "The most trusted job in the room. Not everyone earns it on a given day, but anyone can.",
-      questions: [
-        { type:"mc", prompt:"How do you become an Expert?", choices:["Finish first","Raise your hand and ask","Finish your work, silently show your green screen, get a thumbs up","Get every question right"], answer:2 },
-        { type:"mc", prompt:"A real Expert...", choices:["Shows them the answer","Asks questions \u2014 never tells","Does the first problem for them","Writes the steps on their paper"], answer:1 },
-        { type:"mc", prompt:"A classmate is stuck. What is a good first question?", choices:["\"Want me to just do it for you?\"","\"What do you have so far?\"","\"This one is easy, watch.\"","\"Did you even try?\""], answer:1 },
-        { type:"mc", prompt:"You coached someone and they still do not get it. What do you do?", choices:["Keep going until they understand","Do it for them so they can move on","Put a * next to their name so the teacher comes over","Erase their name from the queue"], answer:2 }
+        { type:"mc", prompt:"Pedro says 0.7 = 7/100. What went wrong?", choices:["Nothing","One place after the point means tenths, so it is 7/10","It should be 7/1000","He should have written 70"], answer:1 },
+        { type:"mc", prompt:"Martina says 0.5 is smaller than 0.25 because 5 is smaller than 25. Is she right?", choices:["Yes","No \u2014 0.5 is the same as 0.50, which is bigger than 0.25","Yes, if you round","No \u2014 they are equal"], answer:1 },
+        { type:"mc", prompt:"Samuel says 1/2 = 0.2. What went wrong?", choices:["Nothing","1 \u00f7 2 = 0.5, not 0.2","It should be 0.12","It should be 2.0"], answer:1 }
       ]},
 
     { title: "Explain it",
       questions: [
-        { type:"written", prompt:"You finished your work early and earned an Expert badge. A classmate is stuck. Describe exactly what you do, step by step \u2014 and name one thing you must NOT do.",
-          hint:"Your teacher reads this one. At least four sentences." }
+        { type:"written", prompt:"Explain why 0.5 and 1/2 are the same number. Use the word \"division\" somewhere in your answer.",
+          hint:"Mr. Landy reads this one himself. At least three sentences." }
+      ]},
+
+    { title: "Money makes it obvious",
+      extension: true,
+      questions: [
+        { type:"text", prompt:"A snack costs 0.25 of your allowance. Write that as a fraction in SIMPLEST form.", accept:["1/4"] },
+        { type:"mc", prompt:"0.5 of $80 is...", choices:["$8","$40","$16","$85"], answer:1 },
+        { type:"text", prompt:"Write three quarters of a dollar as a decimal.", accept:["0.75",".75"] }
+      ]},
+
+    { title: "Mixed practice",
+      extension: true,
+      questions: [
+        { type:"text", prompt:"Write 0.6 as a fraction in SIMPLEST form.", accept:["3/5"], hint:"Start with 6/10." },
+        { type:"text", prompt:"Write 1/10 as a decimal.", accept:["0.1",".1"] },
+        { type:"mc", prompt:"Which one equals 3/4?", choices:["0.34","0.75","0.43","3.4"], answer:1 },
+        { type:"text", prompt:"Write 0.08 as a fraction with 100 on the bottom.", accept:["8/100"] }
       ]},
 
     { title: "Challenge Zone",
       extension: true,
       questions: [
-        { type:"mc", prompt:"A grade of 4 means...", choices:["You passed","Outstanding \u2014 you did extra, or you are a role model","You did exactly what was expected","You need a lot of help"], answer:1 },
-        { type:"mc", prompt:"Can you toss a paper ball into the trash can?", choices:["Yes, it is just trash","Only during Green Time","No \u2014 if it flies, it dies, even into the trash","Only if you make the shot"], answer:2 },
-        { type:"mc", prompt:"What should you type when you ask AI for help?", choices:["\"Give me the answer to number 4.\"","\"Don't give me the answer. Help me find it.\"","\"Do my homework.\"","\"Is this right? Just say yes or no.\""], answer:1 },
-        { type:"mc", prompt:"You think your teacher missed a heart you earned. What do you do?", choices:["Ask out loud right away","Ask again until they say yes","Signal silently one time and accept the answer","Write it on your VIP yourself"], answer:2 },
-        { type:"text", prompt:"Your score this week is 5 hearts minus 3 checks. What is your score?", accept:["2"] },
-        { type:"mc", prompt:"So what Behavior grade does that score give you?", choices:["4","3.5","3","2"], answer:1 },
-        { type:"mc", prompt:"Tricky one. You have 8 hearts and 3 checks. Your score is 5 \u2014 but do you get a 4?", choices:["Yes, 5 or more is always a 4","No \u2014 a 4 also needs 1 check or fewer","Yes, checks do not matter for a 4","No, you need 6 or more"], answer:1 },
-        { type:"text", prompt:"Fill in the blank from the daily chant: \"Eyes up. Hearts up. Minds ______.\"", accept:["sharp"] }
+        { type:"text", prompt:"Write 0.125 as a fraction with 1000 on the bottom.", accept:["125/1000"] },
+        { type:"mc", prompt:"Which of these is the LARGEST?", choices:["0.09","0.9","0.099","0.19"], answer:1 },
+        { type:"text", prompt:"Write 1/3 as a decimal, rounded to TWO decimal places.", accept:["0.33",".33"] }
       ]}
-
   ]
 };
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Practice 0.05 — Estimation Station</title>
+<title>Practice 0.02 — Sharing Problems</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
   :root{
@@ -153,96 +153,95 @@ const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzJxzE8FRVF7gA6vPOzc
 const DEFAULT_KEYS = ["÷"];
 
 const LESSON = {
-  code: "0.05",
-  title: "Estimation Station",
-  subtitle: "Unit 0, Lesson 5 \u00b7 Benchmarks: 0, one half, 1",
+  code: "0.02",
+  title: "Sharing Problems",
+  subtitle: "Unit 0, Lesson 2 \u00b7 Bigger Than One Whole",
 
   slides: [
-    { title: "Warm-up",
+    { title: "Warm-up: yesterday's big idea",
+      teach: "Every fraction is a division problem. Every division problem is a fraction.",
       questions: [
-        { type:"text", prompt:"Write 3/4 as a decimal.", accept:["0.75",".75"] },
-        { type:"text", prompt:"Write 0.2 as a fraction.", accept:["2/10","1/5"] },
-        { type:"mc", prompt:"Is 7/6 more or less than one whole?", choices:["More than one","Less than one","Exactly one"], answer:0 }
+        { type:"text", prompt:"Write 4 \u00f7 9 as a fraction.", accept:["4/9"], hint:"Type it like 4/9" },
+        { type:"text", prompt:"Write 5/6 as a division problem.", accept:["5\u00f76","5/6","5 \u00f7 6"] },
+        { type:"mc", prompt:"Which one means the same thing as 3/8?", choices:["8 \u00f7 3","3 \u00f7 8","3 \u00d7 8","8 \u2212 3"], answer:1 }
       ]},
 
-    { title: "Close to ZERO",
-      teach: "If the top number is TINY compared to the bottom, the fraction is close to 0.",
+    { title: "Sharing, the normal way",
       questions: [
-        { type:"mc", prompt:"1/12 is closest to...", choices:["0","one half","1"], answer:0 },
-        { type:"mc", prompt:"2/15 is closest to...", choices:["0","one half","1"], answer:0 },
-        { type:"mc", prompt:"What makes a fraction close to 0?", choices:["The top is much smaller than the bottom","The top is much bigger than the bottom","Both numbers are small","The bottom is 10"], answer:0 }
+        { type:"text", prompt:"5 friends share 3 pizzas equally. How much does each friend get? Write it as a fraction.", accept:["3/5"] },
+        { type:"text", prompt:"8 students share 5 chocolate bars equally. Write each share as a fraction.", accept:["5/8"] },
+        { type:"text", prompt:"4 people share 1 cake equally. Write each share as a fraction.", accept:["1/4"] }
       ]},
 
-    { title: "Close to ONE HALF",
-      teach: "If the top is about HALF of the bottom, the fraction is close to one half.",
+    { title: "More sharers than things",
+      teach: "When there are more people than items, everybody gets LESS than one whole.",
       questions: [
-        { type:"mc", prompt:"5/11 is closest to...", choices:["0","one half","1"], answer:1 },
-        { type:"mc", prompt:"7/15 is closest to...", choices:["0","one half","1"], answer:1 },
-        { type:"mc", prompt:"What makes a fraction close to one half?", choices:["The top is about half the bottom","The top is 1","The bottom is even","The top equals the bottom"], answer:0 }
+        { type:"mc", prompt:"7 friends share 2 melons. Is each share more or less than one whole melon?", choices:["More than one","Less than one","Exactly one"], answer:1 },
+        { type:"text", prompt:"10 students share 3 liters of juice. Write each share as a fraction.", accept:["3/10"] },
+        { type:"mc", prompt:"When is the answer LESS than one whole?", choices:["When the top number is smaller than the bottom","When the top number is bigger than the bottom","Always","Never"], answer:0 }
       ]},
 
-    { title: "Close to ONE",
-      teach: "If the top is about the SAME as the bottom, the fraction is close to 1.",
+    { title: "More things than sharers",
+      teach: "Flip it around and everybody gets MORE than one whole. The math does not change \u2014 it is still division.",
       questions: [
-        { type:"mc", prompt:"9/10 is closest to...", choices:["0","one half","1"], answer:2 },
-        { type:"mc", prompt:"14/15 is closest to...", choices:["0","one half","1"], answer:2 },
-        { type:"mc", prompt:"What makes a fraction close to 1?", choices:["The top is about the same as the bottom","The top is much smaller","Both numbers are big","The bottom is 100"], answer:0 }
+        { type:"text", prompt:"2 friends share 7 empanadas equally. Write each share as a fraction.", accept:["7/2"] },
+        { type:"text", prompt:"3 friends share 8 arepas equally. Write each share as a fraction.", accept:["8/3"] },
+        { type:"mc", prompt:"Is 8/3 more or less than one whole?", choices:["More than one","Less than one","Exactly one"], answer:0 }
       ]},
 
-    { title: "Now get closer",
-      teach: "5/8: the top is a bit more than half of 8, so the answer is a bit more than 0.5. Estimate: about 0.6.",
+    { title: "Spot it instantly",
+      teach: "Top smaller than bottom \u2192 less than 1.\nTop bigger than bottom \u2192 more than 1.\nTop equals bottom \u2192 exactly 1.",
       questions: [
-        { type:"mc", prompt:"7/8 as a decimal is closest to...", choices:["0.5","0.7","0.9","1.3"], answer:2 },
-        { type:"mc", prompt:"4/9 as a decimal is closest to...", choices:["0.4","0.7","0.9","1.1"], answer:0 },
-        { type:"mc", prompt:"5/8 as a decimal is closest to...", choices:["0.3","0.6","0.8","1.6"], answer:1 }
+        { type:"mc", prompt:"9/4 is...", choices:["More than 1","Less than 1","Exactly 1"], answer:0 },
+        { type:"mc", prompt:"4/9 is...", choices:["More than 1","Less than 1","Exactly 1"], answer:1 },
+        { type:"mc", prompt:"6/6 is...", choices:["More than 1","Less than 1","Exactly 1"], answer:2 },
+        { type:"mc", prompt:"11/12 is...", choices:["More than 1","Less than 1","Exactly 1"], answer:1 }
+      ]},
+
+    { title: "Order matters",
+      teach: "The thing being SHARED goes on top. The SHARERS go on the bottom. Read the sentence twice.",
+      questions: [
+        { type:"mc", prompt:"\"3 friends share 7 apples.\" Which division problem is correct?", choices:["3 \u00f7 7","7 \u00f7 3","7 \u00d7 3","3 \u2212 7"], answer:1 },
+        { type:"text", prompt:"9 friends share 4 pies equally. Write each share as a fraction.", accept:["4/9"] },
+        { type:"mc", prompt:"5 people share 2 cakes. Which fraction is each person's share?", choices:["5/2","2/5","10","7"], answer:1 }
       ]},
 
     { title: "Catch the mistake",
       questions: [
-        { type:"mc", prompt:"Emma says 1/20 is close to 1 because both numbers are small. What went wrong?", choices:["Nothing","1 is tiny compared to 20, so it is close to 0","It is close to one half","20 is not small"], answer:1 },
-        { type:"mc", prompt:"Juan says a bigger bottom number always makes a bigger fraction. Is he right?", choices:["Yes","No \u2014 a bigger bottom means smaller pieces","Yes, if the top stays the same","Only for decimals"], answer:1 },
-        { type:"mc", prompt:"Miri estimates 12/13 as about 0.5. What went wrong?", choices:["Nothing","The top is almost the same as the bottom, so it is close to 1","It is closer to 0","She should have said 1.5"], answer:1 }
+        { type:"mc", prompt:"Juan says 3 friends sharing 10 empanadas each get 3/10. What went wrong?", choices:["Nothing, he is right","He flipped it \u2014 it should be 10/3","He should have multiplied","He should have added"], answer:1 },
+        { type:"mc", prompt:"Miri says 7/7 is less than one whole. Is she right?", choices:["Yes, all fractions are less than one","No \u2014 7 \u00f7 7 = 1, so it is exactly one","No \u2014 it equals 7","Yes, it equals 1/7"], answer:1 },
+        { type:"mc", prompt:"Felipe says every fraction is smaller than 1. Is he right?", choices:["Yes, always","No \u2014 if the top is bigger than the bottom, it is more than 1","Yes, unless it is a decimal","No \u2014 fractions are always bigger than 1"], answer:1 }
       ]},
 
     { title: "Explain it",
       questions: [
-        { type:"written", prompt:"Explain how you can tell whether a fraction is near 0, near one half, or near 1 WITHOUT dividing. Give one example of each.",
-          hint:"Mr. Landy reads this one himself. At least four sentences." }
+        { type:"written", prompt:"Write your own sharing story that gives the answer 9/4. Who is sharing? How many people? How many things? Then say whether each person gets more or less than one whole.",
+          hint:"Mr. Landy reads this one himself. At least three sentences." }
       ]},
 
-    { title: "Sort them fast",
-      extension: true,
-      teach: "Ten seconds each. Do not divide. Compare.",
-      questions: [
-        { type:"mc", prompt:"3/50 is closest to...", choices:["0","one half","1"], answer:0 },
-        { type:"mc", prompt:"8/9 is closest to...", choices:["0","one half","1"], answer:2 },
-        { type:"mc", prompt:"6/13 is closest to...", choices:["0","one half","1"], answer:1 },
-        { type:"mc", prompt:"1/50 is closest to...", choices:["0","one half","1"], answer:0 }
-      ]},
-
-    { title: "On the number line",
+    { title: "Word problems",
       extension: true,
       questions: [
-        { type:"mc", prompt:"Which fraction sits between one half and 1?", choices:["1/8","3/4","1/10","1/20"], answer:1 },
-        { type:"mc", prompt:"Which of these is CLOSEST to one half?", choices:["1/3","4/9","1/5","7/8"], answer:1 },
-        { type:"mc", prompt:"Which of these is the SMALLEST?", choices:["1/4","1/8","1/2","1/3"], answer:1, hint:"A bigger bottom number means smaller pieces." }
+        { type:"text", prompt:"A rope 5 meters long is cut into 3 equal pieces. How long is each piece? Write it as a fraction of a meter.", accept:["5/3"] },
+        { type:"text", prompt:"12 cookies are shared equally among 5 kids. Write each share as a fraction.", accept:["12/5"] },
+        { type:"mc", prompt:"6 friends share 6 empanadas equally. How much does each friend get?", choices:["Less than one","Exactly one whole","More than one","It cannot be shared"], answer:1 }
       ]},
 
     { title: "Mixed practice",
       extension: true,
       questions: [
-        { type:"mc", prompt:"11/12 is closest to...", choices:["0","one half","1"], answer:2 },
-        { type:"mc", prompt:"1/9 is closest to...", choices:["0","one half","1"], answer:0 },
-        { type:"mc", prompt:"9/20 is closest to...", choices:["0","one half","1"], answer:1 },
-        { type:"mc", prompt:"Estimate 11/12 as a decimal.", choices:["0.5","0.7","0.9","1.2"], answer:2 }
+        { type:"text", prompt:"Write 11 \u00f7 4 as a fraction.", accept:["11/4"] },
+        { type:"text", prompt:"4 friends share 11 empanadas equally. Write each share as a fraction.", accept:["11/4"], hint:"Look at the question above this one." },
+        { type:"mc", prompt:"Which is bigger: 7/8 or 8/7?", choices:["7/8","8/7","They are equal"], answer:1, hint:"One of them is more than a whole. One is not." },
+        { type:"text", prompt:"6 friends share 18 cookies equally. How many cookies does each friend get? (Whole number.)", accept:["3"] }
       ]},
 
     { title: "Challenge Zone",
       extension: true,
       questions: [
-        { type:"mc", prompt:"17/35 is closest to...", choices:["0","one half","1"], answer:1 },
-        { type:"mc", prompt:"Which is bigger: 5/9 or 4/7?", choices:["5/9","4/7","They are equal"], answer:1, hint:"Both are just over one half. Which one is further over?" },
-        { type:"mc", prompt:"Estimate 23/24 as a decimal.", choices:["0.5","0.75","0.96","1.2"], answer:2 }
+        { type:"text", prompt:"3 classes share 7 boxes of supplies equally. Write each class's share as a fraction.", accept:["7/3"] },
+        { type:"mc", prompt:"Which of these is the LARGEST?", choices:["5/4","4/5","1","3/4"], answer:0 },
+        { type:"text", prompt:"Preview of tomorrow: in 7/2, how many WHOLE ones are there? (Just the whole number.)", accept:["3"], hint:"How many times does 2 fit completely inside 7?" }
       ]}
   ]
 };

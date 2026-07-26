@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Practice 0.01 — The Secret of ÷</title>
+<title>Practice 0.00 — How This Class Works</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
   :root{
@@ -150,80 +150,122 @@ const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzJxzE8FRVF7gA6vPOzc
 
 // Symbol buttons shown under every typed-answer box (they aren't on a keyboard).
 // Override per question with  keys:["÷","½"]  or switch them off with  keys:[]
-const DEFAULT_KEYS = ["÷"];
+const DEFAULT_KEYS = [];
 
 const LESSON = {
-  code: "0.01",
-  title: "The Secret of ÷",
-  subtitle: "Unit 0, Lesson 1 · Fractions ARE Division",
+  code: "0.00",
+  title: "How This Class Works",
+  subtitle: "Pre-Unit 0 \u00b7 Everything from Day 1 and Day 2",
 
   slides: [
-    { title: "Warm-up: the big idea",
-      teach: "The ÷ symbol is a picture of a fraction. The dots are where the numbers go. So every division problem can be written as a fraction, and every fraction can be written as a division problem.",
+
+    { title: "The Three Times",
+      teach: "Blue = Focus. Green = Collaborate. Red = Assess.",
       questions: [
-        { type:"text", prompt:"Write 3 ÷ 4 as a fraction.", accept:["3/4"], hint:"Type it like this: 3/4" },
-        { type:"text", prompt:"Write 5 ÷ 8 as a fraction.", accept:["5/8"] }
+        { type:"mc", prompt:"Blue Time is for...", choices:["Warm up and the lesson","Practice work","Quizzes and tests","Free time"], answer:0 },
+        { type:"mc", prompt:"Green Time is for...", choices:["The warm up","Practice work","Exit tickets and quizzes","Lining up"], answer:1 },
+        { type:"mc", prompt:"Red Time is for...", choices:["Learning something new","Practice work","Exit tickets, quizzes, and tests","Snacks"], answer:2 }
       ]},
 
-    { title: "Going the other way",
+    { title: "What can I do, and when?",
       questions: [
-        { type:"text", prompt:"Write 7/9 as a division problem.", accept:["7÷9","7/9","7 ÷ 9","7 divided by 9"], hint:"You can type ÷ or /" },
-        { type:"mc", prompt:"Which of these means the same as 2/5?", choices:["5 ÷ 2","2 ÷ 5","2 × 5","5 − 2"], answer:1 }
+        { type:"mc", prompt:"During Red Time, can you get out of your seat?", choices:["Yes","No","If you really need to","Only for the trash"], answer:1 },
+        { type:"mc", prompt:"During which time can you work with friends?", choices:["Blue Time","Green Time","Red Time","All of them"], answer:1 }
       ]},
 
-    { title: "Sharing problems",
+    { title: "Bathroom Boxes",
+      teach: "Going during Blue Time costs the MOST boxes. That is on purpose \u2014 Blue Time is when you are being taught something new, and that is the worst time to miss.",
       questions: [
-        { type:"text", prompt:"4 friends share 3 brownies equally. How much does each friend get? Write your answer as a fraction.", accept:["3/4"] },
-        { type:"text", prompt:"5 friends share 2 pizzas equally. How much does each friend get?", accept:["2/5"] },
-        { type:"mc", prompt:"8 students share 3 packs of markers. Which expression shows one student's share?", choices:["8 ÷ 3","3 ÷ 8","8 × 3","3 + 8"], answer:1 }
+        { type:"mc", prompt:"How many bathroom boxes do you fill in if you go during GREEN Time?", choices:["1","2","3","0"], answer:0 },
+        { type:"mc", prompt:"How many boxes if you go during BLUE Time?", choices:["1","2","3","0"], answer:2 },
+        { type:"mc", prompt:"Which time costs you the FEWEST boxes?", choices:["Blue Time","Green Time","Red Time","They all cost the same"], answer:1 }
       ]},
 
-    { title: "Bigger than one whole",
-      teach: "When the top number is bigger than the bottom number, each person gets MORE than one whole.",
+    { title: "Hearts, Checks, and your score",
+      teach: "Your SCORE is not your GRADE. Your score is hearts minus checks. Then you look up that score on the scale to find your grade.",
       questions: [
-        { type:"text", prompt:"2 friends share 7 empanadas. Write each friend's share as a fraction.", accept:["7/2"] },
-        { type:"mc", prompt:"Is 7/2 more or less than 1 whole?", choices:["More than 1","Less than 1","Exactly 1"], answer:0 }
+        { type:"mc", prompt:"Which of these is TRUE about hearts?", choices:["There is no single way to earn one \u2014 any great choice can","You only get them for correct answers","You only get them for being quiet","Everyone gets the same number each day"], answer:0 },
+        { type:"mc", prompt:"What does a check mean?", choices:["You failed the assignment","Check yourself \u2014 that choice needs fixing","You were absent","You lost a heart forever"], answer:1 },
+        { type:"text", prompt:"You have 6 hearts and 2 checks this week. What is your SCORE?", accept:["4"], hint:"Hearts minus checks." },
+        { type:"mc", prompt:"Your score for the week is 4. What Behavior GRADE does that give you?", choices:["4","3.5","3","2.5"], answer:1, hint:"Look at the scale. A score of 2, 3, or 4 all land in the same band." }
       ]},
 
-    { title: "Mixed practice",
+    { title: "When checks add up",
+      teach: "Three numbers worth memorizing: 3 in a day, 4 in a day, 6 in a week.",
       questions: [
-        { type:"text", prompt:"Write 12 ÷ 5 as a fraction.", accept:["12/5"] },
-        { type:"text", prompt:"Write 11/4 as a division problem.", accept:["11÷4","11/4","11 ÷ 4","11 divided by 4"] },
-        { type:"text", prompt:"Write 9 ÷ 9 as a fraction. Then simplify it.", accept:["1","9/9","1 whole"], hint:"Careful — what happens when the numbers match?" }
+        { type:"mc", prompt:"3 checks in ONE day means...", choices:["Nothing yet","Stay in for part of lunch and write an email home","An office referral","You lose all your hearts"], answer:1 },
+        { type:"mc", prompt:"4 checks in ONE day means...", choices:["Part of lunch","An office referral","A warning","An email home only"], answer:1 },
+        { type:"mc", prompt:"You got 2 checks Monday, 2 Wednesday, and 2 Friday. You never hit 3 in a single day. What happens?", choices:["Nothing \u2014 you never hit 3 in a day","6 in one week means an email home","An office referral","Your score resets"], answer:1 }
       ]},
 
-    { title: "Word problem",
+    { title: "Your grade: three ingredients",
       questions: [
-        { type:"mc", prompt:"A recipe uses 5 cups of flour to make 6 loaves of bread. How much flour is in ONE loaf?", choices:["6/5 of a cup","5/6 of a cup","30 cups","11 cups"], answer:1 },
-        { type:"text", prompt:"A rope is 9 meters long and gets cut into 4 equal pieces. How long is each piece? Answer as a fraction.", accept:["9/4"] }
+        { type:"mc", prompt:"Academic Responsibility is about...", choices:["How you act in class","The work you turn in \u2014 how much, and how on time","Your exam scores","Your attendance"], answer:1 },
+        { type:"mc", prompt:"Your Behavior grade comes from...", choices:["Your VIP score \u2014 hearts minus checks","Your exam average","How quiet you are","Your homework"], answer:0 },
+        { type:"mc", prompt:"Which one affects your GPA?", choices:["Academic Responsibility","Behavior","Summative","All three equally"], answer:2 }
       ]},
 
-    { title: "Catch the mistake",
+    { title: "Getting help",
       questions: [
-        { type:"mc", prompt:"Matías says 3 ÷ 8 = 8/3. What did he do wrong?", choices:["Nothing — he's right","He flipped the numbers; it should be 3/8","He should have multiplied","He should have subtracted"], answer:1 },
-        { type:"mc", prompt:"Emma says 6/6 is less than 1. Is she right?", choices:["Yes, it's a fraction so it's small","No — 6 ÷ 6 = 1, so it equals exactly 1","No — it equals 6","Yes, it equals 1/6"], answer:1 }
+        { type:"mc", prompt:"You need help during Green Time. What do you do?", choices:["Shout your teacher's name","Walk up to the desk and ask","Write your name on the queue and keep working","Sit and wait silently"], answer:2 },
+        { type:"mc", prompt:"Before your teacher helps you, what must you have already done?", choices:["Asked three friends","Tried it on paper or a whiteboard first","Finished everything else","Raised your hand for five minutes"], answer:1 },
+        { type:"mc", prompt:"TRUE or FALSE: saying \"that is unfair\" in a calm voice in front of the whole class is fine.", choices:["True \u2014 calm is what matters","False \u2014 in front of the class is squawking, even in a calm voice"], answer:1 }
+      ]},
+
+    { title: "Your body and the calm room",
+      questions: [
+        { type:"mc", prompt:"Can you put your feet on a chair?", choices:["Yes, if nobody is using it","Only your own chair","Never \u2014 feet stay on the floor","Only during Green Time"], answer:2 },
+        { type:"mc", prompt:"When is it okay to shout out an answer?", choices:["Whenever you know it","Never, no exceptions","When your teacher's hand is by their ear","During Green Time"], answer:2 }
+      ]},
+
+    { title: "Screens",
+      questions: [
+        { type:"mc", prompt:"Your teacher walks past your desk. What should you NOT do?", choices:["Keep working","Close a window or switch tabs","Look up","Ask a question"], answer:1 },
+        { type:"mc", prompt:"Playing a computer game earns you...", choices:["A warning the first time","1 check","3 checks immediately","Nothing if you close it fast"], answer:2 }
+      ]},
+
+    { title: "Materials, pencils, and leaving",
+      questions: [
+        { type:"mc", prompt:"The entry music stops and your notebook is still in your backpack. Are you ready?", choices:["Yes, you have it with you","No \u2014 it has to be OUT on your desk","Only if you get it out fast","Only on the first day"], answer:1 },
+        { type:"mc", prompt:"You forgot a pencil. What is the routine on your way in?", choices:["Ask a friend for one","Sign the sheet, take a pencil, sit down","Ask your teacher for one","Work without it"], answer:1 },
+        { type:"mc", prompt:"Do you have to give that borrowed pencil back?", choices:["Yes, at the end of class","Yes, the next day","No \u2014 it is yours to keep","Only if you signed the sheet"], answer:2 }
+      ]},
+
+    { title: "Leaving class",
+      teach: "Your teacher calls coordinates: \"if your x coordinate is 3, you can line up.\" But only if you are ready.",
+      questions: [
+        { type:"mc", prompt:"Your coordinate gets called. Before you can line up, you must be...", choices:["Just packed up","Packed up, area clear, standing behind your desk, chair tucked in","Sitting quietly with your hand up","First to the door"], answer:1 },
+        { type:"mc", prompt:"Class already started and you walk in late. What do you do?", choices:["Explain why you are late","Slide in silently and do not interrupt","Wait outside until the lesson ends","Ask what you missed right away"], answer:1 }
+      ]},
+
+    { title: "GT Experts",
+      teach: "The most trusted job in the room. Not everyone earns it on a given day, but anyone can.",
+      questions: [
+        { type:"mc", prompt:"How do you become an Expert?", choices:["Finish first","Raise your hand and ask","Finish your work, silently show your green screen, get a thumbs up","Get every question right"], answer:2 },
+        { type:"mc", prompt:"A real Expert...", choices:["Shows them the answer","Asks questions \u2014 never tells","Does the first problem for them","Writes the steps on their paper"], answer:1 },
+        { type:"mc", prompt:"A classmate is stuck. What is a good first question?", choices:["\"Want me to just do it for you?\"","\"What do you have so far?\"","\"This one is easy, watch.\"","\"Did you even try?\""], answer:1 },
+        { type:"mc", prompt:"You coached someone and they still do not get it. What do you do?", choices:["Keep going until they understand","Do it for them so they can move on","Put a * next to their name so the teacher comes over","Erase their name from the queue"], answer:2 }
       ]},
 
     { title: "Explain it",
       questions: [
-        { type:"written", prompt:"Explain to a 5th grader why 2 ÷ 5 is the same thing as 2/5. Use a picture in words if it helps.", hint:"Mr. Landy reads this one himself — there's no wrong answer, but write at least two sentences." }
+        { type:"written", prompt:"You finished your work early and earned an Expert badge. A classmate is stuck. Describe exactly what you do, step by step \u2014 and name one thing you must NOT do.",
+          hint:"Your teacher reads this one. At least four sentences." }
       ]},
 
-    { title: "Connect it to decimals",
-      extension: true,
-      teach: "If a fraction is a division problem, then dividing gives you the decimal. That's why 1/2 = 0.5 — because 1 ÷ 2 = 0.5.",
-      questions: [
-        { type:"mc", prompt:"Which division problem gives you the decimal for 3/4?", choices:["4 ÷ 3","3 ÷ 4","3 × 4","0.75 ÷ 3"], answer:1 },
-        { type:"mc", prompt:"Without calculating: is 7/8 closer to 0, ½, or 1?", choices:["Close to 0","Close to ½","Close to 1"], answer:2 },
-        { type:"mc", prompt:"Without calculating: is 2/9 closer to 0, ½, or 1?", choices:["Close to 0","Close to ½","Close to 1"], answer:0 }
-      ]},
-
-    { title: "Challenge",
+    { title: "Challenge Zone",
       extension: true,
       questions: [
-        { type:"text", prompt:"3 classes share 7 boxes of supplies equally. Write each class's share as a fraction, then say whether it's more or less than 1 box. (Fraction only in the box.)", accept:["7/3"] },
-        { type:"mc", prompt:"Which is the LARGEST?", choices:["4 ÷ 9","9 ÷ 4","4/9","1 ÷ 4"], answer:1 }
+        { type:"mc", prompt:"A grade of 4 means...", choices:["You passed","Outstanding \u2014 you did extra, or you are a role model","You did exactly what was expected","You need a lot of help"], answer:1 },
+        { type:"mc", prompt:"Can you toss a paper ball into the trash can?", choices:["Yes, it is just trash","Only during Green Time","No \u2014 if it flies, it dies, even into the trash","Only if you make the shot"], answer:2 },
+        { type:"mc", prompt:"What should you type when you ask AI for help?", choices:["\"Give me the answer to number 4.\"","\"Don't give me the answer. Help me find it.\"","\"Do my homework.\"","\"Is this right? Just say yes or no.\""], answer:1 },
+        { type:"mc", prompt:"You think your teacher missed a heart you earned. What do you do?", choices:["Ask out loud right away","Ask again until they say yes","Signal silently one time and accept the answer","Write it on your VIP yourself"], answer:2 },
+        { type:"text", prompt:"Your score this week is 5 hearts minus 3 checks. What is your score?", accept:["2"] },
+        { type:"mc", prompt:"So what Behavior grade does that score give you?", choices:["4","3.5","3","2"], answer:1 },
+        { type:"mc", prompt:"Tricky one. You have 8 hearts and 3 checks. Your score is 5 \u2014 but do you get a 4?", choices:["Yes, 5 or more is always a 4","No \u2014 a 4 also needs 1 check or fewer","Yes, checks do not matter for a 4","No, you need 6 or more"], answer:1 },
+        { type:"text", prompt:"Fill in the blank from the daily chant: \"Eyes up. Hearts up. Minds ______.\"", accept:["sharp"] }
       ]}
+
   ]
 };
 
