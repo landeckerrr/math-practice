@@ -96,6 +96,9 @@ const ROSTER = {
   617: "V.Z.M.",
 
   // Section 6.1 — Sandra (add when roster arrives)
+  // TEMPORARY: lets the Ms. Sandra path be tested before her roster lands.
+  // Delete this line when the real 6.1/6.2 rosters go in.
+  199: "T.E.S.",
 
   // Section 6.2 — Sandra (add when roster arrives)
 };

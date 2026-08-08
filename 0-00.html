@@ -69,6 +69,9 @@
   .arow .atext{flex:1;word-break:break-word}
   .arow .afix{color:var(--green-deep);font-weight:600;flex-shrink:0}
   .arow .ablank{color:var(--muted);font-style:italic}
+  .arow .anote{color:var(--muted)}
+  .answers.flat .arow{padding-left:14px}
+  .donehead{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 6px}
   .bigcheck{font-size:56px;text-align:center;margin-bottom:8px}
   .center{text-align:center}
   .hide{display:none}
@@ -138,6 +141,7 @@
       <h2>Turned in!</h2>
       <p class="sub" id="doneSub"></p>
       <div class="teach" style="text-align:left" id="doneDetail"></div>
+      <div id="doneAnswers" style="text-align:left"></div>
     </div>
   </div>
 
@@ -547,35 +551,65 @@ el('exitBtn').onclick=()=>{
   alert(`Saved, ${S.initials}. Come back on this same computer and type VIP ${S.vipDisplay} to pick up where you left off.`);
 };
 
-/* One line per question on the review screen: what they put, and — only
-   when they answered and got it wrong — what it should have been. */
+const arow = (label, mark, body) =>
+  `<div class="arow"><span class="aq">${label}</span>` +
+  `<span class="amark">${mark}</span><span class="atext">${body}</span></div>`;
+
+/* What the student sees BEFORE turning in: which ones are wrong, and what
+   they themselves put. Deliberately no correct answers here — this screen
+   sits in front of the submit button, and the point is to make them think,
+   not to let them copy their way to 100%. */
 function answerRows(si, sl){
   let out = "";
   sl.questions.forEach((q,qi)=>{
     const v = S.answers[qid(si,qi)];
     const blank = (v === undefined || v === "" || v === null);
     let mark, body;
-    if(blank){
+    if(q.type === "written"){
+      mark = "✎";
+      body = blank ? `<span class="ablank">not answered</span>`
+                   : `<span class="anote">your teacher will read this</span>`;
+    } else if(blank){
       mark = "•"; body = `<span class="ablank">not answered</span>`;
-    } else if(q.type === "written"){
-      mark = "✎"; body = renderFraction(v);
     } else if(q.type === "mc"){
-      const right = isCorrect(q, v);
-      mark = right ? "✓" : "✗";
+      mark = isCorrect(q, v) ? "✓" : "✗";
       body = renderFraction(q.choices[Number(v)]);
-      if(!right) body += ` <span class="afix">→ ${renderFraction(q.choices[q.answer])}</span>`;
     } else {
-      const right = isCorrect(q, v);
-      mark = right ? "✓" : "✗";
+      mark = isCorrect(q, v) ? "✓" : "✗";
       body = renderFraction(v);
-      if(!right && q.accept && q.accept.length){
-        body += ` <span class="afix">→ ${renderFraction(q.accept[0])}</span>`;
-      }
     }
-    out += `<div class="arow"><span class="aq">Q${qi+1}</span>` +
-           `<span class="amark">${mark}</span><span class="atext">${body}</span></div>`;
+    out += arow(`Q${qi+1}`, mark, body);
   });
   return `<div class="answers">${out}</div>`;
+}
+
+/* What the student sees AFTER turning in, when it is too late to edit:
+   the answer to everything they missed. Nothing to game at this point. */
+function doneAnswerList(){
+  let out = "", missed = 0;
+  LESSON.slides.forEach((sl,si)=>{
+    sl.questions.forEach((q,qi)=>{
+      const v = S.answers[qid(si,qi)];
+      const blank = (v === undefined || v === "" || v === null);
+      const label = `${si+1}.${qi+1}`;
+      if(q.type === "written"){
+        out += arow(label, "✎", `<span class="anote">your teacher will read this</span>`);
+        return;
+      }
+      if(!blank && isCorrect(q, v)) return;          // got it — nothing to say
+      missed++;
+      const correct = q.type === "mc"
+        ? q.choices[q.answer]
+        : (q.accept && q.accept.length ? q.accept[0] : "");
+      const mine = blank
+        ? `<span class="ablank">left blank</span>`
+        : (q.type === "mc" ? renderFraction(q.choices[Number(v)]) : renderFraction(v));
+      out += arow(label, "✗", `${mine} <span class="afix">→ ${renderFraction(correct)}</span>`);
+    });
+  });
+  if(!out) return "";
+  return `<div class="donehead">${missed ? "The ones to look at" : "For your teacher"}</div>` +
+         `<div class="answers flat">${out}</div>`;
 }
 
 function renderReview(){
@@ -639,6 +673,7 @@ el('submitBtn').onclick = async ()=>{
      VIP ${S.vipDisplay} · ${t.right} of ${t.graded} correct` +
      (t.extGraded ? ` · ${t.extRight}/${t.extGraded} bonus` : ``) +
     `<br>Turned in ${new Date().toLocaleString()}`;
+  el('doneAnswers').innerHTML = doneAnswerList();
   show('doneScreen');
 };
 
