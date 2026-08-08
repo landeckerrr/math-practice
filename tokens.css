@@ -1,0 +1,19 @@
+/* tokens.css — the shared colour variables and the box-model reset.
+   Every page links this first: the two index pages, and every practice set.
+
+   This is the ONLY place these values live. Change a colour here and it
+   changes on the hub and inside every set at the same time.
+
+   Where the hub and the sets disagreed, the SET's value won — that's the
+   screen students actually sit in front of. */
+
+:root{
+  --ink:#15202b; --muted:#6b7785; --line:#d8dee6; --paper:#fff; --wash:#f2f6f3;
+  --green:#2f8a4e; --green-soft:#e6f4ea; --green-deep:#236b3c;
+  --blue:#2f6fd0; --blue-soft:#e8f0fc;
+  --red:#c53d3d; --red-soft:#fdeceb;
+  --gold:#e6a700; --gold-soft:#fff6dd;
+  --violet:#6b4fbb; --violet-soft:#efeafc;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
