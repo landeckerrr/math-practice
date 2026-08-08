@@ -102,6 +102,10 @@ const ROSTER = {
 
 const TEACHERS = { "1": "sandra", "2": "sandra", "3": "landecker", "4": "landecker", "5": "landecker", "6": "landecker" };
 
+/* What each teacher is called on screen. The sets read this so the same
+   file can say "Turn in to Ms. Sandra" or "Turn in to Mr. Landy". */
+const TEACHER_NAMES = { "landecker": "Mr. Landy", "sandra": "Ms. Sandra" };
+
 /* "301" or "3.01" both accepted. Returns null if it isn't a real VIP. */
 function lookupVip(raw) {
   const digits = String(raw).replace(/[^0-9]/g, "");
@@ -110,11 +114,13 @@ function lookupVip(raw) {
   const initials = ROSTER[vip];
   if (!initials) return null;
   const sec = digits[0];
+  const teacher = TEACHERS[sec] || null;
   return {
     vip: vip,
     display: sec + "." + digits.slice(1),   // 3.01
     section: "6." + sec,
-    teacher: TEACHERS[sec] || null,
+    teacher: teacher,
+    teacherName: TEACHER_NAMES[teacher] || "your teacher",
     initials: initials
   };
 }

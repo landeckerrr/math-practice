@@ -17,3 +17,11 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
+/* Stacked fractions. Display only — students still type and submit "2/5".
+   Built from plain spans so there is no library to load on school wifi. */
+.fr{display:inline-flex;flex-direction:column;align-items:center;
+    vertical-align:-0.42em;margin:0 .14em;line-height:1.08}
+.fr .nu{padding:0 .28em}
+.fr .de{padding:0 .28em;border-top:1.6px solid currentColor}
+.fr-wrap{display:inline-flex;align-items:center;gap:.16em}
