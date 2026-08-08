@@ -70,6 +70,10 @@
   .arow .afix{color:var(--green-deep);font-weight:600;flex-shrink:0}
   .arow .ablank{color:var(--muted);font-style:italic}
   .arow .anote{color:var(--muted)}
+  /* Review rows jump to the question. Done-screen rows don't — nothing to go back to. */
+  #slideList .arow{cursor:pointer;border-radius:7px;border:1px solid transparent;transition:.12s}
+  #slideList .arow:hover{background:var(--wash);border-color:var(--line)}
+  #slideList .arow:hover .atext{text-decoration:underline}
   .answers.flat .arow{padding-left:14px}
   .donehead{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 6px}
   .bigcheck{font-size:56px;text-align:center;margin-bottom:8px}
@@ -111,6 +115,7 @@
     <div class="row" style="margin-top:0">
       <button class="ghost" id="backBtn">← Back</button>
       <button class="primary" id="nextBtn">Next →</button>
+      <button class="ghost" id="checkBtn">Check my work</button>
       <div class="spacer"></div>
       <span class="savenote" id="saveNote"></span>
       <button class="ghost" id="exitBtn">Save &amp; exit</button>
@@ -120,14 +125,14 @@
   <div id="reviewScreen" class="hide">
     <div class="card">
       <h2>How did you do?</h2>
-      <p class="sub">Tap any slide to go back and fix it. Nothing is turned in until you press the button at the bottom.</p>
+      <p class="sub">Tap any slide — or any single answer — to go back and fix it. Nothing is turned in until you press the button at the bottom.</p>
       <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">
         <span class="score" id="scoreNum"></span><span class="scorelab">correct</span>
       </div>
       <div class="slidelist" id="slideList"></div>
       <div class="teach" id="reviewNote"></div>
       <div class="row">
-        <button class="ghost" id="reviewBackBtn">← Keep working</button>
+        <button class="ghost" id="reviewBackBtn">← Back to my work</button>
         <div class="spacer"></div>
         <button class="primary" id="submitBtn">Turn in</button>
       </div>
@@ -284,7 +289,7 @@ const LESSON = {
 const el = id => document.getElementById(id);
 /* Identity comes from roster.js — initials only, never a name. */
 const S = { vip:null, vipDisplay:"", section:"", teacher:"", teacherName:"", initials:"",
-            idx:0, answers:{}, submitted:false };
+            idx:0, returnTo:0, answers:{}, submitted:false };
 
 /* greentime:301:0.01 — vip is the integer, setId is the lesson code. */
 const keyFor = vip => `greentime:${vip}:${LESSON.code}`;
@@ -488,7 +493,7 @@ function renderSlide(){
 
   sl.questions.forEach((q,qi)=>{
     const id=qid(si,qi), val=S.answers[id];
-    html += `<div class="q"><div class="qnum">QUESTION ${qi+1}</div><div class="prompt">${escapeHtml(q.prompt)}</div>`;
+    html += `<div class="q" data-qi="${qi}"><div class="qnum">QUESTION ${qi+1}</div><div class="prompt">${escapeHtml(q.prompt)}</div>`;
     if(q.type==="mc"){
       html += `<div class="choices">`;
       q.choices.forEach((c,ci)=>{
@@ -541,18 +546,40 @@ function renderSlide(){
   el('nextBtn').textContent = si===LESSON.slides.length-1 ? "Check my work →" : "Next →";
 }
 
+/* Going to the review screen from anywhere. Remembers the slide they were
+   on so "Back to my work" puts them back, and saves first — same as Next.
+   This only looks; nothing is turned in until the button on the review screen. */
+function openReview(){
+  S.returnTo = S.idx;
+  save();
+  renderReview();
+}
+
 el('backBtn').onclick=()=>{ if(S.idx>0){ S.idx--; save(); renderSlide(); } };
 el('nextBtn').onclick=()=>{
   save();
-  if(S.idx < LESSON.slides.length-1){ S.idx++; renderSlide(); } else renderReview();
+  if(S.idx < LESSON.slides.length-1){ S.idx++; renderSlide(); } else openReview();
 };
+el('checkBtn').onclick = openReview;
+
+/* Jump straight to one question and put the cursor in it. */
+function goToQuestion(si, qi){
+  S.idx = Number(si);
+  show('practiceScreen');
+  renderSlide();
+  const q = el('slideCard').querySelector(`.q[data-qi="${qi}"]`);
+  if(!q) return;
+  q.scrollIntoView({behavior:'smooth', block:'center'});
+  const field = q.querySelector('input[type=text], textarea');
+  if(field) field.focus({preventScroll:true});
+}
 el('exitBtn').onclick=()=>{
   save();
   alert(`Saved, ${S.initials}. Come back on this same computer and type VIP ${S.vipDisplay} to pick up where you left off.`);
 };
 
-const arow = (label, mark, body) =>
-  `<div class="arow"><span class="aq">${label}</span>` +
+const arow = (label, mark, body, attrs="") =>
+  `<div class="arow"${attrs}><span class="aq">${label}</span>` +
   `<span class="amark">${mark}</span><span class="atext">${body}</span></div>`;
 
 /* What the student sees BEFORE turning in: which ones are wrong, and what
@@ -578,7 +605,7 @@ function answerRows(si, sl){
       mark = isCorrect(q, v) ? "✓" : "✗";
       body = renderFraction(v);
     }
-    out += arow(`Q${qi+1}`, mark, body);
+    out += arow(`Q${qi+1}`, mark, body, ` data-go-s="${si}" data-go-q="${qi}"`);
   });
   return `<div class="answers">${out}</div>`;
 }
@@ -637,12 +664,15 @@ function renderReview(){
   el('slideList').querySelectorAll('.chip').forEach(c=>{
     c.onclick=()=>{ S.idx=Number(c.dataset.go); show('practiceScreen'); renderSlide(); };
   });
+  el('slideList').querySelectorAll('.arow[data-go-s]').forEach(r=>{
+    r.onclick=()=>goToQuestion(r.dataset.goS, r.dataset.goQ);
+  });
 
   el('reviewNote').textContent = anyBlank
     ? "Some questions are still blank. Tap those slides and finish them before you turn in."
     : "Red slides mean something's off. Go fix them — you can change any answer before turning in.";
 }
-el('reviewBackBtn').onclick=()=>{ show('practiceScreen'); renderSlide(); };
+el('reviewBackBtn').onclick=()=>{ S.idx = S.returnTo; show('practiceScreen'); renderSlide(); };
 
 el('submitBtn').onclick = async ()=>{
   const btn=el('submitBtn'); btn.disabled=true; btn.textContent="Sending...";
