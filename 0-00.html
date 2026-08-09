@@ -169,7 +169,7 @@ const DEFAULT_KEYS = [];
 const LESSON = {
   code: "0.00",
   title: "How This Class Works",
-  subtitle: "Pre-Unit 0 \u00b7 Everything from Day 1 and Day 2",
+  subtitle: "Pre-Unit 0 · How class runs, and how your VIP becomes a grade",
 
   slides: [
 
@@ -178,106 +178,74 @@ const LESSON = {
       questions: [
         { type:"mc", prompt:"Blue Time is for...", choices:["Warm up and the lesson","Practice work","Quizzes and tests","Free time"], answer:0 },
         { type:"mc", prompt:"Green Time is for...", choices:["The warm up","Practice work","Exit tickets and quizzes","Lining up"], answer:1 },
-        { type:"mc", prompt:"Red Time is for...", choices:["Learning something new","Practice work","Exit tickets, quizzes, and tests","Snacks"], answer:2 }
-      ]},
-
-    { title: "What can I do, and when?",
-      questions: [
-        { type:"mc", prompt:"During Red Time, can you get out of your seat?", choices:["Yes","No","If you really need to","Only for the trash"], answer:1 },
         { type:"mc", prompt:"During which time can you work with friends?", choices:["Blue Time","Green Time","Red Time","All of them"], answer:1 }
       ]},
 
-    { title: "Bathroom Boxes",
-      teach: "Going during Blue Time costs the MOST boxes. That is on purpose \u2014 Blue Time is when you are being taught something new, and that is the worst time to miss.",
+    { title: "Moving around the room",
+      teach: "Going during Blue Time costs the MOST bathroom boxes. That is on purpose — Blue Time is when you are being taught something new, and that is the worst time to miss.",
       questions: [
         { type:"mc", prompt:"How many bathroom boxes do you fill in if you go during GREEN Time?", choices:["1","2","3","0"], answer:0 },
-        { type:"mc", prompt:"How many boxes if you go during BLUE Time?", choices:["1","2","3","0"], answer:2 },
-        { type:"mc", prompt:"Which time costs you the FEWEST boxes?", choices:["Blue Time","Green Time","Red Time","They all cost the same"], answer:1 }
+        { type:"mc", prompt:"Which time costs you the MOST boxes, and why?", choices:["Blue Time — it is when you are being taught something new","Green Time — you are working with friends","Red Time — you are being assessed","They all cost the same"], answer:0 }
       ]},
 
-    { title: "Hearts, Checks, and your score",
-      teach: "Your SCORE is not your GRADE. Your score is hearts minus checks. Then you look up that score on the scale to find your grade.",
+    { title: "Five symbols, five jobs",
+      teach: "Five symbols on your VIP. Each one has exactly ONE job. No symbol counts for two things.\n☆ star · ○ circle · ▲ triangle — these three build Academic Responsibility\n♥ heart · ✓ check — these two build Behavior\nHearts can go to one person, a table, a row, or the whole class at once.",
       questions: [
-        { type:"mc", prompt:"Which of these is TRUE about hearts?", choices:["There is no single way to earn one \u2014 any great choice can","You only get them for correct answers","You only get them for being quiet","Everyone gets the same number each day"], answer:0 },
-        { type:"mc", prompt:"What does a check mean?", choices:["You failed the assignment","Check yourself \u2014 that choice needs fixing","You were absent","You lost a heart forever"], answer:1 },
-        { type:"text", prompt:"You have 6 hearts and 2 checks this week. What is your SCORE?", accept:["4"], hint:"Hearts minus checks." },
-        { type:"mc", prompt:"Your score for the week is 4. What Behavior GRADE does that give you?", choices:["4","3.5","3","2.5"], answer:1, hint:"Look at the scale. A score of 2, 3, or 4 all land in the same band." }
+        { type:"mc", prompt:"A ☆ star means...", choices:["You are ready, working, and contributing","You got the answer right","You were silent the whole class","You finished before everyone else"], answer:0 },
+        { type:"mc", prompt:"A ○ circle means...", choices:["You were on time","That day's practice is finished","You helped somebody","You had your materials out"], answer:1 },
+        { type:"mc", prompt:"What is the difference between a ♥ heart and a ✓ check?", choices:["A heart is for kindness or respect — a check means fix that choice","A heart is for right answers, a check is for wrong ones","A heart cancels a check out completely","There is no real difference"], answer:0 }
+      ]},
+
+    { title: "Behavior: hearts minus checks",
+      teach: "Your Behavior SCORE is hearts minus checks. Nothing else — stars, circles and triangles never touch it.\n3 or more = 4  ·  1 or 2 = 3.5  ·  0 = 3  ·  −1 or −2 = 2.5  ·  −3 or −4 = 2  ·  −5 or lower = 1",
+      questions: [
+        { type:"text", prompt:"You have 3 hearts and 3 checks this cycle. What is your Behavior SCORE?", accept:["0"], keys:[], hint:"Hearts minus checks." },
+        { type:"mc", prompt:"A score of 0 gives you what Behavior GRADE?", choices:["4","3.5","3","2.5"], answer:2, hint:"Look at the scale carefully. Zero is not the top." },
+        { type:"mc", prompt:"You have 1 heart and 4 checks. What Behavior grade is that?", choices:["3.5","3","2.5","2"], answer:3 },
+        { type:"mc", prompt:"TRUE or FALSE: if you simply stay out of trouble all cycle and never get a check, that is a 4 in Behavior.", choices:["True — no checks means top marks","False — no hearts and no checks is a 3. A 4 means you added something to the room"], answer:1 }
       ]},
 
     { title: "When checks add up",
-      teach: "Three numbers worth memorizing: 3 in a day, 4 in a day, 6 in a week.",
+      teach: "One check is a warning. Two is a negative point in PowerSchool. Three and you stay in at lunch. Four is an office referral. Six in one week and an email goes home.",
       questions: [
-        { type:"mc", prompt:"3 checks in ONE day means...", choices:["Nothing yet","Stay in for part of lunch and write an email home","An office referral","You lose all your hearts"], answer:1 },
-        { type:"mc", prompt:"4 checks in ONE day means...", choices:["Part of lunch","An office referral","A warning","An email home only"], answer:1 },
-        { type:"mc", prompt:"You got 2 checks Monday, 2 Wednesday, and 2 Friday. You never hit 3 in a single day. What happens?", choices:["Nothing \u2014 you never hit 3 in a day","6 in one week means an email home","An office referral","Your score resets"], answer:1 }
+        { type:"mc", prompt:"You pick up your SECOND check in one day. What happens?", choices:["Nothing yet","A negative point in PowerSchool","You stay in at lunch","An office referral"], answer:1 },
+        { type:"mc", prompt:"You got 2 checks Monday, 2 Wednesday, and 2 Friday. You never hit 3 in a single day. What happens?", choices:["Nothing — you never hit 3 in a day","Six in one week means an email home","An office referral","Your score resets"], answer:1 }
       ]},
 
-    { title: "Your grade: three ingredients",
+    { title: "Academic Responsibility: three strands",
+      teach: "Academic Responsibility is THREE separate strands. Each one scores 0, 1 or 2. Add them for a score out of 6.\n☆ stars → 4 or more = 2, 2 or 3 = 1, 0 or 1 = 0\n○ circles → all done = 2, 2 or 3 = 1, 0 or 1 = 0\n▲ Delta Math → all finished = 2, 80% or more = 1, under 80% = 0",
       questions: [
-        { type:"mc", prompt:"Academic Responsibility is about...", choices:["How you act in class","The work you turn in \u2014 how much, and how on time","Your exam scores","Your attendance"], answer:1 },
-        { type:"mc", prompt:"Your Behavior grade comes from...", choices:["Your VIP score \u2014 hearts minus checks","Your exam average","How quiet you are","Your homework"], answer:0 },
-        { type:"mc", prompt:"Which one affects your GPA?", choices:["Academic Responsibility","Behavior","Summative","All three equally"], answer:2 }
+        { type:"mc", prompt:"You earned 5 stars this cycle. What does your star strand score?", choices:["0","1","2","5"], answer:2 },
+        { type:"mc", prompt:"You finished 2 of your 4 practices this cycle. What does your circle strand score?", choices:["0","1","2","4"], answer:1 }
       ]},
 
-    { title: "Getting help",
+    { title: "The Delta gate",
+      teach: "▲ Delta Math only counts IF your circle strand scored a 2 — meaning every practice done. Miss even one practice and Delta scores 0, no matter how much of it you finished.",
       questions: [
-        { type:"mc", prompt:"You need help during Green Time. What do you do?", choices:["Shout your teacher's name","Walk up to the desk and ask","Write your name on the queue and keep working","Sit and wait silently"], answer:2 },
-        { type:"mc", prompt:"Before your teacher helps you, what must you have already done?", choices:["Asked three friends","Tried it on paper or a whiteboard first","Finished everything else","Raised your hand for five minutes"], answer:1 },
-        { type:"mc", prompt:"TRUE or FALSE: saying \"that is unfair\" in a calm voice in front of the whole class is fine.", choices:["True \u2014 calm is what matters","False \u2014 in front of the class is squawking, even in a calm voice"], answer:1 }
+        { type:"mc", prompt:"Every practice done AND all of Delta Math finished. What does the Delta strand score?", choices:["0","1","2","3"], answer:2 },
+        { type:"mc", prompt:"You finished ALL of Delta Math, but you skipped one practice. What does the Delta strand score?", choices:["2","1","0","It does not matter"], answer:2 },
+        { type:"mc", prompt:"A student says: \"I got 3 stars, I missed one practice, and I finished all of Delta. That is 1 + 1 + 2 = 4 out of 6, so a 3.\" What did they get right, and what did they get wrong?", choices:["Everything is right","The stars and circles are right — but Delta scores 0 because a practice was missing, so it is 2 out of 6, a 2","The stars should have been 2","Delta is right — the circles should have been 0"], answer:1, hint:"Check the gate before you add." }
       ]},
 
-    { title: "Your body and the calm room",
+    { title: "Getting help, helping others",
       questions: [
-        { type:"mc", prompt:"Can you put your feet on a chair?", choices:["Yes, if nobody is using it","Only your own chair","Never \u2014 feet stay on the floor","Only during Green Time"], answer:2 },
-        { type:"mc", prompt:"When is it okay to shout out an answer?", choices:["Whenever you know it","Never, no exceptions","When your teacher's hand is by their ear","During Green Time"], answer:2 }
-      ]},
-
-    { title: "Screens",
-      questions: [
-        { type:"mc", prompt:"Your teacher walks past your desk. What should you NOT do?", choices:["Keep working","Close a window or switch tabs","Look up","Ask a question"], answer:1 },
-        { type:"mc", prompt:"Playing a computer game earns you...", choices:["A warning the first time","1 check","3 checks immediately","Nothing if you close it fast"], answer:2 }
-      ]},
-
-    { title: "Materials, pencils, and leaving",
-      questions: [
-        { type:"mc", prompt:"The entry music stops and your notebook is still in your backpack. Are you ready?", choices:["Yes, you have it with you","No \u2014 it has to be OUT on your desk","Only if you get it out fast","Only on the first day"], answer:1 },
-        { type:"mc", prompt:"You forgot a pencil. What is the routine on your way in?", choices:["Ask a friend for one","Sign the sheet, take a pencil, sit down","Ask your teacher for one","Work without it"], answer:1 },
-        { type:"mc", prompt:"Do you have to give that borrowed pencil back?", choices:["Yes, at the end of class","Yes, the next day","No \u2014 it is yours to keep","Only if you signed the sheet"], answer:2 }
-      ]},
-
-    { title: "Leaving class",
-      teach: "Your teacher calls coordinates: \"if your x coordinate is 3, you can line up.\" But only if you are ready.",
-      questions: [
-        { type:"mc", prompt:"Your coordinate gets called. Before you can line up, you must be...", choices:["Just packed up","Packed up, area clear, standing behind your desk, chair tucked in","Sitting quietly with your hand up","First to the door"], answer:1 },
-        { type:"mc", prompt:"Class already started and you walk in late. What do you do?", choices:["Explain why you are late","Slide in silently and do not interrupt","Wait outside until the lesson ends","Ask what you missed right away"], answer:1 }
-      ]},
-
-    { title: "GT Experts",
-      teach: "The most trusted job in the room. Not everyone earns it on a given day, but anyone can.",
-      questions: [
-        { type:"mc", prompt:"How do you become an Expert?", choices:["Finish first","Raise your hand and ask","Finish your work, silently show your green screen, get a thumbs up","Get every question right"], answer:2 },
-        { type:"mc", prompt:"A real Expert...", choices:["Shows them the answer","Asks questions \u2014 never tells","Does the first problem for them","Writes the steps on their paper"], answer:1 },
-        { type:"mc", prompt:"A classmate is stuck. What is a good first question?", choices:["\"Want me to just do it for you?\"","\"What do you have so far?\"","\"This one is easy, watch.\"","\"Did you even try?\""], answer:1 },
-        { type:"mc", prompt:"You coached someone and they still do not get it. What do you do?", choices:["Keep going until they understand","Do it for them so they can move on","Put a * next to their name so the teacher comes over","Erase their name from the queue"], answer:2 }
+        { type:"mc", prompt:"You need help during Green Time. What do you do?", choices:["Shout across the room","Walk up to the desk and wait","Write your name on the queue and keep working","Sit quietly and do nothing"], answer:2 },
+        { type:"mc", prompt:"A classmate is stuck and you are an Expert. What is a good first question?", choices:["\"Want me to just do it for you?\"","\"What do you have so far?\"","\"This one is easy, watch.\"","\"Did you even try?\""], answer:1 }
       ]},
 
     { title: "Explain it",
       questions: [
-        { type:"written", prompt:"You finished your work early and earned an Expert badge. A classmate is stuck. Describe exactly what you do, step by step \u2014 and name one thing you must NOT do.",
+        { type:"written", prompt:"Your friend says: \"I talk a lot in class and I always have my stuff out, so I am definitely getting a 4 in Academic Responsibility.\" Explain why that might not be true. Use the words stars, circles and Delta somewhere in your answer.",
           hint:"Your teacher reads this one. At least four sentences." }
       ]},
 
     { title: "Challenge Zone",
       extension: true,
       questions: [
-        { type:"mc", prompt:"A grade of 4 means...", choices:["You passed","Outstanding \u2014 you did extra, or you are a role model","You did exactly what was expected","You need a lot of help"], answer:1 },
-        { type:"mc", prompt:"Can you toss a paper ball into the trash can?", choices:["Yes, it is just trash","Only during Green Time","No \u2014 if it flies, it dies, even into the trash","Only if you make the shot"], answer:2 },
-        { type:"mc", prompt:"What should you type when you ask AI for help?", choices:["\"Give me the answer to number 4.\"","\"Don't give me the answer. Help me find it.\"","\"Do my homework.\"","\"Is this right? Just say yes or no.\""], answer:1 },
-        { type:"mc", prompt:"You think your teacher missed a heart you earned. What do you do?", choices:["Ask out loud right away","Ask again until they say yes","Signal silently one time and accept the answer","Write it on your VIP yourself"], answer:2 },
-        { type:"text", prompt:"Your score this week is 5 hearts minus 3 checks. What is your score?", accept:["2"] },
-        { type:"mc", prompt:"So what Behavior grade does that score give you?", choices:["4","3.5","3","2"], answer:1 },
-        { type:"mc", prompt:"Tricky one. You have 8 hearts and 3 checks. Your score is 5 \u2014 but do you get a 4?", choices:["Yes, 5 or more is always a 4","No \u2014 a 4 also needs 1 check or fewer","Yes, checks do not matter for a 4","No, you need 6 or more"], answer:1 },
-        { type:"text", prompt:"Fill in the blank from the daily chant: \"Eyes up. Hearts up. Minds ______.\"", accept:["sharp"] }
+        { type:"text", prompt:"You have 5 hearts and 2 checks. What is your Behavior SCORE?", accept:["3"], keys:[] },
+        { type:"mc", prompt:"So what Behavior GRADE does a score of 3 give you?", choices:["4","3.5","3","2.5"], answer:0, hint:"Three is exactly where the top band starts." },
+        { type:"mc", prompt:"6 stars, every practice done, and 85% of Delta Math finished. What is your AR GRADE?", choices:["4","3.5","3","2.5"], answer:1, hint:"Score each strand, then add. 80% or more of Delta is worth 1." },
+        { type:"mc", prompt:"Hardest one. 4 stars, 3 of your 4 practices done, and ALL of Delta Math finished. What is your AR GRADE?", choices:["3.5","3","2.5","2"], answer:2, hint:"Three of four practices is not all of them. What does that do to Delta?" }
       ]}
 
   ]
@@ -292,7 +260,7 @@ const S = { vip:null, vipDisplay:"", section:"", teacher:"", teacherName:"", ini
             idx:0, returnTo:0, answers:{}, submitted:false };
 
 /* greentime:301:0.01 — vip is the integer, setId is the lesson code. */
-const keyFor = vip => `greentime:${vip}:${LESSON.code}`;
+const keyFor = vip => `greentime:${vip}:${LESSON.code}v2`;
 
 function save(){
   try{
