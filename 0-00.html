@@ -169,83 +169,83 @@ const DEFAULT_KEYS = [];
 const LESSON = {
   code: "0.00",
   title: "How This Class Works",
-  subtitle: "Pre-Unit 0 · How class runs, and how your VIP becomes a grade",
+  subtitle: "Pre-Unit 0 · How class runs, and what your VIP symbols mean",
 
   slides: [
 
     { title: "The Three Times",
-      teach: "Blue = Focus. Green = Collaborate. Red = Assess.",
+      teach: "Blue = Focus. You learn something new.\nGreen = Collaborate. You work, and you can work together.\nRed = Assess. You show what you know, on your own.",
       questions: [
-        { type:"mc", prompt:"Blue Time is for...", choices:["Warm up and the lesson","Practice work","Quizzes and tests","Free time"], answer:0 },
+        { type:"mc", prompt:"Blue Time is for...", choices:["The warm up and the lesson","Practice work","Quizzes and tests","Free time"], answer:0 },
         { type:"mc", prompt:"Green Time is for...", choices:["The warm up","Practice work","Exit tickets and quizzes","Lining up"], answer:1 },
-        { type:"mc", prompt:"During which time can you work with friends?", choices:["Blue Time","Green Time","Red Time","All of them"], answer:1 }
+        { type:"mc", prompt:"In which time can you work with friends?", choices:["Blue Time","Green Time","Red Time","All of them"], answer:1 }
       ]},
 
     { title: "Moving around the room",
-      teach: "Going during Blue Time costs the MOST bathroom boxes. That is on purpose — Blue Time is when you are being taught something new, and that is the worst time to miss.",
+      teach: "Bathroom boxes: Blue Time costs 3. Red Time costs 2. Green Time costs 1.\nBlue Time costs the most on purpose. Blue Time is when you learn something new, so it is the worst time to be away.",
       questions: [
         { type:"mc", prompt:"How many bathroom boxes do you fill in if you go during GREEN Time?", choices:["1","2","3","0"], answer:0 },
-        { type:"mc", prompt:"Which time costs you the MOST boxes, and why?", choices:["Blue Time — it is when you are being taught something new","Green Time — you are working with friends","Red Time — you are being assessed","They all cost the same"], answer:0 }
+        { type:"mc", prompt:"Which time costs you the MOST boxes, and why?", choices:["Blue Time — it is when you learn something new","Green Time — you are working with friends","Red Time — you are taking a test","They all cost the same"], answer:0 }
       ]},
 
     { title: "Five symbols, five jobs",
-      teach: "Five symbols on your VIP. Each one has exactly ONE job. No symbol counts for two things.\n☆ star · ○ circle · ▲ triangle — these three build Academic Responsibility\n♥ heart · ✓ check — these two build Behavior\nHearts can go to one person, a table, a row, or the whole class at once.",
+      teach: "There are five symbols on your VIP. Each one has ONE job. No symbol does two jobs.\n☆ star · ○ circle · ▲ triangle — these three build your Academic Responsibility grade.\n♥ heart · ✓ check — these two build your Behavior grade.\nA heart can go to one person, a table, a row, or the whole class.",
       questions: [
-        { type:"mc", prompt:"A ☆ star means...", choices:["You are ready, working, and contributing","You got the answer right","You were silent the whole class","You finished before everyone else"], answer:0 },
-        { type:"mc", prompt:"A ○ circle means...", choices:["You were on time","That day's practice is finished","You helped somebody","You had your materials out"], answer:1 },
-        { type:"mc", prompt:"What is the difference between a ♥ heart and a ✓ check?", choices:["A heart is for kindness or respect — a check means fix that choice","A heart is for right answers, a check is for wrong ones","A heart cancels a check out completely","There is no real difference"], answer:0 }
+        { type:"mc", prompt:"A ☆ star means...", choices:["You are ready, working, and joining in","You got the answer right","You were quiet the whole class","You finished before everyone else"], answer:0 },
+        { type:"mc", prompt:"A ○ circle means...", choices:["You were on time","You finished that day's practice","You helped somebody","You had your things out"], answer:1 },
+        { type:"mc", prompt:"What is the difference between a ♥ heart and a ✓ check?", choices:["A heart is for being kind or respectful. A check means: fix that choice.","A heart is for right answers. A check is for wrong answers.","A heart makes a check go away.","There is no real difference."], answer:0 }
       ]},
 
-    { title: "Behavior: hearts minus checks",
-      teach: "Your Behavior SCORE is hearts minus checks. Nothing else — stars, circles and triangles never touch it.\n3 or more = 4  ·  1 or 2 = 3.5  ·  0 = 3  ·  −1 or −2 = 2.5  ·  −3 or −4 = 2  ·  −5 or lower = 1",
+    { title: "Hearts and checks",
+      teach: "Hearts and checks are the only two symbols that change your Behavior grade.\nYour Behavior score = hearts − checks.\nStars, circles and triangles never change it.",
       questions: [
-        { type:"text", prompt:"You have 3 hearts and 3 checks this cycle. What is your Behavior SCORE?", accept:["0"], keys:[], hint:"Hearts minus checks." },
-        { type:"mc", prompt:"A score of 0 gives you what Behavior GRADE?", choices:["4","3.5","3","2.5"], answer:2, hint:"Look at the scale carefully. Zero is not the top." },
-        { type:"mc", prompt:"You have 1 heart and 4 checks. What Behavior grade is that?", choices:["3.5","3","2.5","2"], answer:3 },
-        { type:"mc", prompt:"TRUE or FALSE: if you simply stay out of trouble all cycle and never get a check, that is a 4 in Behavior.", choices:["True — no checks means top marks","False — no hearts and no checks is a 3. A 4 means you added something to the room"], answer:1 }
+        { type:"text", prompt:"You have 3 hearts and 3 checks. What is your Behavior score?", accept:["0"], keys:[], hint:"Hearts minus checks." },
+        { type:"text", prompt:"You have 5 hearts and 1 check. What is your Behavior score?", accept:["4"], keys:[] },
+        { type:"mc", prompt:"TRUE or FALSE: getting a lot of stars will help your Behavior grade.", choices:["True — stars help every grade","False — stars only help Academic Responsibility"], answer:1 }
       ]},
 
     { title: "When checks add up",
-      teach: "One check is a warning. Two is a negative point in PowerSchool. Three and you stay in at lunch. Four is an office referral. Six in one week and an email goes home.",
+      teach: "In ONE day:\n1 check = a warning\n2 checks = a negative point in PowerSchool\n3 checks = you stay in at lunch\n4 checks = an office referral\n6 checks in one week = an email goes home.",
       questions: [
-        { type:"mc", prompt:"You pick up your SECOND check in one day. What happens?", choices:["Nothing yet","A negative point in PowerSchool","You stay in at lunch","An office referral"], answer:1 },
-        { type:"mc", prompt:"You got 2 checks Monday, 2 Wednesday, and 2 Friday. You never hit 3 in a single day. What happens?", choices:["Nothing — you never hit 3 in a day","Six in one week means an email home","An office referral","Your score resets"], answer:1 }
+        { type:"mc", prompt:"You get your SECOND check in one day. What happens?", choices:["Nothing yet","A negative point in PowerSchool","You stay in at lunch","An office referral"], answer:1 },
+        { type:"mc", prompt:"You got 2 checks Monday, 2 checks Wednesday, and 2 checks Friday. You never got 3 in one day. What happens?", choices:["Nothing — you never got 3 in one day","6 checks in one week means an email goes home","An office referral","Your score goes back to zero"], answer:1 }
       ]},
 
-    { title: "Academic Responsibility: three strands",
-      teach: "Academic Responsibility is THREE separate strands. Each one scores 0, 1 or 2. Add them for a score out of 6.\n☆ stars → 4 or more = 2, 2 or 3 = 1, 0 or 1 = 0\n○ circles → all done = 2, 2 or 3 = 1, 0 or 1 = 0\n▲ Delta Math → all finished = 2, 80% or more = 1, under 80% = 0",
+    { title: "What builds Academic Responsibility",
+      teach: "Three symbols build your Academic Responsibility grade:\n☆ star — you are ready, working, and joining in\n○ circle — you finished that day's practice\n▲ triangle — you finished Delta Math\nHearts and checks are not part of it.",
       questions: [
-        { type:"mc", prompt:"You earned 5 stars this cycle. What does your star strand score?", choices:["0","1","2","5"], answer:2 },
-        { type:"mc", prompt:"You finished 2 of your 4 practices this cycle. What does your circle strand score?", choices:["0","1","2","4"], answer:1 }
+        { type:"mc", prompt:"Which symbol shows that you finished that day's practice?", choices:["☆ star","○ circle","▲ triangle","♥ heart"], answer:1 },
+        { type:"mc", prompt:"Which symbol is about Delta Math?", choices:["☆ star","○ circle","▲ triangle","✓ check"], answer:2 },
+        { type:"mc", prompt:"You were kind to a classmate and got a heart. Does that help your Academic Responsibility grade?", choices:["Yes, hearts help every grade","No — hearts only help Behavior","Only if you also got a star","Only on Delta Math days"], answer:1 }
       ]},
 
-    { title: "The Delta gate",
-      teach: "▲ Delta Math only counts IF your circle strand scored a 2 — meaning every practice done. Miss even one practice and Delta scores 0, no matter how much of it you finished.",
+    { title: "The Delta Math rule",
+      teach: "Delta Math only counts if you finished ALL of your practices first.\nIf you miss even one practice, Delta Math does not count at all — even if you finished every single question.",
       questions: [
-        { type:"mc", prompt:"Every practice done AND all of Delta Math finished. What does the Delta strand score?", choices:["0","1","2","3"], answer:2 },
-        { type:"mc", prompt:"You finished ALL of Delta Math, but you skipped one practice. What does the Delta strand score?", choices:["2","1","0","It does not matter"], answer:2 },
-        { type:"mc", prompt:"A student says: \"I got 3 stars, I missed one practice, and I finished all of Delta. That is 1 + 1 + 2 = 4 out of 6, so a 3.\" What did they get right, and what did they get wrong?", choices:["Everything is right","The stars and circles are right — but Delta scores 0 because a practice was missing, so it is 2 out of 6, a 2","The stars should have been 2","Delta is right — the circles should have been 0"], answer:1, hint:"Check the gate before you add." }
+        { type:"mc", prompt:"You finished all of Delta Math, but you missed one practice. Does Delta Math count?", choices:["Yes, you finished it","No — you have to finish all your practices first","Only half of it counts","Only if you finished it early"], answer:1 },
+        { type:"mc", prompt:"What do you have to do FIRST, before Delta Math can help your grade?", choices:["Get 4 stars","Finish all of your practices","Get a heart","Ask the teacher"], answer:1 }
       ]},
 
     { title: "Getting help, helping others",
       questions: [
-        { type:"mc", prompt:"You need help during Green Time. What do you do?", choices:["Shout across the room","Walk up to the desk and wait","Write your name on the queue and keep working","Sit quietly and do nothing"], answer:2 },
-        { type:"mc", prompt:"A classmate is stuck and you are an Expert. What is a good first question?", choices:["\"Want me to just do it for you?\"","\"What do you have so far?\"","\"This one is easy, watch.\"","\"Did you even try?\""], answer:1 }
+        { type:"mc", prompt:"You need help during Green Time. What do you do?", choices:["Shout across the room","Walk up to the desk and wait there","Write your name on the help queue and keep working","Sit quietly and do nothing"], answer:2 },
+        { type:"mc", prompt:"A classmate is stuck, and you are an Expert. What is a good first question to ask them?", choices:["\"Do you want me to just do it for you?\"","\"What do you have so far?\"","\"This one is easy, watch.\"","\"Did you even try?\""], answer:1 }
       ]},
 
     { title: "Explain it",
       questions: [
-        { type:"written", prompt:"Your friend says: \"I talk a lot in class and I always have my stuff out, so I am definitely getting a 4 in Academic Responsibility.\" Explain why that might not be true. Use the words stars, circles and Delta somewhere in your answer.",
-          hint:"Your teacher reads this one. At least four sentences." }
+        { type:"written", prompt:"Your friend says: \"I talk a lot in class and I always have my things out. So my Academic Responsibility will be great.\" Explain why that might not be true. Use the words stars, circles and Delta Math in your answer.",
+          hint:"Your teacher reads this one. Write at least four sentences." }
       ]},
 
     { title: "Challenge Zone",
       extension: true,
+      teach: "This is the math we will do together on Day A. Try it early if you want to.\n\nBEHAVIOR: score = hearts − checks\n3 or more = 4 · 1 or 2 = 3.5 · 0 = 3 · −1 or −2 = 2.5 · −3 or −4 = 2 · −5 or lower = 1\n\nACADEMIC RESPONSIBILITY: give each of the three symbols a 0, 1 or 2. Then add them up, out of 6.\n☆ stars: 4 or more = 2 · 2 or 3 = 1 · 0 or 1 = 0\n○ circles: all done = 2 · 2 or 3 = 1 · 0 or 1 = 0\n▲ Delta Math: all finished = 2 · 80% or more = 1 · under 80% = 0 — and remember, it is 0 anyway unless circles got a 2\nYour total out of 6: 6 = 4 · 5 = 3.5 · 4 = 3 · 3 = 2.5 · 2 = 2 · 1 or 0 = 1",
       questions: [
-        { type:"text", prompt:"You have 5 hearts and 2 checks. What is your Behavior SCORE?", accept:["3"], keys:[] },
-        { type:"mc", prompt:"So what Behavior GRADE does a score of 3 give you?", choices:["4","3.5","3","2.5"], answer:0, hint:"Three is exactly where the top band starts." },
-        { type:"mc", prompt:"6 stars, every practice done, and 85% of Delta Math finished. What is your AR GRADE?", choices:["4","3.5","3","2.5"], answer:1, hint:"Score each strand, then add. 80% or more of Delta is worth 1." },
-        { type:"mc", prompt:"Hardest one. 4 stars, 3 of your 4 practices done, and ALL of Delta Math finished. What is your AR GRADE?", choices:["3.5","3","2.5","2"], answer:2, hint:"Three of four practices is not all of them. What does that do to Delta?" }
+        { type:"text", prompt:"You have 5 hearts and 2 checks. What is your Behavior score?", accept:["3"], keys:[] },
+        { type:"mc", prompt:"What Behavior grade does a score of 3 give you?", choices:["4","3.5","3","2.5"], answer:0 },
+        { type:"mc", prompt:"6 stars, all practices done, and 85% of Delta Math finished. What is your Academic Responsibility grade?", choices:["4","3.5","3","2.5"], answer:1, hint:"Give each symbol a 0, 1 or 2. Then add." },
+        { type:"mc", prompt:"Hardest one. 4 stars, 3 of your 4 practices done, and ALL of Delta Math finished. What is your Academic Responsibility grade?", choices:["3.5","3","2.5","2"], answer:2, hint:"3 practices out of 4 is not all of them. What does that do to Delta Math?" }
       ]}
 
   ]
