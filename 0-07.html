@@ -252,7 +252,7 @@ const LESSON = {
 const el = id => document.getElementById(id);
 /* Identity comes from roster.js — initials only, never a name. */
 const S = { vip:null, vipDisplay:"", section:"", teacher:"", teacherName:"", initials:"",
-            idx:0, returnTo:0, answers:{}, submitted:false };
+            idx:0, returnTo:0, answers:{}, submitted:false, attempt:0 };
 
 /* greentime:301:0.01 — vip is the integer, setId is the lesson code. */
 const keyFor = vip => `greentime:${vip}:${LESSON.code}`;
@@ -262,7 +262,7 @@ function save(){
     localStorage.setItem(keyFor(S.vip), JSON.stringify({
       vip:S.vip, vipDisplay:S.vipDisplay, section:S.section, teacher:S.teacher,
       idx:S.idx, answers:S.answers,
-      submitted:S.submitted, saved:new Date().toISOString()
+      submitted:S.submitted, attempt:S.attempt, saved:new Date().toISOString()
     }));
     flashSaved();
   }catch(e){}
@@ -396,7 +396,7 @@ el('lookupBtn').onclick = ()=>{
     note.textContent = `Picking up where you stopped — slide ${prev.idx+1}.`;
     note.classList.remove('hide');
   } else if(prev && prev.submitted){
-    note.textContent = `This VIP already turned in Practice ${LESSON.code}. Starting again replaces it.`;
+    note.textContent = `You already turned in Practice ${LESSON.code}. You can keep working — turning it in again sends your teacher an updated copy.`;
     note.classList.remove('hide');
   } else {
     note.classList.add('hide');
@@ -413,11 +413,15 @@ el('retryBtn').onclick = askAgain;
 el('startBtn').onclick = ()=>{
   if(!pending) return;
   const prev = load(pending.vip);
-  if(prev && !prev.submitted){ S.idx = prev.idx; S.answers = prev.answers || {}; }
+  if(prev){ S.idx = prev.idx; S.answers = prev.answers || {}; }
   S.vip = pending.vip; S.vipDisplay = pending.display;
   S.section = pending.section; S.teacher = pending.teacher;
   S.teacherName = pending.teacherName;
-  S.initials = pending.initials; S.submitted = false;
+  S.initials = pending.initials;
+  /* Keep the turned-in flag and the attempt count. Reopening a finished
+     practice must not quietly pretend it was never handed in. */
+  S.submitted = prev ? !!prev.submitted : false;
+  S.attempt = (prev && prev.attempt) || 0;
   el('barWho').textContent = S.initials;
   el('barVip').textContent = S.vipDisplay;
   el('barCode').textContent = "Practice "+LESSON.code;
@@ -640,11 +644,13 @@ el('reviewBackBtn').onclick=()=>{ S.idx = S.returnTo; show('practiceScreen'); re
 el('submitBtn').onclick = async ()=>{
   const btn=el('submitBtn'); btn.disabled=true; btn.textContent="Sending...";
   const t=totals();
+  const attemptNo = (S.attempt || 0) + 1;   // 1 the first time, 2 the second
   const payload={
     lesson:LESSON.code, lessonTitle:LESSON.title,
     vip:S.vip, vipDisplay:S.vipDisplay, section:S.section, teacher:S.teacher,
     score:t.right, outOf:t.graded, bonusScore:t.extRight, bonusOutOf:t.extGraded,
     submittedAt:new Date().toISOString(),
+    attempt:attemptNo,
     answers: LESSON.slides.flatMap((sl,si)=> sl.questions.map((q,qi)=>({
       q:`${si+1}.${qi+1}`, bonus:!!sl.extension,
       response:S.answers[qid(si,qi)] ?? "",
@@ -659,7 +665,7 @@ el('submitBtn').onclick = async ()=>{
   }
   /* Mark it turned in but KEEP the answers on this machine — if the send
      failed silently (no-cors hides that), the work is still recoverable. */
-  S.submitted=true; save();
+  S.attempt = attemptNo; S.submitted=true; save();
   el('doneSub').textContent=`Nice work, ${S.initials}.`;
   el('doneDetail').innerHTML =
     `<b>Practice ${LESSON.code} — ${escapeHtml(LESSON.title)}</b><br>

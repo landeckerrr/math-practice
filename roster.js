@@ -95,12 +95,54 @@ const ROSTER = {
   616: "P.V.C.",
   617: "V.Z.M.",
 
-  // Section 6.1 — Sandra (add when roster arrives)
-  // TEMPORARY: lets the Ms. Sandra path be tested before her roster lands.
-  // Delete this line when the real 6.1/6.2 rosters go in.
-  199: "T.E.S.",
+  // Section 6.1 — Sandra
+  101: "J.A.",
+  102: "P.Á.M.",
+  103: "J.C.A.",
+  104: "D.D.L.",
+  105: "S.D.Z.",
+  106: "J.F.Z.",
+  107: "M.G.N.",
+  108: "M.G.G.",
+  109: "M.L.",
+  110: "M.L.T.",
+  111: "F.M.Z.",
+  112: "L.M.G.",
+  113: "E.M.P.",
+  114: "L.N.M.",
+  115: "M.O.S.",
+  116: "P.R.V.",
+  117: "M.T.G.",
+  118: "V.T.G.",
+  119: "P.V.O.",
+  120: "A.V.M.",
+  121: "M.Z.M.",
 
-  // Section 6.2 — Sandra (add when roster arrives)
+  // Section 6.2 — Sandra
+  201: "C.A.Z.",
+  202: "M.A.A.",
+  203: "S.B.C.",
+  204: "E.B.M.",
+  205: "P.B.J.",
+  206: "M.C.A.",
+  207: "M.C.G.",
+  208: "N.E.M.",
+  209: "L.H.G.",
+  210: "E.J.G.",
+  211: "R.L.",
+  212: "G.L.E.",
+  213: "P.L.E.",
+  214: "S.M.R.",
+  215: "S.P.D.",
+  216: "A.P.B.",
+  217: "M.R.C.",
+  218: "A.R.F.",
+  219: "E.R.U.",
+  220: "J.S.V.",
+  221: "R.S.O.",
+  222: "A.T.S.",
+  223: "M.T.P.",
+  224: "E.U.D.",
 };
 
 const TEACHERS = { "1": "sandra", "2": "sandra", "3": "landecker", "4": "landecker", "5": "landecker", "6": "landecker" };
@@ -109,7 +151,8 @@ const TEACHERS = { "1": "sandra", "2": "sandra", "3": "landecker", "4": "landeck
    file can say "Turn in to Ms. Sandra" or "Turn in to Mr. Landy". */
 const TEACHER_NAMES = { "landecker": "Mr. Landy", "sandra": "Ms. Sandra" };
 
-/* "301" or "3.01" both accepted. Returns null if it isn't a real VIP. */
+/* "301" or "3-01" both accepted — any separator is fine, the digits are what
+   count. Shows as "3-01". Returns null if it isn't a real VIP. */
 function lookupVip(raw) {
   const digits = String(raw).replace(/[^0-9]/g, "");
   if (digits.length !== 3) return null;
@@ -120,7 +163,7 @@ function lookupVip(raw) {
   const teacher = TEACHERS[sec] || null;
   return {
     vip: vip,
-    display: sec + "." + digits.slice(1),   // 3.01
+    display: sec + "-" + digits.slice(1),   // 3-01
     section: "6." + sec,
     teacher: teacher,
     teacherName: TEACHER_NAMES[teacher] || "your teacher",
