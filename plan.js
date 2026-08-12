@@ -14,7 +14,7 @@ const UNIT0 = {
   meta: "17 classes · Aug 11 – Sep 11",
   classes: [
     { n:1,  type:"lesson",    code:"0.01", title:"The Secret of ÷",                    opens:"2026-08-11" },
-    { n:2,  type:"lesson",    code:"0.02", title:"Sharing Problems & Bigger Than One", opens:"2026-08-13" },
+    { n:2,  type:"lesson",    code:"0.02", title:"Sharing Problems & Bigger Than One", opens:"2026-08-12" },
     { n:3,  type:"lesson",    code:"0.03", title:"Numbers in Disguise",                opens:"2026-08-14" },
     { n:4,  type:"lesson",    code:"0.05", title:"Estimation Station",                 opens:"2026-08-18" },
     { n:5,  type:"lesson",    code:"0.07", title:"So What IS 5/8?",                    opens:"2026-08-19" },
