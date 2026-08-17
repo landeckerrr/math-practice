@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VIP — turn in your grades</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#333333; --gray:#6D6E71; --line:#D8D8D8;
+  --azul:#004990; --amarillo:#C88A12;
+  --verde:#92C83E; --naranja:#F37021;
+  --ar-tint:#F9F3E7; --beh-tint:#E6EDF4;
+  --paper:#FFFFFF; --bg:#F2F3F5; --r:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+[hidden]{display:none!important;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.45;}
+.wrap{max-width:520px;margin:0 auto;padding:14px 14px 44px;}
+
+.top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.top .vipword{font-weight:900;letter-spacing:.06em;font-size:15px;color:var(--azul);}
+.top .tag{font-size:14px;color:var(--gray);}
+.top .who{margin-left:auto;font-size:15px;color:var(--ink);font-weight:700;}
+
+.card{background:var(--paper);border-radius:var(--r);padding:18px 16px 20px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10);margin-bottom:14px;}
+.block{border-radius:var(--r);padding:16px 14px 18px;margin-bottom:14px;}
+.block.beh{background:var(--beh-tint);}
+.block.ar{background:var(--ar-tint);}
+h1{font-size:22px;font-weight:900;margin:0 0 4px;letter-spacing:-.01em;}
+h2{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin:0 0 2px;}
+h2.beh{color:var(--azul);} h2.ar{color:var(--amarillo);}
+h3{font-size:19px;font-weight:900;margin:0 0 12px;}
+p.sub{margin:0 0 16px;color:var(--gray);font-size:15px;}
+
+.count{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid rgba(0,0,0,.09);}
+.count.first{border-top:0;padding-top:2px;}
+.sym{width:52px;height:52px;flex:none;border:2.5px solid var(--azul);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;
+  background:#fff;color:var(--azul);}
+.sym.gold{border-color:var(--amarillo);color:var(--amarillo);}
+.lab{flex:1;min-width:0;}
+.lab b{display:block;font-weight:700;font-size:17px;}
+.lab span{display:block;font-size:14px;color:var(--gray);line-height:1.3;}
+.pm{display:flex;align-items:center;gap:4px;flex:none;}
+button{font-family:inherit;}
+.btn-pm{width:46px;height:46px;border-radius:12px;border:2px solid var(--line);background:#fff;
+  font-size:26px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1;padding:0;}
+.btn-pm:active{background:#EDEDED;}
+.num{min-width:46px;text-align:center;font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;}
+
+.pick3{display:flex;gap:8px;margin-top:6px;}
+.pick3 button{flex:1;padding:12px 4px;border-radius:12px;border:2px solid var(--line);
+  background:#fff;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.25;}
+.pick3 button.on{border-color:var(--amarillo);background:var(--amarillo);color:#fff;}
+.locked{opacity:.42;}
+.gate{margin-top:8px;font-size:14px;font-weight:500;color:var(--naranja);}
+
+.math{background:#fff;border-radius:12px;padding:14px 12px;margin-top:14px;text-align:center;
+  border:2px dashed var(--line);}
+.math .eq{font-size:26px;font-weight:700;line-height:1.5;}
+.math .eq b{font-weight:900;}
+.math .cap{font-size:13px;color:var(--gray);margin-top:4px;}
+.stack{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;
+  font-size:17px;text-align:left;}
+.stack .pts{font-weight:900;font-size:22px;text-align:right;font-variant-numeric:tabular-nums;}
+.stack .rule{grid-column:1/-1;height:2px;background:var(--ink);margin:4px 0;}
+.stack .zero{color:var(--gray);}
+
+label.f{display:block;font-size:13px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--gray);margin:16px 0 6px;}
+.guess{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+.guess button{padding:14px 0;border-radius:12px;border:2px solid var(--line);background:#fff;
+  font-size:17px;font-weight:900;color:var(--ink);cursor:pointer;}
+.guess button.on{border-color:var(--azul);background:var(--azul);color:#fff;}
+
+input[type=text],input[type=tel]{width:100%;padding:15px 14px;font-size:22px;font-weight:700;
+  border:2px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;color:var(--ink);}
+input:focus,button:focus-visible,summary:focus-visible{outline:3px solid var(--azul);outline-offset:2px;}
+.namehit{margin-top:10px;font-size:26px;font-weight:900;}
+.msg{margin-top:10px;font-size:16px;font-weight:700;}
+.msg.ok{color:var(--verde);} .msg.bad{color:var(--naranja);} .msg.wait{color:var(--gray);}
+.retry{margin-left:6px;padding:8px 14px;border-radius:10px;border:2px solid var(--naranja);
+  background:#fff;color:var(--naranja);font-weight:900;font-size:15px;cursor:pointer;}
+.cycsel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.cycsel button{padding:14px 0;border-radius:12px;border:2px solid var(--line);background:#fff;
+  font-size:19px;font-weight:900;cursor:pointer;color:var(--ink);}
+.cycsel button.on{border-color:var(--azul);background:var(--azul);color:#fff;}
+
+.go{display:block;width:100%;padding:18px;border-radius:14px;border:0;background:var(--azul);
+  color:#fff;font-size:19px;font-weight:900;cursor:pointer;margin-top:16px;}
+.go:disabled{background:#B7BCC2;cursor:default;}
+.go.green{background:var(--verde);color:#1d3b00;}
+.back{display:block;width:100%;padding:12px;margin-top:8px;background:none;border:0;
+  color:var(--gray);font-size:15px;font-weight:700;cursor:pointer;}
+
+.pair{display:flex;gap:10px;}
+.pair>div{flex:1;border-radius:12px;padding:14px 10px;text-align:center;border:3px solid var(--verde);
+  background:#fff;}
+.pair>div.off{border-color:var(--naranja);}
+.pair .t{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);}
+.pair .g{font-size:50px;font-weight:900;line-height:1.05;}
+.pair .note{font-size:13px;color:var(--naranja);font-weight:500;line-height:1.3;}
+
+details{background:#fff;border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.10);
+  padding:0;margin-bottom:14px;overflow:hidden;}
+summary{padding:16px;font-size:17px;font-weight:900;cursor:pointer;list-style:none;}
+summary::-webkit-details-marker{display:none;}
+summary::after{content:" ▾";color:var(--gray);}
+details[open] summary::after{content:" ▴";}
+.tbl{padding:0 14px 18px;}
+.tbl h4{font-size:12px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--gray);margin:14px 0 6px;}
+table{width:100%;border-collapse:collapse;font-size:15px;}
+th,td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--line);}
+th{font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);}
+td.k{text-align:left;font-weight:700;white-space:nowrap;}
+tr.now td{background:#FFF6D9;font-weight:900;}
+td.now{background:#FFF6D9;font-weight:900;border-radius:6px;}
+
+.finish{text-align:center;padding:20px 0;}
+.finish .big{font-size:54px;}
+.err{background:#FFF1E8;border:2px solid var(--naranja);border-radius:12px;padding:14px;
+  margin-top:14px;font-size:16px;font-weight:500;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <span class="vipword">VIP</span><span class="tag">weekly grades</span>
+    <span class="who" id="who"></span>
+  </div>
+
+  <!-- ============ STEP 1 ============ -->
+  <section id="s1" class="card">
+    <h1>Who are you?</h1>
+    <p class="sub">Your VIP number is on your paper. Your student ID is the 5 numbers that start with 3.</p>
+
+    <label class="f" for="vip">VIP number</label>
+    <input type="text" id="vip" inputmode="numeric" autocomplete="off" placeholder="3-14">
+    <div class="namehit" id="namehit"></div>
+    <div class="msg" id="vipmsg"></div>
+
+    <label class="f" for="sid">Student ID</label>
+    <input type="tel" id="sid" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="33101">
+    <div class="msg" id="idmsg"></div>
+
+    <label class="f">Which cycle is on your paper?</label>
+    <div class="cycsel" id="cycsel"></div>
+
+    <button class="go" id="go1" disabled>Start</button>
+  </section>
+
+  <!-- ============ STEP 2 ============ -->
+  <section id="s2" hidden>
+
+    <div class="block beh">
+      <h2 class="beh">Behavior</h2>
+      <h3>Count your hearts and checks</h3>
+
+      <div class="count first">
+        <div class="sym">&#9825;</div>
+        <div class="lab"><b>Hearts</b><span>kind and respectful</span></div>
+        <div class="pm"><button class="btn-pm" data-dec="h">&minus;</button>
+          <span class="num" id="n_h">0</span>
+          <button class="btn-pm" data-inc="h">+</button></div>
+      </div>
+
+      <div class="count">
+        <div class="sym">&#10003;</div>
+        <div class="lab"><b>Checks</b><span>check yourself</span></div>
+        <div class="pm"><button class="btn-pm" data-dec="c">&minus;</button>
+          <span class="num" id="n_c">0</span>
+          <button class="btn-pm" data-inc="c">+</button></div>
+      </div>
+
+      <div class="math"><div class="eq" id="behEq"></div>
+        <div class="cap">hearts minus checks</div></div>
+
+      <label class="f">What behavior grade did you write on your paper?</label>
+      <div class="guess" id="behGuess"></div>
+    </div>
+
+    <div class="block ar">
+      <h2 class="ar">Academic Responsibility</h2>
+      <h3>Count your stars and circles</h3>
+      <p class="sub" style="margin-bottom:6px">A free circle counts. Tap it like you earned it.</p>
+
+      <div class="count first">
+        <div class="sym gold">&#9734;</div>
+        <div class="lab"><b>Stars</b><span>ready, working, contributing</span></div>
+        <div class="pm"><button class="btn-pm" data-dec="s">&minus;</button>
+          <span class="num" id="n_s">0</span>
+          <button class="btn-pm" data-inc="s">+</button></div>
+      </div>
+
+      <div class="count">
+        <div class="sym gold">&#9711;</div>
+        <div class="lab"><b>Circles</b><span>the Past Due practice</span></div>
+        <div class="pm"><button class="btn-pm" data-dec="o">&minus;</button>
+          <span class="num" id="n_o">0</span>
+          <button class="btn-pm" data-inc="o">+</button></div>
+      </div>
+
+      <div class="count" id="triRow">
+        <div class="sym gold">&#9651;</div>
+        <div class="lab"><b>Triangle</b><span>Delta Math</span>
+          <div class="pick3" id="tri">
+            <button data-tri="0">not 80% yet</button>
+            <button data-tri="1">80% or more</button>
+            <button data-tri="2">all finished</button>
+          </div>
+        </div>
+      </div>
+      <div class="gate" id="gate" hidden>Delta Math only counts when all 4 circles are filled.</div>
+
+      <div class="math"><div class="stack" id="arStack"></div></div>
+
+      <label class="f">What acad resp grade did you write on your paper?</label>
+      <div class="guess" id="arGuess"></div>
+    </div>
+
+    <details id="chart">
+      <summary>How the grades work</summary>
+      <div class="tbl">
+        <h4>Each symbol is worth points</h4>
+        <table><thead><tr><th></th><th>0 pts</th><th>1 pt</th><th>2 pts</th></tr></thead>
+          <tbody>
+            <tr id="rowS"><td class="k">&#9734; stars</td><td>0 or 1</td><td>2 or 3</td><td>4 or more</td></tr>
+            <tr id="rowO"><td class="k">&#9711; circles</td><td>0 or 1</td><td>2 or 3</td><td>all 4</td></tr>
+            <tr id="rowD"><td class="k">&#9651; Delta</td><td>under 80%</td><td>80% or more</td><td>all finished</td></tr>
+          </tbody></table>
+
+        <h4>Add the points &rarr; Academic Responsibility</h4>
+        <table><thead><tr><th>Points</th><th>Grade</th></tr></thead>
+          <tbody id="arTbl"></tbody></table>
+
+        <h4>Hearts minus checks &rarr; Behavior</h4>
+        <table><thead><tr><th>&#9825; &minus; &#10003;</th><th>Grade</th></tr></thead>
+          <tbody id="behTbl"></tbody></table>
+      </div>
+    </details>
+
+    <button class="go" id="go2" disabled>Show me my grades</button>
+    <div id="out"></div>
+    <button class="back" id="back2">Back</button>
+  </section>
+
+  <!-- ============ DONE ============ -->
+  <section id="s3" class="card" hidden>
+    <div class="finish">
+      <div class="big">&#9989;</div>
+      <h1 style="margin-top:8px">Turned in</h1>
+      <p class="sub" id="doneLine"></p>
+    </div>
+    <button class="back" id="again">Turn in a different cycle</button>
+  </section>
+
+</div>
+
+<script>
+/* =====================================================================
+   VIP weekly grades — student self-report
+   Michael Landecker · TCS 6th grade math · 2026-27
+   PASTE YOUR APPS SCRIPT URL BELOW. Nothing else needs editing.
+   ===================================================================== */
+var SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzJxzE8FRVF7gA6vPOzcuPAqBF7y_oeBMVpifKrhJ--yGqUfGN-WADMdbX23rCjoY0P/exec";
+
+/* Preferred names only — never student IDs. This file is public. */
+var VIP_NAMES = {
+  "1-01":"🐉 Jaco", "1-02":"Pedro", "1-03":"⚽Juan",
+  "1-04":"🐶Daniel", "1-05":"Sara", "1-06":"🎾Jero",
+  "1-07":"🦝Manu", "1-08":"🐻 Tin", "1-09":"👽Mathy",
+  "1-10":"🏀Maxi", "1-11":"🎣Fidel", "1-12":"🍬Luchss",
+  "1-13":"💃Mym", "1-14":"🎸Loroto", "1-15":"⚽Football",
+  "1-17":"⚽Martín", "1-19":"🎣 Pedro", "1-20":"🩰Alice",
+  "1-21":"María", "2-01":"🐕Celi", "2-02":"🐕Marti",
+  "2-03":"🏀Sebas", "2-04":"🏃Emi", "2-05":"😊PJ",
+  "2-06":"⚽Migue", "2-07":"🎾Miguel", "2-08":"⚽Nico",
+  "2-09":"🎵Lore", "2-10":"😊Emi", "2-11":"🐚Rose",
+  "2-12":"🤸Gabi", "2-13":"Paloma", "2-14":"🚘Simon",
+  "2-15":"🐟Steve", "2-16":"🏌️Agustin", "2-17":"🏐Mavca",
+  "2-18":"🏓Ame", "2-19":"⚽Rue", "2-21":"🏀Rafa",
+  "2-22":"Ana", "2-23":"🏌️Migue", "2-24":"🐴Emi",
+  "3-01":"🪼 Cris", "3-02":"🏃‍♂️ Agostinho", "3-03":"⚽ Maxi",
+  "3-04":"🐴 Leti", "3-05":"🎹 Federico", "3-06":"🎣 Borda",
+  "3-07":"🪿 Juanfe", "3-08":"⚽ Emilio", "3-09":"⚽ Jero",
+  "3-10":"🐴 Juli", "3-11":"⚽ Balta", "3-12":"🎨 Emma",
+  "3-13":"🎶Bella", "3-14":"⚽ Dante", "3-15":"🐕 Elena",
+  "3-16":"⚽ Santi", "3-17":"🎾Juan", "3-18":"🐶 Emi",
+  "3-19":"🎮 Mateo", "3-20":"🎤 Gaby", "3-21":"🎮 Rafa",
+  "3-22":"🏌️Martín", "3-23":"⚽ Sam", "4-01":"Martín Bernal Álvarez",
+  "4-02":"⚽ Soccer", "4-03":"🍣 Tóbal", "4-04":"🛸Migue",
+  "4-05":"🏌️Jose", "4-06":"🎸Poal", "4-07":"👽 Eva",
+  "4-08":"⚽ Pedro", "4-09":"⚽ López", "4-10":"🎮Salva",
+  "4-11":"🏌️ Santi", "4-12":"🤸 Maca", "4-13":"⚽ Nacho",
+  "4-14":"⚽ Cris", "4-15":"🎣Juanda", "4-16":"Martín PV",
+  "4-17":"⚽Martín RC", "4-18":"🐕 Sarita", "4-19":"🏐 Becky",
+  "4-20":"Santi LS", "4-21":"📖Alicia", "4-22":"🏌️ Miguel",
+  "4-23":"⛵ Pipo", "5-01":"🏀 Ade", "5-02":"🐕 Beli",
+  "5-03":"⚽ Mati", "5-04":"🐕 Elisa", "5-05":"🍕Agus",
+  "5-06":"🏐 Rosi", "5-07":"💻 Emi", "5-08":"📣 Emma",
+  "5-09":"🎨 Cami", "5-10":"⚽ Lucho", "5-11":"🐎 Eli",
+  "5-12":"🏐 Juli", "5-13":"⚽Vicen", "5-14":"🏖️ Hele",
+  "5-15":"⚽ Andres", "5-16":"🐎 Ame", "5-17":"👽 Sarita",
+  "5-18":"⚽ Elena", "5-19":"⚽ Nico", "5-20":"🎮 Pedro",
+  "6-01":"🪖 PJ", "6-02":"🐎 Salo", "6-03":"🚗 Botero",
+  "6-04":"🎨 Ama", "6-05":"🏍️ Martín", "6-06":"😊 Maria",
+  "6-07":"🚗 Luka", "6-08":"Alejandro HD", "6-09":"🐈 Eva",
+  "6-10":"🏌️ Santiago", "6-11":"🐒 Maria", "6-12":"Mar LE",
+  "6-13":"🎾 Mejia", "6-14":"🏐 Ele", "6-15":"🏗️Bruno",
+  "6-16":"⚽ Toro", "6-17":"🚗 Rafa", "6-18":"🐕 Emi",
+  "6-19":"Pascual VC", "6-20":"⚽ Vicente"
+};
+
+/* ---------- the rules, straight off the paper ---------- */
+var MAX_CIRCLES = 4;
+function bandStars(n){ return n >= 4 ? 2 : n >= 2 ? 1 : 0; }
+function bandCircles(n){ return n >= MAX_CIRCLES ? 2 : n >= 2 ? 1 : 0; }
+function bandDelta(tri, circles){ return circles < MAX_CIRCLES ? 0 : (tri === null ? 0 : tri); }
+function arGrade(t){ return t >= 6 ? 4 : t === 5 ? 3.5 : t === 4 ? 3 : t === 3 ? 2.5 : t === 2 ? 2 : 1; }
+function behGrade(n){ return n >= 3 ? 4 : n >= 1 ? 3.5 : n === 0 ? 3 : n >= -2 ? 2.5 : n >= -4 ? 2 : 1; }
+var GRADES = [4, 3.5, 3, 2.5, 2, 1];
+var AR_ROWS  = [["6","4"],["5","3.5"],["4","3"],["3","2.5"],["2","2"],["0 or 1","1"]];
+var BEH_ROWS = [["3 or more","4"],["1 or 2","3.5"],["0","3"],["&minus;1 or &minus;2","2.5"],
+                ["&minus;3 or &minus;4","2"],["&minus;5 or lower","1"]];
+
+var S = { vip:"", sid:"", cycle:null, h:0, c:0, s:0, o:0, tri:null,
+          guessB:null, guessA:null, seen:false, verified:false };
+
+function $(id){ return document.getElementById(id); }
+function fmt(g){ return g === Math.floor(g) ? String(g) : g.toFixed(1); }
+function cleanVip(v){ return (v || "").replace(/[^0-9]/g, ""); }
+function lookupVip(v){
+  var d = cleanVip(v).replace(/^0+/, "");
+  if (d.length < 3) return null;
+  var key = d.charAt(0) + "-" + d.slice(1).padStart(2, "0");
+  return VIP_NAMES[key] ? key : null;
+}
+var CONNECTED = SUBMIT_URL.indexOf("http") === 0;
+
+function saveLocal(){ try{ localStorage.setItem("vip_wip", JSON.stringify(S)); }catch(e){} }
+function loadLocal(){
+  try{
+    var o = JSON.parse(localStorage.getItem("vip_wip") || "null");
+    if (o && o.vip){ S = o; S.verified = false; $("vip").value = o.vip; $("sid").value = o.sid || ""; }
+  }catch(e){}
+}
+
+/* ---------- cycle buttons ---------- */
+var ch = ""; for (var i = 1; i <= 8; i++) ch += '<button data-cyc="' + i + '">' + i + '</button>';
+$("cycsel").innerHTML = ch;
+$("cycsel").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if (!b) return;
+  S.cycle = +b.dataset.cyc;
+  [].forEach.call(this.children, function(x){ x.classList.toggle("on", +x.dataset.cyc === S.cycle); });
+  gate1();
+});
+
+/* ---------- step 1: check the ID right away ---------- */
+var timer = null;
+function onId(){
+  var key = lookupVip($("vip").value);
+  S.vip = key || "";
+  $("namehit").textContent = key ? VIP_NAMES[key] : "";
+  $("vipmsg").className = "msg bad";
+  $("vipmsg").textContent = (!key && cleanVip($("vip").value).length >= 3)
+    ? "That VIP number is not on the list. Check your paper, or tell your teacher." : "";
+
+  S.sid = $("sid").value.replace(/[^0-9]/g, "");
+  S.verified = false;
+  clearTimeout(timer);
+
+  if (!S.vip || S.sid.length !== 5){ setId("", ""); gate1(); return; }
+
+  // Nothing to ask. This is a setup mistake, not a student mistake.
+  if (!CONNECTED){
+    setId("bad", "This page is not connected yet, so it cannot check your ID.<br>" +
+                 "<b>Teacher:</b> paste the Apps Script /exec URL into SUBMIT_URL in vip.html.");
+    gate1(); return;
+  }
+
+  setId("wait", "Checking\u2026"); gate1();
+  timer = setTimeout(runCheck, 400);
+}
+
+function runCheck(){
+  setId("wait", "Checking\u2026"); gate1();
+  fetch(SUBMIT_URL, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+    body: JSON.stringify({ kind:"check", vip:S.vip, sid:S.sid }) })
+  .then(function(r){ return r.json(); })
+  .then(function(res){
+    if (res && res.ok){ S.verified = true; setId("ok", "That's you \u2713"); }
+    else { S.verified = false; setId("bad", "That student ID does not go with " + S.vip + "."); }
+    gate1();
+  })
+  .catch(function(){
+    S.verified = false;
+    setId("bad", "Could not reach the internet to check your ID. " +
+                 '<button type="button" class="retry" id="retry">Try again</button>');
+    var r = $("retry"); if (r) r.addEventListener("click", runCheck);
+    gate1();
+  });
+}
+function setId(cls, txt){ $("idmsg").className = "msg " + cls; $("idmsg").innerHTML = txt; }
+function gate1(){ $("go1").disabled = !(S.vip && S.verified && S.cycle); }
+$("vip").addEventListener("input", onId);
+$("sid").addEventListener("input", onId);
+$("go1").addEventListener("click", function(){ show(2); });
+
+/* ---------- counters ---------- */
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-inc],[data-dec]"); if (!b) return;
+  var k = b.dataset.inc || b.dataset.dec;
+  var cap = (k === "o") ? MAX_CIRCLES : 30;
+  S[k] = Math.max(0, Math.min(cap, S[k] + (b.dataset.inc ? 1 : -1)));
+  paint();
+});
+$("tri").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if (!b || S.o < MAX_CIRCLES) return;
+  S.tri = +b.dataset.tri; paint();
+});
+
+/* ---------- grade guesses ---------- */
+function buildGuess(el, key){
+  el.innerHTML = GRADES.map(function(g){ return '<button data-g="' + g + '">' + fmt(g) + '</button>'; }).join("");
+  el.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return;
+    S[key] = +b.dataset.g; paint();
+  });
+}
+buildGuess($("behGuess"), "guessB");
+buildGuess($("arGuess"), "guessA");
+
+/* ---------- the chart ---------- */
+$("arTbl").innerHTML  = AR_ROWS.map(function(r,i){ return '<tr data-ar="'+i+'"><td class="k">'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join("");
+$("behTbl").innerHTML = BEH_ROWS.map(function(r,i){ return '<tr data-beh="'+i+'"><td class="k">'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join("");
+
+function markChart(net, tot){
+  var ps = bandStars(S.s), po = bandCircles(S.o), pd = bandDelta(S.tri, S.o);
+  [["rowS", ps], ["rowO", po], ["rowD", pd]].forEach(function(p){
+    var tds = $(p[0]).children;
+    for (var i = 1; i < tds.length; i++) tds[i].classList.toggle("now", i - 1 === p[1]);
+  });
+  var arIdx  = [6,5,4,3,2].indexOf(tot); if (arIdx < 0) arIdx = 5;
+  var behIdx = net >= 3 ? 0 : net >= 1 ? 1 : net === 0 ? 2 : net >= -2 ? 3 : net >= -4 ? 4 : 5;
+  [].forEach.call($("arTbl").children,  function(tr){ tr.classList.toggle("now", +tr.dataset.ar  === arIdx); });
+  [].forEach.call($("behTbl").children, function(tr){ tr.classList.toggle("now", +tr.dataset.beh === behIdx); });
+}
+
+/* ---------- paint ---------- */
+function paint(){
+  $("n_h").textContent = S.h; $("n_c").textContent = S.c;
+  $("n_s").textContent = S.s; $("n_o").textContent = S.o;
+
+  var net = S.h - S.c;
+  $("behEq").innerHTML = "&#9825; " + S.h + " &minus; &#10003; " + S.c + " = <b>" + net + "</b>";
+
+  var open = S.o >= MAX_CIRCLES;
+  $("triRow").classList.toggle("locked", !open);
+  $("gate").hidden = open;
+  [].forEach.call($("tri").children, function(x){ x.classList.toggle("on", open && S.tri === +x.dataset.tri); });
+
+  var ps = bandStars(S.s), po = bandCircles(S.o), pd = bandDelta(S.tri, S.o), tot = ps + po + pd;
+  $("arStack").innerHTML =
+    row("&#9734;", S.s + (S.s === 1 ? " star" : " stars"), ps) +
+    row("&#9711;", S.o + " of " + MAX_CIRCLES + " circles", po) +
+    row("&#9651;", triWord(), pd) +
+    '<div class="rule"></div><span></span><span style="font-weight:700">total</span>' +
+    '<span class="pts">' + tot + '</span>';
+
+  [].forEach.call($("behGuess").children, function(x){ x.classList.toggle("on", +x.dataset.g === S.guessB); });
+  [].forEach.call($("arGuess").children,  function(x){ x.classList.toggle("on", +x.dataset.g === S.guessA); });
+
+  markChart(net, tot);
+  $("go2").disabled = (S.guessB === null || S.guessA === null);
+  $("go2").hidden = S.seen;
+  if (S.seen) reveal(behGrade(net), arGrade(tot));
+  saveLocal();
+}
+function row(sym, words, pts){
+  return '<span style="font-size:22px">' + sym + '</span>' +
+         '<span' + (pts === 0 ? ' class="zero"' : '') + '>' + words + '</span>' +
+         '<span class="pts">' + pts + '</span>';
+}
+function triWord(){
+  if (S.o < MAX_CIRCLES) return "no Delta yet";
+  return S.tri === 2 ? "all finished" : S.tri === 1 ? "80% or more"
+       : S.tri === 0 ? "not 80% yet" : "not picked";
+}
+
+/* ---------- reveal both at once ---------- */
+function reveal(b, a){
+  $("out").innerHTML =
+    '<div class="pair">' +
+      box("Behavior", b, S.guessB) +
+      box("Acad Resp", a, S.guessA) +
+    '</div>' +
+    '<button class="go green" id="go3">Turn it in</button>' +
+    '<div id="subErr"></div>';
+  $("go3").addEventListener("click", submit);
+}
+function box(title, real, guess){
+  var same = (guess === real);
+  return '<div class="' + (same ? "" : "off") + '">' +
+    '<div class="t">' + title + '</div><div class="g">' + fmt(real) + '</div>' +
+    (same ? "" : '<div class="note">your paper says ' + fmt(guess) + '</div>') + '</div>';
+}
+$("go2").addEventListener("click", function(){ S.seen = true; paint(); });
+$("back2").addEventListener("click", function(){ show(1); });
+
+/* ---------- steps ---------- */
+function show(n){
+  [1,2,3].forEach(function(i){ $("s" + i).hidden = (i !== n); });
+  $("who").textContent = S.vip ? VIP_NAMES[S.vip] + " \u00B7 " + S.vip : "";
+  window.scrollTo(0, 0);
+  if (n === 2) paint();
+}
+
+/* ---------- turn it in ---------- */
+function submit(){
+  var btn = $("go3");
+  btn.disabled = true; btn.textContent = "Sending\u2026";
+  $("subErr").innerHTML = "";
+
+  var net = S.h - S.c;
+  var tot = bandStars(S.s) + bandCircles(S.o) + bandDelta(S.tri, S.o);
+  var p = { kind:"vip", vip:S.vip, sid:S.sid, cycle:S.cycle,
+            hearts:S.h, checks:S.c, net:net,
+            stars:S.s, circles:S.o, delta:triWord(),
+            behGrade:behGrade(net), arGrade:arGrade(tot), arPoints:tot,
+            studentBeh:S.guessB, studentAr:S.guessA,
+            matchBeh:(S.guessB === behGrade(net)), matchAr:(S.guessA === arGrade(tot)),
+            submittedAt: new Date().toISOString() };
+
+  fetch(SUBMIT_URL, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+    body: JSON.stringify(p) })
+  .then(function(r){ return r.json(); })
+  .then(function(res){
+    if (res && res.ok) finish(p);
+    else {
+      btn.disabled = false; btn.textContent = "Turn it in";
+      $("subErr").innerHTML = '<div class="err">' +
+        (res && res.error === "id"
+          ? "That student ID does not go with " + S.vip + ". Go back and check it."
+          : "Something went wrong. Try again, or tell your teacher.") + '</div>';
+    }
+  })
+  .catch(function(){
+    btn.disabled = false; btn.textContent = "Turn it in";
+    $("subErr").innerHTML = '<div class="err">No internet. Check your wifi and press Turn it in again.</div>';
+  });
+}
+function finish(p){
+  $("doneLine").textContent = VIP_NAMES[S.vip] + " \u00B7 Cycle " + S.cycle +
+    " \u00B7 Behavior " + fmt(p.behGrade) + " \u00B7 Acad Resp " + fmt(p.arGrade);
+  try{ localStorage.removeItem("vip_wip"); }catch(e){}
+  show(3);
+}
+$("again").addEventListener("click", function(){
+  S.h = S.c = S.s = S.o = 0; S.tri = null;
+  S.guessB = S.guessA = null; S.seen = false; S.cycle = null;
+  $("out").innerHTML = "";
+  [].forEach.call($("cycsel").children, function(x){ x.classList.remove("on"); });
+  show(1); onId();
+});
+
+/* ---------- boot ---------- */
+loadLocal();
+show(1);
+onId();
+</script>
+</body>
+</html>

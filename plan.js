@@ -111,10 +111,25 @@ function renderUnit(unit, mount){
   });
 }
 
+/* Today as YYYY-MM-DD, built from the local date parts. NOT toISOString():
+   that is UTC, and after early evening here it would already say tomorrow. */
+function todayStamp(){
+  const t = new Date();
+  return t.getFullYear() + "-" +
+         String(t.getMonth() + 1).padStart(2, "0") + "-" +
+         String(t.getDate()).padStart(2, "0");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const mount = document.getElementById("unit0");
   if (mount) renderUnit(UNIT0, mount);
   document.querySelectorAll("[data-teacher]").forEach(el => {
     el.textContent = SITE.teacherName;
   });
+
+  /* Light the VIP button up on a cycle-end day. No list, no match, no change —
+     the button stays grey and still works, so a late student can always get in. */
+  const vip = document.getElementById("vipbtn");
+  const days = (typeof SITE !== "undefined" && SITE.vipDays) ? SITE.vipDays : [];
+  if (vip && days.indexOf(todayStamp()) !== -1) vip.classList.add("on");
 });
