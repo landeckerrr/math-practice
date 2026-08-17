@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Print a practice set</title>
+<style>
+@page{size:letter;margin:0.55in 0.6in 0.5in 0.6in}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Carlito',Calibri,'DejaVu Sans',Arial,sans-serif;color:#111;font-size:11.2pt;line-height:1.35;padding:26px}
+.bar{background:#eef1f4;border:1px solid #c8d0d8;border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:10.5pt}
+.bar b{font-size:12pt}
+.bar a{color:#0B4F9E;margin-right:12px;white-space:nowrap}
+.bar button{font:inherit;font-weight:700;padding:7px 16px;border:0;border-radius:6px;background:#0B4F9E;color:#fff;cursor:pointer}
+.hd{border-bottom:2.5px solid #111;padding-bottom:8px;margin-bottom:12px}
+.hd .code{font-size:9pt;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#555}
+.hd h1{font-size:19pt;font-weight:700;margin:2px 0 1px}
+.hd .sub{font-size:10pt;color:#555}
+.idbar{display:flex;gap:16px;margin-top:10px}
+.fld{font-size:9.5pt}
+.fld span{font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:8.5pt;color:#555}
+.fld .ln{border-bottom:1.4px solid #111;height:19px;margin-top:2px}
+.fld.nm{flex:1}.fld.sm{flex:0 0 100px}
+.note{border:1.4px solid #111;border-radius:4px;padding:7px 9px;font-size:9.5pt;margin:10px 0 14px;background:#f6f6f6}
+.sec{font-size:10pt;font-weight:700;letter-spacing:.10em;text-transform:uppercase;background:#111;color:#fff;
+     padding:4px 9px;border-radius:3px;display:inline-block;margin:14px 0 8px}
+.sec.bonus{background:#fff;color:#111;border:2px solid #111}
+.slide{margin-bottom:11px;break-inside:avoid}
+.st{font-size:12pt;font-weight:700;border-bottom:1.2px solid #bbb;padding-bottom:2px;margin-bottom:6px}
+.teach{font-size:10pt;background:#f2f2f2;border-left:3px solid #777;padding:5px 8px;margin-bottom:7px;white-space:pre-line}
+.q{margin:0 0 9px 0;break-inside:avoid;padding-left:27px;position:relative}
+.qn{position:absolute;left:0;top:0;font-weight:700;font-size:10.5pt}
+.p{margin-bottom:4px}
+.ch div{margin:1.5px 0}
+.ch .ci{display:inline-block;width:13px;height:13px;border:1.3px solid #111;border-radius:50%;margin-right:7px;vertical-align:-2px}
+.ans{border-bottom:1.4px solid #111;height:21px;width:210px;margin-top:3px}
+.lines div{border-bottom:1.1px solid #999;height:23px}
+.hint{font-size:9pt;font-style:italic;color:#555;margin:2px 0}
+.foot{margin-top:14px;border-top:1.2px solid #bbb;padding-top:5px;font-size:9pt;color:#555}
+.keyrow{font-size:10.5pt;margin:2px 0}
+.err{border:2px solid #b00;background:#fdecea;padding:14px;border-radius:8px;font-size:11pt}
+@media print{.bar{display:none}body{padding:0}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div id="out"></div>
+<script>
+const SETS = ["0-00","0-01","0-02","0-03","0-05","0-07","0-08","0-09","0-10","0-11","0-12","0-13","0-14","0-15"];
+const qs = new URLSearchParams(location.search);
+const set = qs.get("set");
+const keyMode = qs.get("answers") === "1";
+const esc = s => String(s??"").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function bar(){
+  let h = `<b>Print a practice set.</b> Pick one, then use your browser's Print command.<br><br>`;
+  h += SETS.map(s=>`<a href="?set=${s}">${s.replace("-",".")}</a>`).join("");
+  if(set) h += `<br><br><a href="?set=${set}${keyMode?"":"&answers=1"}">${keyMode?"student worksheet":"answer key (teacher)"}</a>
+               &nbsp; <button onclick="window.print()">Print this</button>`;
+  document.getElementById("bar").innerHTML = h;
+}
+bar();
+
+async function load(){
+  const out = document.getElementById("out");
+  if(!set){ out.innerHTML = ""; return; }
+  let txt;
+  try{
+    const r = await fetch(set + ".html");
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    txt = await r.text();
+  }catch(e){
+    out.innerHTML = `<div class="err"><b>Could not load ${esc(set)}.html.</b> That set may not be built yet.</div>`; return;
+  }
+  const m = txt.match(/const LESSON\s*=\s*(\{[\s\S]*?\n\});/);
+  if(!m){ out.innerHTML = `<div class="err"><b>Found ${esc(set)}.html but could not read its questions.</b></div>`; return; }
+  let L;
+  try{ L = new Function("return " + m[1])(); }
+  catch(e){ out.innerHTML = `<div class="err"><b>The question block in ${esc(set)}.html did not parse.</b></div>`; return; }
+  render(L);
+  document.title = (keyMode ? "KEY " : "") + "Practice " + L.code + " — " + L.title;
+}
+
+function render(L){
+  const req = L.slides.filter(s=>!s.extension), bon = L.slides.filter(s=>s.extension);
+  const nreq = req.reduce((a,s)=>a+s.questions.length,0);
+  let n = 1, h = "";
+
+  if(keyMode){
+    h += `<div class="hd"><div class="code">Answer key &middot; teacher copy &middot; do not hand out</div>
+          <h1>Practice ${esc(L.code)} &mdash; ${esc(L.title)}</h1></div>`;
+    for(const [label,grp] of [["Part 1 &middot; counts toward the score",req],["Part 2 &middot; bonus",bon]]){
+      if(!grp.length) continue;
+      h += `<div class="sec">${label}</div>`;
+      for(const s of grp){
+        h += `<div class="slide"><div class="st">${esc(s.title)}</div>`;
+        for(const q of s.questions){
+          let a;
+          if(q.type==="mc") a = esc(q.choices[q.answer]);
+          else if(q.type==="written") a = "Written response &mdash; you read this one.";
+          else a = q.accept.map(esc).join(" or ");
+          h += `<div class="keyrow"><b>${n}.</b> ${a}</div>`; n++;
+        }
+        h += `</div>`;
+      }
+    }
+    h += `<div class="foot">Part 1 is out of ${nreq}. Part 2 does not count against the score.</div>`;
+    document.getElementById("out").innerHTML = h; return;
+  }
+
+  h += `<div class="hd"><div class="code">Practice ${esc(L.code)} &middot; paper version</div>
+        <h1>${esc(L.title)}</h1><div class="sub">${esc(L.subtitle||"")}</div>
+        <div class="idbar">
+          <div class="fld nm"><span>Name</span><div class="ln"></div></div>
+          <div class="fld sm"><span>VIP</span><div class="ln"></div></div>
+          <div class="fld sm"><span>Score &nbsp;/ ${nreq}</span><div class="ln"></div></div>
+        </div></div>
+        <div class="note"><b>How to do this page.</b> For multiple choice, fill in the circle next to your answer.
+        Otherwise write your answer on the line. Do all of Part 1. Part 2 is a bonus &mdash; it does not count
+        against your score, so you can get everything right without doing it.</div>`;
+
+  const block = grp => grp.map(s=>{
+    let b = `<div class="slide"><div class="st">${esc(s.title)}</div>`;
+    if(s.teach) b += `<div class="teach">${esc(s.teach)}</div>`;
+    for(const q of s.questions){
+      b += `<div class="q"><span class="qn">${n}.</span><div class="p">${esc(q.prompt)}</div>`;
+      if(q.hint) b += `<div class="hint">Hint: ${esc(q.hint)}</div>`;
+      if(q.type==="mc") b += `<div class="ch">` + q.choices.map(c=>`<div><span class="ci"></span>${esc(c)}</div>`).join("") + `</div>`;
+      else if(q.type==="written") b += `<div class="lines">` + "<div></div>".repeat(6) + `</div>`;
+      else b += `<div class="ans"></div>`;
+      b += `</div>`; n++;
+    }
+    return b + `</div>`;
+  }).join("");
+
+  h += `<div class="sec">Part 1 &middot; do all of this &middot; ${nreq} questions</div>` + block(req);
+  if(bon.length) h += `<div class="sec bonus">Part 2 &middot; bonus &middot; only if Part 1 is finished</div>` + block(bon);
+  h += `<div class="foot">Practice ${esc(L.code)} &middot; ${esc(L.title)} &middot; Hand this in when you finish.</div>`;
+  document.getElementById("out").innerHTML = h;
+}
+load();
+</script>
+</body>
+</html>
