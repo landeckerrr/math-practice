@@ -19,6 +19,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
   font-family:Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:17px;line-height:1.45;}
 .wrap{max-width:520px;margin:0 auto;padding:14px 14px 44px;}
+.wrap.wide{max-width:960px;}
 
 .top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .top .vipword{font-weight:900;letter-spacing:.06em;font-size:15px;color:var(--azul);}
@@ -27,19 +28,24 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
 
 .card{background:var(--paper);border-radius:var(--r);padding:18px 16px 20px;
   box-shadow:0 1px 3px rgba(0,0,0,.10);margin-bottom:14px;}
-.block{border-radius:var(--r);padding:16px 14px 18px;margin-bottom:14px;}
-.block.beh{background:var(--beh-tint);}
-.block.ar{background:var(--ar-tint);}
 h1{font-size:22px;font-weight:900;margin:0 0 4px;letter-spacing:-.01em;}
-h2{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin:0 0 2px;}
-h2.beh{color:var(--azul);} h2.ar{color:var(--amarillo);}
-h3{font-size:19px;font-weight:900;margin:0 0 12px;}
 p.sub{margin:0 0 16px;color:var(--gray);font-size:15px;}
 
-.count{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid rgba(0,0,0,.09);}
+/* ---------- two columns: AR left, Behavior right ---------- */
+.cols{display:grid;grid-template-columns:1fr;gap:14px;}
+@media (min-width:760px){ .cols{grid-template-columns:1fr 1fr;align-items:start;} }
+.col{border-radius:var(--r);padding:16px 14px 18px;}
+.col.ar{background:var(--ar-tint);}
+.col.beh{background:var(--beh-tint);}
+.col h2{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin:0 0 2px;}
+.col.ar h2{color:var(--amarillo);} .col.beh h2{color:var(--azul);}
+.col h3{font-size:19px;font-weight:900;margin:0 0 12px;}
+.col .hint{font-size:14px;color:var(--gray);margin:-8px 0 12px;}
+
+.count{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid rgba(0,0,0,.09);}
 .count.first{border-top:0;padding-top:2px;}
-.sym{width:52px;height:52px;flex:none;border:2.5px solid var(--azul);border-radius:10px;
-  display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;
+.sym{width:50px;height:50px;flex:none;border:2.5px solid var(--azul);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
   background:#fff;color:var(--azul);}
 .sym.gold{border-color:var(--amarillo);color:var(--amarillo);}
 .lab{flex:1;min-width:0;}
@@ -47,36 +53,60 @@ p.sub{margin:0 0 16px;color:var(--gray);font-size:15px;}
 .lab span{display:block;font-size:14px;color:var(--gray);line-height:1.3;}
 .pm{display:flex;align-items:center;gap:4px;flex:none;}
 button{font-family:inherit;}
-.btn-pm{width:46px;height:46px;border-radius:12px;border:2px solid var(--line);background:#fff;
-  font-size:26px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1;padding:0;}
+.btn-pm{width:44px;height:44px;border-radius:12px;border:2px solid var(--line);background:#fff;
+  font-size:25px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1;padding:0;}
 .btn-pm:active{background:#EDEDED;}
-.num{min-width:46px;text-align:center;font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;}
+.num{min-width:42px;text-align:center;font-size:29px;font-weight:900;font-variant-numeric:tabular-nums;}
 
-.pick3{display:flex;gap:8px;margin-top:6px;}
-.pick3 button{flex:1;padding:12px 4px;border-radius:12px;border:2px solid var(--line);
-  background:#fff;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.25;}
+.pick3{display:flex;gap:6px;margin-top:6px;}
+.pick3 button{flex:1;padding:11px 3px;border-radius:11px;border:2px solid var(--line);
+  background:#fff;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.25;}
 .pick3 button.on{border-color:var(--amarillo);background:var(--amarillo);color:#fff;}
 .locked{opacity:.42;}
 .gate{margin-top:8px;font-size:14px;font-weight:500;color:var(--naranja);}
 
-.math{background:#fff;border-radius:12px;padding:14px 12px;margin-top:14px;text-align:center;
-  border:2px dashed var(--line);}
-.math .eq{font-size:26px;font-weight:700;line-height:1.5;}
-.math .eq b{font-weight:900;}
-.math .cap{font-size:13px;color:var(--gray);margin-top:4px;}
-.stack{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;
-  font-size:17px;text-align:left;}
-.stack .pts{font-weight:900;font-size:22px;text-align:right;font-variant-numeric:tabular-nums;}
-.stack .rule{grid-column:1/-1;height:2px;background:var(--ink);margin:4px 0;}
+/* ---------- SCORE ---------- */
+.scorebox{background:#fff;border-radius:12px;border:2px dashed var(--line);
+  padding:12px 12px 14px;margin-top:14px;}
+.scorebox .cap{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gray);text-align:center;margin-bottom:8px;}
+.stack{display:grid;grid-template-columns:auto 1fr auto;gap:5px 10px;align-items:center;font-size:16px;}
+.stack .pts{font-weight:900;font-size:21px;text-align:right;font-variant-numeric:tabular-nums;}
+.stack .rule{grid-column:1/-1;height:2px;background:var(--ink);margin:3px 0;}
 .stack .zero{color:var(--gray);}
+.eq{font-size:25px;font-weight:700;text-align:center;line-height:1.4;}
+.eq b{font-weight:900;}
+.eqcap{font-size:13px;color:var(--gray);text-align:center;}
+.total{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-top:6px;}
+.total .n{font-size:40px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;}
+.total .w{font-size:14px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;}
 
+/* ---------- GRADE ---------- */
+.gradebox{margin-top:12px;background:#fff;border-radius:12px;border:3px solid var(--verde);
+  padding:14px 12px;text-align:center;}
+.gradebox .say{font-size:17px;font-weight:700;}
+.gradebox .g{font-size:58px;font-weight:900;line-height:1;letter-spacing:-.02em;margin-top:2px;}
+
+/* ---------- little tables ---------- */
+.mini{margin-top:12px;}
+.mini h4{font-size:11px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--gray);margin:0 0 6px;text-align:center;}
+table{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border-radius:10px;overflow:hidden;}
+th,td{padding:7px 6px;text-align:center;border-bottom:1px solid var(--line);}
+th{font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);}
+td.k{text-align:left;font-weight:700;white-space:nowrap;padding-left:12px;}
+tr.now td{background:#FFF6D9;font-weight:900;}
+td.now{background:#FFF6D9;font-weight:900;}
+details{margin-top:12px;background:#fff;border-radius:10px;overflow:hidden;}
+summary{padding:10px 12px;font-size:14px;font-weight:900;cursor:pointer;list-style:none;color:var(--gray);}
+summary::-webkit-details-marker{display:none;}
+summary::after{content:" ▾";}
+details[open] summary::after{content:" ▴";}
+details table{border-radius:0;}
+
+/* ---------- inputs / buttons ---------- */
 label.f{display:block;font-size:13px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;
   color:var(--gray);margin:16px 0 6px;}
-.guess{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
-.guess button{padding:14px 0;border-radius:12px;border:2px solid var(--line);background:#fff;
-  font-size:17px;font-weight:900;color:var(--ink);cursor:pointer;}
-.guess button.on{border-color:var(--azul);background:var(--azul);color:#fff;}
-
 input[type=text],input[type=tel]{width:100%;padding:15px 14px;font-size:22px;font-weight:700;
   border:2px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;color:var(--ink);}
 input:focus,button:focus-visible,summary:focus-visible{outline:3px solid var(--azul);outline-offset:2px;}
@@ -89,38 +119,12 @@ input:focus,button:focus-visible,summary:focus-visible{outline:3px solid var(--a
 .cycsel button{padding:14px 0;border-radius:12px;border:2px solid var(--line);background:#fff;
   font-size:19px;font-weight:900;cursor:pointer;color:var(--ink);}
 .cycsel button.on{border-color:var(--azul);background:var(--azul);color:#fff;}
-
 .go{display:block;width:100%;padding:18px;border-radius:14px;border:0;background:var(--azul);
   color:#fff;font-size:19px;font-weight:900;cursor:pointer;margin-top:16px;}
 .go:disabled{background:#B7BCC2;cursor:default;}
 .go.green{background:var(--verde);color:#1d3b00;}
 .back{display:block;width:100%;padding:12px;margin-top:8px;background:none;border:0;
   color:var(--gray);font-size:15px;font-weight:700;cursor:pointer;}
-
-.pair{display:flex;gap:10px;}
-.pair>div{flex:1;border-radius:12px;padding:14px 10px;text-align:center;border:3px solid var(--verde);
-  background:#fff;}
-.pair>div.off{border-color:var(--naranja);}
-.pair .t{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);}
-.pair .g{font-size:50px;font-weight:900;line-height:1.05;}
-.pair .note{font-size:13px;color:var(--naranja);font-weight:500;line-height:1.3;}
-
-details{background:#fff;border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.10);
-  padding:0;margin-bottom:14px;overflow:hidden;}
-summary{padding:16px;font-size:17px;font-weight:900;cursor:pointer;list-style:none;}
-summary::-webkit-details-marker{display:none;}
-summary::after{content:" ▾";color:var(--gray);}
-details[open] summary::after{content:" ▴";}
-.tbl{padding:0 14px 18px;}
-.tbl h4{font-size:12px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;
-  color:var(--gray);margin:14px 0 6px;}
-table{width:100%;border-collapse:collapse;font-size:15px;}
-th,td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--line);}
-th{font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);}
-td.k{text-align:left;font-weight:700;white-space:nowrap;}
-tr.now td{background:#FFF6D9;font-weight:900;}
-td.now{background:#FFF6D9;font-weight:900;border-radius:6px;}
-
 .finish{text-align:center;padding:20px 0;}
 .finish .big{font-size:54px;}
 .err{background:#FFF1E8;border:2px solid var(--naranja);border-radius:12px;padding:14px;
@@ -129,7 +133,7 @@ td.now{background:#FFF6D9;font-weight:900;border-radius:6px;}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="wrap">
 
   <div class="top">
     <span class="vipword">VIP</span><span class="tag">weekly grades</span>
@@ -158,96 +162,111 @@ td.now{background:#FFF6D9;font-weight:900;border-radius:6px;}
 
   <!-- ============ STEP 2 ============ -->
   <section id="s2" hidden>
+    <div class="cols">
 
-    <div class="block beh">
-      <h2 class="beh">Behavior</h2>
-      <h3>Count your hearts and checks</h3>
+      <!-- ---------- LEFT: Academic Responsibility ---------- -->
+      <div class="col ar">
+        <h2>Academic Responsibility</h2>
+        <h3>Count your stars and circles</h3>
+        <p class="hint">A free circle counts. Tap it like you earned it.</p>
 
-      <div class="count first">
-        <div class="sym">&#9825;</div>
-        <div class="lab"><b>Hearts</b><span>kind and respectful</span></div>
-        <div class="pm"><button class="btn-pm" data-dec="h">&minus;</button>
-          <span class="num" id="n_h">0</span>
-          <button class="btn-pm" data-inc="h">+</button></div>
-      </div>
+        <div class="count first">
+          <div class="sym gold">&#9734;</div>
+          <div class="lab"><b>Stars</b><span>ready, working, contributing</span></div>
+          <div class="pm"><button class="btn-pm" data-dec="s">&minus;</button>
+            <span class="num" id="n_s">0</span>
+            <button class="btn-pm" data-inc="s">+</button></div>
+        </div>
 
-      <div class="count">
-        <div class="sym">&#10003;</div>
-        <div class="lab"><b>Checks</b><span>check yourself</span></div>
-        <div class="pm"><button class="btn-pm" data-dec="c">&minus;</button>
-          <span class="num" id="n_c">0</span>
-          <button class="btn-pm" data-inc="c">+</button></div>
-      </div>
+        <div class="count">
+          <div class="sym gold">&#9711;</div>
+          <div class="lab"><b>Circles</b><span>the Past Due practice</span></div>
+          <div class="pm"><button class="btn-pm" data-dec="o">&minus;</button>
+            <span class="num" id="n_o">0</span>
+            <button class="btn-pm" data-inc="o">+</button></div>
+        </div>
 
-      <div class="math"><div class="eq" id="behEq"></div>
-        <div class="cap">hearts minus checks</div></div>
-
-      <label class="f">What behavior grade did you write on your paper?</label>
-      <div class="guess" id="behGuess"></div>
-    </div>
-
-    <div class="block ar">
-      <h2 class="ar">Academic Responsibility</h2>
-      <h3>Count your stars and circles</h3>
-      <p class="sub" style="margin-bottom:6px">A free circle counts. Tap it like you earned it.</p>
-
-      <div class="count first">
-        <div class="sym gold">&#9734;</div>
-        <div class="lab"><b>Stars</b><span>ready, working, contributing</span></div>
-        <div class="pm"><button class="btn-pm" data-dec="s">&minus;</button>
-          <span class="num" id="n_s">0</span>
-          <button class="btn-pm" data-inc="s">+</button></div>
-      </div>
-
-      <div class="count">
-        <div class="sym gold">&#9711;</div>
-        <div class="lab"><b>Circles</b><span>the Past Due practice</span></div>
-        <div class="pm"><button class="btn-pm" data-dec="o">&minus;</button>
-          <span class="num" id="n_o">0</span>
-          <button class="btn-pm" data-inc="o">+</button></div>
-      </div>
-
-      <div class="count" id="triRow">
-        <div class="sym gold">&#9651;</div>
-        <div class="lab"><b>Triangle</b><span>Delta Math</span>
-          <div class="pick3" id="tri">
-            <button data-tri="0">not 80% yet</button>
-            <button data-tri="1">80% or more</button>
-            <button data-tri="2">all finished</button>
+        <div class="count" id="triRow">
+          <div class="sym gold">&#9651;</div>
+          <div class="lab"><b>Triangle</b><span>Delta Math</span>
+            <div class="pick3" id="tri">
+              <button data-tri="0">not 80% yet</button>
+              <button data-tri="1">80% or more</button>
+              <button data-tri="2">all finished</button>
+            </div>
           </div>
         </div>
+        <div class="gate" id="gate" hidden>Delta Math only counts when all 4 circles are filled.</div>
+
+        <div class="scorebox">
+          <div class="cap">Score</div>
+          <div class="stack" id="arStack"></div>
+        </div>
+
+        <div class="gradebox">
+          <div class="say">So your grade is</div>
+          <div class="g" id="arG">–</div>
+        </div>
+
+        <div class="mini">
+          <h4>Score &rarr; grade</h4>
+          <table><thead><tr><th>Score</th><th>Grade</th></tr></thead><tbody id="arTbl"></tbody></table>
+        </div>
+
+        <details>
+          <summary>Where the points come from</summary>
+          <table><thead><tr><th></th><th>0 pts</th><th>1 pt</th><th>2 pts</th></tr></thead>
+            <tbody>
+              <tr id="rowS"><td class="k">&#9734; stars</td><td>0 or 1</td><td>2 or 3</td><td>4 or more</td></tr>
+              <tr id="rowO"><td class="k">&#9711; circles</td><td>0 or 1</td><td>2 or 3</td><td>all 4</td></tr>
+              <tr id="rowD"><td class="k">&#9651; Delta</td><td>under 80%</td><td>80% or more</td><td>all finished</td></tr>
+            </tbody></table>
+        </details>
       </div>
-      <div class="gate" id="gate" hidden>Delta Math only counts when all 4 circles are filled.</div>
 
-      <div class="math"><div class="stack" id="arStack"></div></div>
+      <!-- ---------- RIGHT: Behavior ---------- -->
+      <div class="col beh">
+        <h2>Behavior</h2>
+        <h3>Count your hearts and checks</h3>
+        <p class="hint">Look at all four classes on your paper.</p>
 
-      <label class="f">What acad resp grade did you write on your paper?</label>
-      <div class="guess" id="arGuess"></div>
+        <div class="count first">
+          <div class="sym">&#9825;</div>
+          <div class="lab"><b>Hearts</b><span>kind and respectful</span></div>
+          <div class="pm"><button class="btn-pm" data-dec="h">&minus;</button>
+            <span class="num" id="n_h">0</span>
+            <button class="btn-pm" data-inc="h">+</button></div>
+        </div>
+
+        <div class="count">
+          <div class="sym">&#10003;</div>
+          <div class="lab"><b>Checks</b><span>check yourself</span></div>
+          <div class="pm"><button class="btn-pm" data-dec="c">&minus;</button>
+            <span class="num" id="n_c">0</span>
+            <button class="btn-pm" data-inc="c">+</button></div>
+        </div>
+
+        <div class="scorebox">
+          <div class="cap">Score</div>
+          <div class="eq" id="behEq"></div>
+          <div class="eqcap">hearts minus checks</div>
+        </div>
+
+        <div class="gradebox">
+          <div class="say">So your grade is</div>
+          <div class="g" id="behG">–</div>
+        </div>
+
+        <div class="mini">
+          <h4>Score &rarr; grade</h4>
+          <table><thead><tr><th>Score</th><th>Grade</th></tr></thead><tbody id="behTbl"></tbody></table>
+        </div>
+      </div>
+
     </div>
 
-    <details id="chart">
-      <summary>How the grades work</summary>
-      <div class="tbl">
-        <h4>Each symbol is worth points</h4>
-        <table><thead><tr><th></th><th>0 pts</th><th>1 pt</th><th>2 pts</th></tr></thead>
-          <tbody>
-            <tr id="rowS"><td class="k">&#9734; stars</td><td>0 or 1</td><td>2 or 3</td><td>4 or more</td></tr>
-            <tr id="rowO"><td class="k">&#9711; circles</td><td>0 or 1</td><td>2 or 3</td><td>all 4</td></tr>
-            <tr id="rowD"><td class="k">&#9651; Delta</td><td>under 80%</td><td>80% or more</td><td>all finished</td></tr>
-          </tbody></table>
-
-        <h4>Add the points &rarr; Academic Responsibility</h4>
-        <table><thead><tr><th>Points</th><th>Grade</th></tr></thead>
-          <tbody id="arTbl"></tbody></table>
-
-        <h4>Hearts minus checks &rarr; Behavior</h4>
-        <table><thead><tr><th>&#9825; &minus; &#10003;</th><th>Grade</th></tr></thead>
-          <tbody id="behTbl"></tbody></table>
-      </div>
-    </details>
-
-    <button class="go" id="go2" disabled>Show me my grades</button>
-    <div id="out"></div>
+    <button class="go green" id="go2">Turn it in</button>
+    <div id="subErr"></div>
     <button class="back" id="back2">Back</button>
   </section>
 
@@ -267,7 +286,6 @@ td.now{background:#FFF6D9;font-weight:900;border-radius:6px;}
 /* =====================================================================
    VIP weekly grades — student self-report
    Michael Landecker · TCS 6th grade math · 2026-27
-   PASTE YOUR APPS SCRIPT URL BELOW. Nothing else needs editing.
    ===================================================================== */
 var SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzJxzE8FRVF7gA6vPOzcuPAqBF7y_oeBMVpifKrhJ--yGqUfGN-WADMdbX23rCjoY0P/exec";
 
@@ -309,7 +327,6 @@ var VIP_NAMES = {
   "5-12":"🏐 Juli", "5-13":"⚽Vicen", "5-14":"🏖️ Hele",
   "5-15":"⚽ Andres", "5-16":"🐎 Ame", "5-17":"👽 Sarita",
   "5-18":"⚽ Elena", "5-19":"⚽ Nico", "5-20":"🎮 Pedro",
-  "5-21":"🎮 Pedro",
   "6-01":"🪖 PJ", "6-02":"🐎 Salo", "6-03":"🚗 Botero",
   "6-04":"🎨 Ama", "6-05":"🏍️ Martín", "6-06":"😊 Maria",
   "6-07":"🚗 Luka", "6-08":"Alejandro HD", "6-09":"🐈 Eva",
@@ -317,6 +334,9 @@ var VIP_NAMES = {
   "6-13":"🎾 Mejia", "6-14":"🏐 Ele", "6-15":"🏗️Bruno",
   "6-16":"⚽ Toro", "6-17":"🚗 Rafa", "6-18":"🐕 Emi",
   "6-19":"Pascual VC", "6-20":"⚽ Vicente",
+  /* 5-21 is Pedro Ramírez Vasco's current number; 5-20 above is last year's
+     and belongs to nobody now. Both are here so either card works. */
+  "5-21":"🎮 Pedro",
   /* Guest numbers — spares for Ms. Sandra when a real number will not let
      somebody in. The Apps Script has to accept these too, or the ID check
      will still turn them away. */
@@ -333,13 +353,11 @@ function bandCircles(n){ return n >= MAX_CIRCLES ? 2 : n >= 2 ? 1 : 0; }
 function bandDelta(tri, circles){ return circles < MAX_CIRCLES ? 0 : (tri === null ? 0 : tri); }
 function arGrade(t){ return t >= 6 ? 4 : t === 5 ? 3.5 : t === 4 ? 3 : t === 3 ? 2.5 : t === 2 ? 2 : 1; }
 function behGrade(n){ return n >= 3 ? 4 : n >= 1 ? 3.5 : n === 0 ? 3 : n >= -2 ? 2.5 : n >= -4 ? 2 : 1; }
-var GRADES = [4, 3.5, 3, 2.5, 2, 1];
 var AR_ROWS  = [["6","4"],["5","3.5"],["4","3"],["3","2.5"],["2","2"],["0 or 1","1"]];
 var BEH_ROWS = [["3 or more","4"],["1 or 2","3.5"],["0","3"],["&minus;1 or &minus;2","2.5"],
                 ["&minus;3 or &minus;4","2"],["&minus;5 or lower","1"]];
 
-var S = { vip:"", sid:"", cycle:null, h:0, c:0, s:0, o:0, tri:null,
-          guessB:null, guessA:null, seen:false, verified:false };
+var S = { vip:"", sid:"", cycle:null, s:0, o:0, tri:null, h:0, c:0, verified:false };
 
 function $(id){ return document.getElementById(id); }
 function fmt(g){ return g === Math.floor(g) ? String(g) : g.toFixed(1); }
@@ -386,7 +404,6 @@ function onId(){
 
   if (!S.vip || S.sid.length !== 5){ setId("", ""); gate1(); return; }
 
-  // Nothing to ask. This is a setup mistake, not a student mistake.
   if (!CONNECTED){
     setId("bad", "This page is not connected yet, so it cannot check your ID.<br>" +
                  "<b>Teacher:</b> paste the Apps Script /exec URL into SUBMIT_URL in vip.html.");
@@ -434,41 +451,16 @@ $("tri").addEventListener("click", function(e){
   S.tri = +b.dataset.tri; paint();
 });
 
-/* ---------- grade guesses ---------- */
-function buildGuess(el, key){
-  el.innerHTML = GRADES.map(function(g){ return '<button data-g="' + g + '">' + fmt(g) + '</button>'; }).join("");
-  el.addEventListener("click", function(e){
-    var b = e.target.closest("button"); if (!b) return;
-    S[key] = +b.dataset.g; paint();
-  });
-}
-buildGuess($("behGuess"), "guessB");
-buildGuess($("arGuess"), "guessA");
-
-/* ---------- the chart ---------- */
+/* ---------- the two little tables ---------- */
 $("arTbl").innerHTML  = AR_ROWS.map(function(r,i){ return '<tr data-ar="'+i+'"><td class="k">'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join("");
 $("behTbl").innerHTML = BEH_ROWS.map(function(r,i){ return '<tr data-beh="'+i+'"><td class="k">'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join("");
 
-function markChart(net, tot){
-  var ps = bandStars(S.s), po = bandCircles(S.o), pd = bandDelta(S.tri, S.o);
-  [["rowS", ps], ["rowO", po], ["rowD", pd]].forEach(function(p){
-    var tds = $(p[0]).children;
-    for (var i = 1; i < tds.length; i++) tds[i].classList.toggle("now", i - 1 === p[1]);
-  });
-  var arIdx  = [6,5,4,3,2].indexOf(tot); if (arIdx < 0) arIdx = 5;
-  var behIdx = net >= 3 ? 0 : net >= 1 ? 1 : net === 0 ? 2 : net >= -2 ? 3 : net >= -4 ? 4 : 5;
-  [].forEach.call($("arTbl").children,  function(tr){ tr.classList.toggle("now", +tr.dataset.ar  === arIdx); });
-  [].forEach.call($("behTbl").children, function(tr){ tr.classList.toggle("now", +tr.dataset.beh === behIdx); });
-}
-
 /* ---------- paint ---------- */
 function paint(){
-  $("n_h").textContent = S.h; $("n_c").textContent = S.c;
   $("n_s").textContent = S.s; $("n_o").textContent = S.o;
+  $("n_h").textContent = S.h; $("n_c").textContent = S.c;
 
-  var net = S.h - S.c;
-  $("behEq").innerHTML = "&#9825; " + S.h + " &minus; &#10003; " + S.c + " = <b>" + net + "</b>";
-
+  /* --- Academic Responsibility --- */
   var open = S.o >= MAX_CIRCLES;
   $("triRow").classList.toggle("locked", !open);
   $("gate").hidden = open;
@@ -479,20 +471,21 @@ function paint(){
     row("&#9734;", S.s + (S.s === 1 ? " star" : " stars"), ps) +
     row("&#9711;", S.o + " of " + MAX_CIRCLES + " circles", po) +
     row("&#9651;", triWord(), pd) +
-    '<div class="rule"></div><span></span><span style="font-weight:700">total</span>' +
-    '<span class="pts">' + tot + '</span>';
+    '<div class="rule"></div><span></span>' +
+    '<span style="font-weight:700">total</span><span class="pts">' + tot + '</span>';
+  $("arG").textContent = fmt(arGrade(tot));
 
-  [].forEach.call($("behGuess").children, function(x){ x.classList.toggle("on", +x.dataset.g === S.guessB); });
-  [].forEach.call($("arGuess").children,  function(x){ x.classList.toggle("on", +x.dataset.g === S.guessA); });
+  /* --- Behavior --- */
+  var net = S.h - S.c;
+  $("behEq").innerHTML = "&#9825; " + S.h + " &minus; &#10003; " + S.c +
+                         " = <b>" + String(net).replace("-", "\u2212") + "</b>";
+  $("behG").textContent = fmt(behGrade(net));
 
-  markChart(net, tot);
-  $("go2").disabled = (S.guessB === null || S.guessA === null);
-  $("go2").hidden = S.seen;
-  if (S.seen) reveal(behGrade(net), arGrade(tot));
+  markTables(net, tot, ps, po, pd);
   saveLocal();
 }
 function row(sym, words, pts){
-  return '<span style="font-size:22px">' + sym + '</span>' +
+  return '<span style="font-size:21px">' + sym + '</span>' +
          '<span' + (pts === 0 ? ' class="zero"' : '') + '>' + words + '</span>' +
          '<span class="pts">' + pts + '</span>';
 }
@@ -501,57 +494,50 @@ function triWord(){
   return S.tri === 2 ? "all finished" : S.tri === 1 ? "80% or more"
        : S.tri === 0 ? "not 80% yet" : "not picked";
 }
-
-/* ---------- reveal both at once ---------- */
-function reveal(b, a){
-  $("out").innerHTML =
-    '<div class="pair">' +
-      box("Behavior", b, S.guessB) +
-      box("Acad Resp", a, S.guessA) +
-    '</div>' +
-    '<button class="go green" id="go3">Turn it in</button>' +
-    '<div id="subErr"></div>';
-  $("go3").addEventListener("click", submit);
+function markTables(net, tot, ps, po, pd){
+  [["rowS", ps], ["rowO", po], ["rowD", pd]].forEach(function(p){
+    var tds = $(p[0]).children;
+    for (var i = 1; i < tds.length; i++) tds[i].classList.toggle("now", i - 1 === p[1]);
+  });
+  var arIdx  = [6,5,4,3,2].indexOf(tot); if (arIdx < 0) arIdx = 5;
+  var behIdx = net >= 3 ? 0 : net >= 1 ? 1 : net === 0 ? 2 : net >= -2 ? 3 : net >= -4 ? 4 : 5;
+  [].forEach.call($("arTbl").children,  function(tr){ tr.classList.toggle("now", +tr.dataset.ar  === arIdx); });
+  [].forEach.call($("behTbl").children, function(tr){ tr.classList.toggle("now", +tr.dataset.beh === behIdx); });
 }
-function box(title, real, guess){
-  var same = (guess === real);
-  return '<div class="' + (same ? "" : "off") + '">' +
-    '<div class="t">' + title + '</div><div class="g">' + fmt(real) + '</div>' +
-    (same ? "" : '<div class="note">your paper says ' + fmt(guess) + '</div>') + '</div>';
-}
-$("go2").addEventListener("click", function(){ S.seen = true; paint(); });
-$("back2").addEventListener("click", function(){ show(1); });
 
 /* ---------- steps ---------- */
 function show(n){
   [1,2,3].forEach(function(i){ $("s" + i).hidden = (i !== n); });
+  $("wrap").classList.toggle("wide", n === 2);
   $("who").textContent = S.vip ? VIP_NAMES[S.vip] + " \u00B7 " + S.vip : "";
   window.scrollTo(0, 0);
   if (n === 2) paint();
 }
+$("back2").addEventListener("click", function(){ show(1); });
 
 /* ---------- turn it in ---------- */
-function submit(){
-  var btn = $("go3");
+$("go2").addEventListener("click", function(){
+  var btn = this;
   btn.disabled = true; btn.textContent = "Sending\u2026";
   $("subErr").innerHTML = "";
 
   var net = S.h - S.c;
   var tot = bandStars(S.s) + bandCircles(S.o) + bandDelta(S.tri, S.o);
   var p = { kind:"vip", vip:S.vip, sid:S.sid, cycle:S.cycle,
-            hearts:S.h, checks:S.c, net:net,
-            stars:S.s, circles:S.o, delta:triWord(),
-            behGrade:behGrade(net), arGrade:arGrade(tot), arPoints:tot,
-            studentBeh:S.guessB, studentAr:S.guessA,
-            matchBeh:(S.guessB === behGrade(net)), matchAr:(S.guessA === arGrade(tot)),
+            stars:S.s, circles:S.o, delta:triWord(), arPoints:tot, arGrade:arGrade(tot),
+            hearts:S.h, checks:S.c, net:net, behGrade:behGrade(net),
             submittedAt: new Date().toISOString() };
 
   fetch(SUBMIT_URL, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
     body: JSON.stringify(p) })
   .then(function(r){ return r.json(); })
   .then(function(res){
-    if (res && res.ok) finish(p);
-    else {
+    if (res && res.ok){
+      $("doneLine").textContent = VIP_NAMES[S.vip] + " \u00B7 Cycle " + S.cycle +
+        " \u00B7 Acad Resp " + fmt(p.arGrade) + " \u00B7 Behavior " + fmt(p.behGrade);
+      try{ localStorage.removeItem("vip_wip"); }catch(e){}
+      show(3);
+    } else {
       btn.disabled = false; btn.textContent = "Turn it in";
       $("subErr").innerHTML = '<div class="err">' +
         (res && res.error === "id"
@@ -563,17 +549,10 @@ function submit(){
     btn.disabled = false; btn.textContent = "Turn it in";
     $("subErr").innerHTML = '<div class="err">No internet. Check your wifi and press Turn it in again.</div>';
   });
-}
-function finish(p){
-  $("doneLine").textContent = VIP_NAMES[S.vip] + " \u00B7 Cycle " + S.cycle +
-    " \u00B7 Behavior " + fmt(p.behGrade) + " \u00B7 Acad Resp " + fmt(p.arGrade);
-  try{ localStorage.removeItem("vip_wip"); }catch(e){}
-  show(3);
-}
+});
+
 $("again").addEventListener("click", function(){
-  S.h = S.c = S.s = S.o = 0; S.tri = null;
-  S.guessB = S.guessA = null; S.seen = false; S.cycle = null;
-  $("out").innerHTML = "";
+  S.s = S.o = S.h = S.c = 0; S.tri = null; S.cycle = null;
   [].forEach.call($("cycsel").children, function(x){ x.classList.remove("on"); });
   show(1); onId();
 });
