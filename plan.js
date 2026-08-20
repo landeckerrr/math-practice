@@ -11,25 +11,15 @@
 
 const UNIT0 = {
   title: "Unit 0 — Fractions, Decimals & Division",
-  meta: "17 classes · Aug 11 – Sep 11",
+  meta: "7 classes + 1 bonus · Aug 11 – Aug 21",
   classes: [
-    { n:1,  type:"lesson",    code:"0.01", title:"The Secret of ÷",                    opens:"2026-08-11" },
-    { n:2,  type:"lesson",    code:"0.02", title:"Sharing Problems & Bigger Than One", opens:"2026-08-12" },
-    { n:3,  type:"lesson",    code:"0.03", title:"Numbers in Disguise",                opens:"2026-08-14" },
-    { n:4,  type:"lesson",    code:"0.05", title:"Estimation Station",                 opens:"2026-08-18" },
-    { n:5,  type:"lesson",    code:"0.07", title:"So What IS 5/8?",                    opens:"2026-08-19" },
-    { n:6,  type:"lesson",    code:"0.08", title:"Long Division, One-Digit Divisors",  opens:"2026-08-21" },
-    { n:7,  type:"lesson",    code:"0.09", title:"Remainders ARE Fractions",           opens:"2026-08-24" },
-    { n:8,  type:"lesson",    code:"0.10", title:"Two-Digit Divisors",                 opens:"2026-08-25" },
-    { n:9,  type:"lesson",    code:"0.11", title:"Division That Keeps Going",          opens:"2026-08-26" },
-    { n:10, type:"lesson",    code:"0.12", title:"Dividing Decimals",                  opens:"2026-08-28" },
-    { n:11, type:"lesson",    code:"0.13", title:"Decimal Division in Context",        opens:"2026-08-31" },
-    { n:12, type:"lesson",    code:"0.14", title:"How Many Fit?",                      opens:"2026-09-02" },
-    { n:13, type:"quiz",      code:"",     title:"Quiz",                               opens:"2026-09-04" },
-    { n:14, type:"lesson",    code:"0.15", title:"The Shortcut, Finally",              opens:"2026-09-07" },
-    { n:15, type:"practice",  code:"",     title:"Practice Day / Study Guide",         opens:"2026-09-08" },
-    { n:16, type:"practice",  code:"",     title:"Practice Day / Study Guide",         opens:"2026-09-09" },
-    { n:17, type:"summative", code:"",     title:"Unit 0 Summative",                   opens:"2026-09-11" }
+    { n:1, type:"lesson",    code:"0.01", title:"The Secret of ÷",                    opens:"2026-08-11" },
+    { n:2, type:"lesson",    code:"0.02", title:"Sharing Problems & Bigger Than One", opens:"2026-08-12" },
+    { n:3, type:"lesson",    code:"0.03", title:"Numbers in Disguise",                opens:"2026-08-14" },
+    { n:4, type:"lesson",    code:"0.05", title:"Estimation Station",                 opens:"2026-08-18" },
+    { n:5, type:"practice",  code:"",     title:"Practice Day / Study Guide",         opens:"2026-08-20" },
+    { n:6, type:"summative", code:"",     title:"Unit 0 Summative",                   opens:"2026-08-21" },
+    { n:7, type:"lesson",    code:"0.07", title:"So What IS 5/8?",                    opens:"2026-08-18", note:"Bonus" }
   ]
 };
 
@@ -93,10 +83,13 @@ function renderUnit(unit, mount){
       const a = document.createElement("a");
       a.className = "row" + (isToday ? " today" : "");
       a.href = c.code.replace(".", "-") + ".html";
+      /* An optional `note` on the class becomes a small chip, same one the
+         locked and paper rows use. Rows without a note are unchanged. */
       a.innerHTML = `<span class="code"></span><span class="title"></span>
-                     ${isToday ? '<span class="now">Today</span>' : ""}<span class="arrow">→</span>`;
+                     ${isToday ? '<span class="now">Today</span>' : ""}${c.note ? '<span class="tag"></span>' : ""}<span class="arrow">→</span>`;
       a.querySelector(".code").textContent = c.code;
       a.querySelector(".title").textContent = c.title;
+      if (c.note) a.querySelector(".tag").textContent = c.note;
       mount.appendChild(a);
     } else {
       const el = document.createElement("div");
